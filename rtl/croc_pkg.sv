@@ -69,8 +69,9 @@ package croc_pkg;
   localparam bit [31:0]   UserAddrRange     = 32'h6000_0000;
 
   localparam int unsigned NumCrocDomainSubordinates = 2 + NumSramBanks; // Peripherals + Memory + User Domain
+  localparam int unsigned NumMemOBIPorts  = 3; // 2 instr. ports + 1 data port 
   
-  localparam int unsigned NumXbarManagers = 4; // Debug module, Core Instr, Core Data, User Domain
+  localparam int unsigned NumXbarManagers = 5; // Debug module, 2*Core Instr, Core Data, User Domain
   localparam int unsigned NumXbarSbrRules = NumCrocDomainSubordinates; // number of address rules in the decoder
   localparam int unsigned NumXbarSbr      = NumXbarSbrRules + 1; // additional OBI error, used for signal arrays
 
@@ -78,8 +79,10 @@ package croc_pkg;
   typedef enum int {
     XbarError  = 0,
     XbarPeriph = 1,
-    XbarBank0  = 2,
-    XbarUser   = 2 + NumSramBanks
+    XbarInstr0 = 2,
+    XbarInstr1 = 3,
+    XbarData   = 4,
+    XbarUser   = 2 + NumMemOBIPorts
   } croc_xbar_outputs_e;
 
   // generate the address rules dependent on the number of SRAM banks
