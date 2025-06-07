@@ -49,7 +49,7 @@ module cve2_decoder #(
   output logic [31:0]           imm_j_type_o,
   output logic [31:0]           zimm_rs1_type_o,
 
-  // register file
+  // register files
   output cve2_pkg::rf_wd_sel_e rf_wdata_sel_o,   // RF write data selection
   output logic                 rf_we_o,          // write enable for regfile
   output logic [4:0]           rf_raddr_a_o,
@@ -58,6 +58,16 @@ module cve2_decoder #(
   output logic                 rf_ren_a_o,          // Instruction reads from RF addr A
   output logic                 rf_ren_b_o,          // Instruction reads from RF addr B
 
+  output cve2_pkg::rf_wd_sel_e rf_fp_wdata_sel_o,   // RF write data selection
+  output logic                 rf_fp_we_o,          // write enable for regfile
+  output logic [4:0]           rf_fp_raddr_a_o,
+  output logic [4:0]           rf_fp_raddr_b_o,
+  output logic [4:0]           rf_fp_raddr_c_o,
+  output logic [4:0]           rf_fp_waddr_o,
+  output logic                 rf_fp_ren_a_o,          // Instruction reads from RF addr A
+  output logic                 rf_fp_ren_b_o,          // Instruction reads from RF addr B
+  output logic                 rf_fp_ren_c_o,          // Instruction reads from RF addr C only for fused multiply-add insts.
+
   // ALU
   output cve2_pkg::alu_op_e    alu_operator_o,        // ALU operation selection
   output cve2_pkg::op_a_sel_e  alu_op_a_mux_sel_o,    // operand a selection: reg value, PC,
@@ -65,6 +75,16 @@ module cve2_decoder #(
   output cve2_pkg::op_b_sel_e  alu_op_b_mux_sel_o,    // operand b selection: reg value or
                                                       // immediate
   output logic                 alu_multicycle_o,      // ternary bitmanip instruction
+
+  // FPU
+  //output logic [2:0][fpnew_pkg::W-1:0] fpu_operands_o,
+  output fpnew_pkg::roundmode_e        fpu_rnd_mode_o,
+  output fpnew_pkg::operation_e        fpu_op_o,
+  output logic                         fpu_op_mod_o,
+  output fpnew_pkg::fp_format_e        fpu_src_fmt_o,
+  output fpnew_pkg::fp_format_e        fpu_dst_fmt_o,
+  output fpnew_pkg::int_format_e       fpu_int_fmt_o,
+  output logic                         fpu_valid_o,
 
   // MULT & DIV
   output logic                 mult_en_o,             // perform integer multiplication
@@ -164,9 +184,14 @@ module cve2_decoder #(
   assign rf_raddr_a_o = (use_rs3_q & ~instr_first_cycle_i) ? instr_rs3 : instr_rs1; // rs3 / rs1
   assign rf_raddr_b_o = instr_rs2; // rs2
 
+  assign rf_fp_raddr_a_o = instr_rs1;
+  assign rf_fp_raddr_b_o = instr_rs2;
+  assign rf_fp_raddr_c_o = instr_rs3;
+
   // destination register
   assign instr_rd = instr[11:7];
   assign rf_waddr_o   = instr_rd; // rd
+  assign rf_fp_waddr_o = instr_rd;
 
   ////////////////////
   // Register check //
@@ -210,6 +235,12 @@ module cve2_decoder #(
     rf_ren_a_o            = 1'b0;
     rf_ren_b_o            = 1'b0;
 
+    rf_fp_wdata_sel_o     = RF_WD_EX;
+    rf_fp_we_o            = 1'b0;
+    rf_fp_ren_a_o         = 1'b0;
+    rf_fp_ren_b_o         = 1'b0;
+    rf_fp_ren_c_o         = 1'b0;
+
     csr_access_o          = 1'b0;
     csr_illegal           = 1'b0;
     csr_op                = CSR_OP_READ;
@@ -225,6 +256,14 @@ module cve2_decoder #(
     dret_insn_o           = 1'b0;
     ecall_insn_o          = 1'b0;
     wfi_insn_o            = 1'b0;
+
+    fpu_rnd_mode_o        = RNE;
+    fpu_op_o              = '0;
+    fpu_op_mod_o          = 1'b0;
+    fpu_src_fmt_o         = FP32;
+    fpu_dst_fmt_o         = FP32:
+    fpu_int_fmt_o         = INT32;
+    fpu_valid_o           = 1'b0;
 
     opcode                = opcode_e'(instr[6:0]);
 
@@ -630,6 +669,218 @@ module cve2_decoder #(
         end
 
       end
+
+      /////////
+      // FPU //
+      /////////
+
+      OPCODE_FP: begin
+        rf_fp_ren_a_o = 1'b1;
+        rf_fp_ren_b_o = 1'b1;
+        rf_fp_we_o    = 1'b1;
+        fpu_valid_o   = 1'b1;
+        unique case (instr[31:25]) 
+          7'b000_0000: begin // FADD_S
+            fpu_op_o = ADD;
+            fpu_op_mod_o = 1'b0;
+          end
+          7'b000_0100: begin // FSUB_S
+            fpu_op_o = ADD;
+            fpu_op_mod_o = 1'b1;
+          end
+          7'b000_1000: begin // FMUL_S
+            fpu_op_o = MUL;
+            fpu_op_mod_o = 1'b0;
+          end
+          7'b000_1100: begin // FDIV_S
+            fpu_op_o = DIV;
+            fpu_op_mod_o = 1'b0;
+          end
+          default: illegal_insn = 1'b1;
+        endcase
+
+        unique case ({instr[31:25], instr[14:12]}) 
+          {7'b001_0000, 3'b000}: begin // FSGNJ_S
+            fpu_op_o = SGNJ;
+            fpu_op_mod_o = 1'b0;
+            fpu_rnd_mode_o = RNE;
+          end
+          {7'b001_0000, 3'b001}: begin // FSGNJN_S
+            fpu_op_o = SGNJ;
+            fpu_op_mod_o = 1'b0; 
+            fpu_rnd_mode_o = RTZ; 
+          end
+          {7'b001_0000, 3'b010}: begin // FSGNJX_S
+            fpu_op_o = SGNJ;
+            fpu_op_mod_o = 1'b0;  
+            fpu_rnd_mode_o = RDN;
+          end
+          {7'b001_0100, 3'b000}: begin // FMIN_S
+            fpu_op_o = MINMAX;
+            fpu_op_mod_o = 1'b0;  
+            fpu_rnd_mode_o = RNE;
+          end
+          {7'b001_0100, 3'b001}: begin // FMAX_S
+            fpu_op_o = MINMAX;
+            fpu_op_mod_o = 1'b0; 
+            fpu_rnd_mode_o = RTZ; 
+          end
+          {7'b101_0000, 3'b000}: begin // FLE_S
+            fpu_op_o = CMP;
+            fpu_op_mod_o = 1'b0;  
+            fpu_rnd_mode_o = RNE;
+            rf_fp_we_o = 1'b0;
+            rf_we      = 1'b1;
+          end
+          {7'b101_0000, 3'b001}: begin // FLT_S
+            fpu_op_o = CMP;
+            fpu_op_mod_o = 1'b0;  
+            fpu_rnd_mode_o = RTZ;
+            rf_fp_we_o = 1'b0;
+            rf_we      = 1'b1;
+          end
+          {7'b101_0000, 3'b010}: begin // FEQ_S
+            fpu_op_o = CMP;
+            fpu_op_mod_o = 1'b0;  
+            fpu_rnd_mode_o = RDN;
+            rf_fp_we_o = 1'b0;
+            rf_we      = 1'b1;  
+          end
+          default: illegal_insn = 1'b1;
+        endcase
+
+        unique case(instr[31:20])
+          12'b0101_1000_0000: begin // FSQRT_S
+            fpu_op_o = SQRT;
+            fpu_op_mod_o = 1'b0;  
+            rf_fp_ren_b_o = 1'b0;
+          end
+          12'b1100_0000_0000: begin // FCVT_W_S
+            fpu_op_o = F2I;
+            fpu_op_mod_o = 1'b0;  
+            rf_fp_we_o = 1'b0;
+            rf_we      = 1'b1;
+          end
+          12'b1100_0000_0001: begin // FCVT_WU_S
+            fpu_op_o = F2I;
+            fpu_op_mod_o = 1'b1;  
+            rf_fp_we_o = 1'b0;
+            rf_we      = 1'b1;
+          end
+          12'b1101_0000_0000: begin // FCVT_S_W
+            fpu_op_o = I2F;
+            fpu_op_mod_o = 1'b0;  
+            rf_ren_a_o   = 1'b1;
+            rf_fp_ren_a_o = 1'b0;
+            rf_fp_ren_b_o = 1'b0;
+            rf_fp_we_o    = 1'b1;
+          end
+          12'b1101_0000_0001: begin // FCVT_S_WU
+            fpu_op_o = I2F;
+            fpu_op_mod_o = 1'b1;
+            rf_ren_a_o   = 1'b1;
+            rf_fp_ren_a_o = 1'b0;
+            rf_fp_ren_b_o = 1'b0;
+            rf_fp_we_o    = 1'b1;  
+          end
+          default: illegal_insn = 1'b1;
+        endcase
+
+        unique case({instr[31:20], instr[14:12]})
+          {12'b1110_0000_0000, 3'b000}: begin // FMV_X_W
+            //TODO: register file 
+          end
+          {12'b1110_0000_0000, 3'b001}: begin // FCLASS_S
+            fpu_op_o = CLASSIFY;
+            fpu_op_mod_o = 1'b0;
+            rf_fp_ren_b_o = 1'b0;
+            rf_fp_we_o    = 1'b0;
+            rf_we         = 1'b1;
+          end
+          {12'b1111_0000_0000, 3'b000}: begin // FMV_W_X
+            //TODO: register file
+          end
+          default: illegal_insn = 1'b1;
+        endcase
+
+      end
+
+      OPCODE_LOAD_FP: begin
+        fpu_valid_o = 1'b0;
+        if(instr[14:12] == 3'b010) begin // FLW
+          rf_ren_a_o          = 1'b1;
+          data_req_o          = 1'b1;
+          data_type_o         = 2'b00;
+        end else begin
+          illegal_insn = 1'b1;
+        end
+      end
+
+      OPCODE_STORE_FP: begin
+        fpu_valid_o = 1'b0;
+        if(instr[14:12] == 3'b010) begin // FSW
+          rf_ren_a_o         = 1'b1;
+          rf_fp_ren_b_o      = 1'b1;
+          data_req_o         = 1'b1;
+          data_we_o          = 1'b1;
+          data_type_o        = 2'b00;
+        end else begin
+          illegal_insn = 1'b1;
+        end
+      end
+
+      OPCODE_FMADD: begin
+        if(instr[26:25] == 2'b00) begin // FMADD_S
+          fpu_op_o = FMADD;
+          fpu_op_mod_o = 1'b0;
+          rf_fp_ren_a_o = 1'b1;
+          rf_fp_ren_b_o = 1'b1;
+          rf_fp_ren_c_o = 1'b1;
+          rf_fp_we_o    = 1'b1;
+        end else begin
+          illegal_insn = 1'b1;
+        end 
+      end
+
+      OPCODE_FNMADD: begin
+        if(instr[26:25] == 2'b00) begin // FNMADD_S
+          fpu_op_o = FNMSUB;
+          fpu_op_mod_o = 1'b1;
+          rf_fp_ren_a_o = 1'b1;
+          rf_fp_ren_b_o = 1'b1;
+          rf_fp_ren_c_o = 1'b1;
+          rf_fp_we_o    = 1'b1;
+        end else begin
+          illegal_insn = 1'b1;
+        end
+      end
+
+      OPCODE_FMSUB: begin
+        if(instr[26:25] == 2'b00) begin // FMSUB_S
+          fpu_op_o = FMADD;
+          fpu_op_mod_o = 1'b1;
+          rf_fp_ren_a_o = 1'b1;
+          rf_fp_ren_b_o = 1'b1;
+          rf_fp_ren_c_o = 1'b1;
+          rf_fp_we_o    = 1'b1;  
+        end else begin
+          illegal_insn = 1'b1;
+        end
+      end
+
+      OPCODE_FNMSUB: begin
+        if(instr[26:25] == 2'b00) begin // FNMSUB_S
+          fpu_op_o = FNMSUB;
+          fpu_op_mod_o = 1'b0;
+          rf_fp_ren_a_o = 1'b1;
+          rf_fp_ren_b_o = 1'b1;
+          rf_fp_ren_c_o = 1'b1;
+          rf_fp_we_o    = 1'b1;  
+        end else begin
+          illegal_insn = 1'b1;
+        end
+      end
+
       default: begin
         illegal_insn = 1'b1;
       end
@@ -647,6 +898,7 @@ module cve2_decoder #(
     // these cases are not handled here
     if (illegal_insn) begin
       rf_we           = 1'b0;
+      rf_fp_we        = 1'b0;
       data_req_o      = 1'b0;
       data_we_o       = 1'b0;
       jump_in_dec_o   = 1'b0;
@@ -760,6 +1012,27 @@ module cve2_decoder #(
       end
 
       OPCODE_LOAD: begin
+        alu_op_a_mux_sel_o  = OP_A_REG_A;
+
+        // offset from immediate
+        alu_operator_o      = ALU_ADD;
+        alu_op_b_mux_sel_o  = OP_B_IMM;
+        imm_b_mux_sel_o     = IMM_B_I;
+      end
+
+      OPCODE_STORE_FP: begin
+        alu_op_a_mux_sel_o = OP_A_REG_A;
+        alu_op_b_mux_sel_o = OP_B_REG_B;
+        alu_operator_o     = ALU_ADD;
+
+        if (!instr_alu[14]) begin //TODO: not sure about this
+          // offset from immediate
+          imm_b_mux_sel_o     = IMM_B_S;
+          alu_op_b_mux_sel_o  = OP_B_IMM;
+        end
+      end
+
+      OPCODE_LOAD_FP: begin
         alu_op_a_mux_sel_o  = OP_A_REG_A;
 
         // offset from immediate

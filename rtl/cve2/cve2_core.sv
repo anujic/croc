@@ -159,6 +159,18 @@ module cve2_core import cve2_pkg::*; #(
   logic        rf_ren_b;
   logic [4:0]  rf_waddr_wb;
   logic [31:0] rf_wdata_wb;
+
+  logic [4:0]  rf_fp_raddr_a;
+  logic [31:0] rf_fp_rdata_a;
+  logic [4:0]  rf_fp_raddr_b;
+  logic [31:0] rf_fp_rdata_b;
+  logic [4:0]  rf_fp_raddr_c;
+  logic [31:0] rf_fp_rdata_c;
+  logic        rf_fp_ren_a;
+  logic        rf_fp_ren_b;
+  logic        rf_fp_ren_c;
+  logic [4:0]  rf_fp_waddr_wb;
+  logic [31:0] rf_fp_wdata_wb;
   // Writeback register write data that can be used on the forwarding path (doesn't factor in memory
   // read data as this is too late for the forwarding path)
   logic [31:0] rf_wdata_lsu;
@@ -176,6 +188,9 @@ module cve2_core import cve2_pkg::*; #(
 
   logic [31:0] alu_adder_result_ex;    // Used to forward computed address to LSU
   logic [31:0] result_ex;
+
+  // FPU Control
+  logic [2:0][fpnew_pkg::W:0] fpu_operands_ex;
 
   // Multiplier Control
   logic        mult_en_ex;
@@ -468,6 +483,19 @@ module cve2_core import cve2_pkg::*; #(
     .rf_wdata_id_o     (rf_wdata_id),
     .rf_we_id_o        (rf_we_id),
 
+    .rf_fp_raddr_a_o      (rf_fp_raddr_a),
+    .rf_fp_rdata_a_i      (rf_fp_rdata_a),
+    .rf_fp_raddr_b_o      (rf_fp_raddr_b),
+    .rf_fp_rdata_b_i      (rf_fp_rdata_b),
+    .rf_fp_raddr_c_o      (rf_fp_raddr_c),
+    .rf_fp_rdata_c_i      (rf_fp_rdata_c),
+    .rf_fp_ren_a_o        (rf_fp_ren_a),
+    .rf_fp_ren_b_o        (rf_fp_ren_b),
+    .rf_fp_ren_c_o        (rf_fp_ren_c),
+    .rf_fp_waddr_id_o     (rf_fp_waddr_id),
+    .rf_fp_wdata_id_o     (rf_fp_wdata_id),
+    .rf_fp_we_id_o        (rf_fp_we_id),
+
     .en_wb_o           (en_wb),
     .instr_perf_count_id_o (instr_perf_count_id),
 
@@ -506,6 +534,23 @@ module cve2_core import cve2_pkg::*; #(
     .multdiv_signed_mode_i(multdiv_signed_mode_ex),
     .multdiv_operand_a_i  (multdiv_operand_a_ex),
     .multdiv_operand_b_i  (multdiv_operand_b_ex),
+
+    // FPU
+    .fpu_operands_i(),
+    .fpu_rnd_mode_i(),
+    .fpu_op_i(),
+    .fpu_op_mod_i(),
+    .fpu_src_fmt_i(),
+    .fpu_dst_fmt_i(),
+    .fpu_int_fmt_i(),
+      // Input Handshake
+    .fpu_in_valid_i(),
+    .fpu_in_ready_o(),
+    .fpu_flush_i(),
+      // Output signals
+    .fpu_status_o(),
+      // Indication of valid data in flight
+    .fpu_busy_o(),
 
     // Intermediate value register
     .imd_val_we_o(imd_val_we_ex),
@@ -637,7 +682,7 @@ module cve2_core import cve2_pkg::*; #(
   `endif
 
   ////////////////////////
-  // RF (Register File) //
+  // RFs (Register Files) //
   ////////////////////////
   cve2_register_file_ff #(
     .RV32E            (RV32E),
@@ -656,6 +701,27 @@ module cve2_core import cve2_pkg::*; #(
     .waddr_a_i(rf_waddr_wb),
     .wdata_a_i(rf_wdata_wb),
     .we_a_i   (rf_we_wb)
+  );
+
+  cve2_register_file_float_ff #(
+    .RV32E            (RV32E),
+    .DataWidth        (32),
+    .WordZeroVal      (32'h0)
+  ) register_filefp__i (
+    .clk_i (clk_i),
+    .rst_ni(rst_ni),
+
+    .test_en_i(test_en_i),
+
+    .raddr_a_i(rf_fp_raddr_a),
+    .rdata_a_o(rf_fp_rdata_a),
+    .raddr_b_i(rf_fp_raddr_b),
+    .rdata_b_o(rf_fp_rdata_b),
+    .raddr_b_i(rf_fp_raddr_c),
+    .rdata_b_o(rf_fp_rdata_c),
+    .waddr_a_i(rf_fp_waddr_wb),
+    .wdata_a_i(rf_fp_wdata_wb),
+    .we_a_i   (rf_fp_we_wb)
   );
 
 

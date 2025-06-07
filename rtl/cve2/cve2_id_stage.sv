@@ -62,6 +62,22 @@ module cve2_id_stage #(
   output logic [31:0]               alu_operand_a_ex_o,
   output logic [31:0]               alu_operand_b_ex_o,
 
+  // FPU
+  output logic [2:0][fpnew_pkg::W-1:0] fpu_operands_o,
+  output fpnew_pkg::roundmode_e        fpu_rnd_mode_o,
+  output fpnew_pkg::operation_e        fpu_op_o,
+  output logic                         fpu_op_mod_o,
+  output fpnew_pkg::fp_format_e        fpu_src_fmt_o,
+  output fpnew_pkg::fp_format_e        fpu_dst_fmt_o,
+  output fpnew_pkg::int_format_e       fpu_int_fmt_o,
+    // Input Handshake
+  output  logic                        fpu_in_valid_o,
+  input   logic                        fpu_in_ready_i,
+  output  logic                        fpu_flush_o,
+  input fpnew_pkg::status_t            fpu_status_i,
+    // Indication of valid data in flight
+  input logic                          fpu_busy_i,
+
   // Multicycle Operation Stage Register
   input  logic [1:0]                imd_val_we_ex_i,
   input  logic [33:0]               imd_val_d_ex_i[2],
@@ -133,10 +149,25 @@ module cve2_id_stage #(
   output logic                      rf_ren_a_o,
   output logic                      rf_ren_b_o,
 
+  output logic [4:0]                rf_fp_raddr_a_o,
+  input  logic [31:0]               rf_fp_rdata_a_i,
+  output logic [4:0]                rf_fp_raddr_b_o,
+  input  logic [31:0]               rf_fp_rdata_b_i,
+  output logic [4:0]                rf_fp_raddr_c_o,
+  input  logic [31:0]               rf_fp_rdata_c_i,
+  output logic                      rf_fp_ren_a_o,
+  output logic                      rf_fp_ren_b_o,
+  output logic                      rf_fp_ren_c_o,
+
+
   // Register file write (via writeback)
   output logic [4:0]                rf_waddr_id_o,
   output logic [31:0]               rf_wdata_id_o,
   output logic                      rf_we_id_o,
+
+  output logic [4:0]                rf_fp_waddr_id_o,
+  output logic [31:0]               rf_fp_wdata_id_o,
+  output logic                      rf_fp_we_id_o,
 
   output  logic                     en_wb_o,
   output  logic                     instr_perf_count_id_o,
@@ -181,6 +212,7 @@ module cve2_id_stage #(
   logic        stall_id;
   logic        flush_id;
   logic        multicycle_done;
+  logic [2:0][fpnew_pkg::W-1:0] fpu_operands;
 
   // Immediate decoding and sign extension
   logic [31:0] imm_i_type;
@@ -200,9 +232,18 @@ module cve2_id_stage #(
   logic        rf_ren_a, rf_ren_b;
   logic        rf_ren_a_dec, rf_ren_b_dec;
 
+  rf_wd_sel_e  rf_fp_wdata_sel;
+  logic        rf_fp_we_dec, rf_fp_we_raw;
+  logic        rf_fp_ren_a, rf_fp_ren_b, rf_fp_ren_c;
+  logic        rf_fp_ren_a_dec, rf_fp_ren_b_dec, rf_fp_ren_c_dec;
+
   // Read enables should only be asserted for valid and legal instructions
   assign rf_ren_a = instr_valid_i & ~instr_fetch_err_i & ~illegal_insn_o & rf_ren_a_dec;
   assign rf_ren_b = instr_valid_i & ~instr_fetch_err_i & ~illegal_insn_o & rf_ren_b_dec;
+
+  assign rf_fp_ren_a = instr_valid_i & ~instr_fetch_err_i & ~illegal_insn_o & rf_fp_ren_a_dec;
+  assign rf_fp_ren_b = instr_valid_i & ~instr_fetch_err_i & ~illegal_insn_o & rf_fp_ren_b_dec;
+  assign rf_fp_ren_c = instr_valid_i & ~instr_fetch_err_i & ~illegal_insn_o & rf_fp_ren_c_dec;
 
   assign rf_ren_a_o = rf_ren_a;
   assign rf_ren_b_o = rf_ren_b;
@@ -297,6 +338,11 @@ module cve2_id_stage #(
   // ALU MUX for Operand B
   assign alu_operand_b = (alu_op_b_mux_sel == OP_B_IMM) ? imm_b : rf_rdata_b_fwd;
 
+  // FPU operands
+  assign fpu_operands[0] = rf_fp_ren_a? rf_fp_rdata_a_i : rf_rdata_a_fwd;
+  assign fpu_operands[1] = (fpu_op_o == ADD) && rf_fp_ren_a? rf_fp_data_a_i : (rf_fp_ren_b? rf_fp_rdata_b_i : rf_rdata_b_fwd); // because fpu is funny with add :)
+  assign fpu_operands[2] = (fpu_op_o == ADD) && rf_fp_ren_b? rf_fp_data_b_i : rf_fp_rdata_c_i;
+
   /////////////////////////////////////////
   // Multicycle Operation Stage Register //
   /////////////////////////////////////////
@@ -326,6 +372,14 @@ module cve2_id_stage #(
       RF_WD_EX:  rf_wdata_id_o = result_ex_i;
       RF_WD_CSR: rf_wdata_id_o = csr_rdata_i;
       default:   rf_wdata_id_o = result_ex_i;
+    endcase
+  end
+
+  always_comb begin : rf_fp_wdata_id_mux
+    unique case (rf_fp_wdata_sel)
+      RF_WD_EX:  rf_fp_wdata_id_o = result_ex_i;
+      RF_WD_CSR: rf_fp_wdata_id_o = csr_rdata_i;
+      default:   rf_fp_wdata_id_o = result_ex_i;
     endcase
   end
 
@@ -377,6 +431,17 @@ module cve2_id_stage #(
     .rf_ren_a_o  (rf_ren_a_dec),
     .rf_ren_b_o  (rf_ren_b_dec),
 
+    .rf_fp_wdata_sel_o(rf_fp_wdata_sel),
+    .rf_fp_we_o       (rf_fp_we_dec),
+
+    .rf_fp_raddr_a_o(rf_fp_raddr_a_o),
+    .rf_fp_raddr_b_o(rf_fp_raddr_b_o),
+    .rf_fp_raddr_c_o(rf_fp_raddr_c_o),
+    .rf_fp_waddr_o  (rf_fp_waddr_id_o),
+    .rf_fp_ren_a_o  (rf_fp_ren_a_dec),
+    .rf_fp_ren_b_o  (rf_fp_ren_b_dec),
+    .rf_fp_ren_c_o  (rf_fp_ren_c_dec),
+
     // ALU
     .alu_operator_o    (alu_operator),
     .alu_op_a_mux_sel_o(alu_op_a_mux_sel_dec),
@@ -390,6 +455,14 @@ module cve2_id_stage #(
     .div_sel_o            (div_sel_ex_o),
     .multdiv_operator_o   (multdiv_operator),
     .multdiv_signed_mode_o(multdiv_signed_mode),
+
+    .fpu_rnd_mode_o(fpu_rnd_mode_o),
+    .fpu_op_o(fpu_op_o),
+    .fpu_op_mod_o(fpu_op_mod_o),
+    .fpu_src_fmt_o(fpu_src_fmt_o),
+    .fpu_dst_fmt_o(fpu_dst_fmt_o),
+    .fpu_int_fmt_o(fpu_int_fmt_o),
+    .fpu_valid_o(fpu_in_valid_o),
 
     // CSRs
     .csr_access_o(csr_access_o),

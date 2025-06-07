@@ -67,6 +67,8 @@ sw: $(SW_HEX)
 VLOG_ARGS  = -svinputport=compat
 VSIM_ARGS  = -t 1ns -voptargs=+acc
 VSIM_ARGS += -suppress vsim-3009 -suppress vsim-8683 -suppress vsim-8386
+VSIM_ARGS += -do "waves.do"
+VSIM_ARGS += -do "run -all"
 
 vsim/compile_rtl.tcl: Bender.lock Bender.yml
 	$(BENDER) script vsim -t rtl -t vsim -t simulation -t verilator -DSYNTHESIS -DSIMULATION  --vlog-arg="$(VLOG_ARGS)" > $@

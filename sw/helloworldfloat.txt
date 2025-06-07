@@ -1,0 +1,12 @@
+
+
+float fmac(float a, float b, float c){
+  float res = c+ a*b;
+  return res;
+}
+
+int main(){
+  float res   = fmac(1.3f, 2.3f, 3.3245f);
+  //float res = 1.3435f * 2.3245353f;
+  return 0;
+}
