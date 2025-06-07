@@ -23,6 +23,8 @@ module cve2_wb #(
   output logic                     perf_instr_ret_wb_o,
   output logic                     perf_instr_ret_compressed_wb_o,
 
+  //input  logic                     is_fp_dest_id_i,
+
   input  logic [4:0]               rf_waddr_id_i,
   input  logic [31:0]              rf_wdata_id_i,
   input  logic                     rf_we_id_i,
@@ -34,6 +36,14 @@ module cve2_wb #(
   output logic [31:0]              rf_wdata_wb_o,
   output logic                     rf_we_wb_o,
 
+  input  logic [4:0]               rf_fp_waddr_id_i,
+  input  logic [31:0]              rf_fp_wdata_id_i,
+  input  logic                     rf_fp_we_id_i,
+
+  output logic [4:0]               rf_fp_waddr_wb_o,
+  output logic [31:0]              rf_fp_wdata_wb_o,
+  output logic                     rf_fp_we_wb_o,
+  
   input logic                      lsu_resp_valid_i,
   input logic                      lsu_resp_err_i
 );
@@ -44,6 +54,8 @@ module cve2_wb #(
   // 1 == RF write from LSU
   logic [31:0] rf_wdata_wb_mux    [2];
   logic [1:0]  rf_wdata_wb_mux_we;
+  logic [31:0] rf_fp_wdata_wb_mux    [2];
+  logic [1:0]  rf_fp_wdata_wb_mux_we;
 
     // without writeback stage just pass through register write signals
     assign rf_waddr_wb_o         = rf_waddr_id_i;
@@ -63,6 +75,22 @@ module cve2_wb #(
   assign rf_wdata_wb_o = ({32{rf_wdata_wb_mux_we[0]}} & rf_wdata_wb_mux[0]) |
                          ({32{rf_wdata_wb_mux_we[1]}} & rf_wdata_wb_mux[1]);
   assign rf_we_wb_o    = |rf_wdata_wb_mux_we;
+
+  
+
+    // without writeback stage just pass through register write signals
+    assign rf_fp_waddr_wb_o         = rf_fp_waddr_id_i;
+    assign rf_fp_wdata_wb_mux[0]    = rf_fp_wdata_id_i;
+    assign rf_fp_wdata_wb_mux_we[0] = rf_fp_we_id_i;
+
+  assign rf_fp_wdata_wb_mux[1]    = rf_wdata_lsu_i;
+  assign rf_fp_wdata_wb_mux_we[1] = rf_we_lsu_i;
+
+  // RF write data can come from ID results (all RF writes that aren't because of loads will come
+  // from here) or the LSU (RF writes for load data)
+  assign rf_fp_wdata_wb_o = ({32{rf_fp_wdata_wb_mux_we[0]}} & rf_fp_wdata_wb_mux[0]) |
+                         ({32{rf_fp_wdata_wb_mux_we[1]}} & rf_fp_wdata_wb_mux[1]);
+  assign rf_fp_we_wb_o    = |rf_fp_wdata_wb_mux_we;
 
   `ASSERT(RFWriteFromOneSourceOnly, $onehot0(rf_wdata_wb_mux_we))
 endmodule

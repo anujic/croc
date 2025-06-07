@@ -180,6 +180,9 @@ module cve2_core import cve2_pkg::*; #(
   logic [4:0]  rf_waddr_id;
   logic [31:0] rf_wdata_id;
   logic        rf_we_id;
+  logic [4:0]  rf_fp_waddr_id;
+  logic [31:0] rf_fp_wdata_id;
+  logic        rf_fp_we_id;
 
   // ALU Control
   alu_op_e     alu_operator_ex;
@@ -190,7 +193,21 @@ module cve2_core import cve2_pkg::*; #(
   logic [31:0] result_ex;
 
   // FPU Control
-  logic [2:0][fpnew_pkg::W:0] fpu_operands_ex;
+  logic [2:0][31:0] fpu_operands_ex;
+  fpnew_pkg::roundmode_e        fpu_rnd_mode_ex;
+  fpnew_pkg::operation_e        fpu_op_ex;
+  logic                         fpu_op_mod_ex;
+  fpnew_pkg::fp_format_e        fpu_src_fmt_ex;
+  fpnew_pkg::fp_format_e        fpu_dst_fmt_ex;
+  fpnew_pkg::int_format_e       fpu_int_fmt_ex;
+    // Input Handshake
+  logic                        fpu_in_valid_ex;
+  logic                        fpu_in_ready_ex;
+  logic                        fpu_flush_ex;
+  fpnew_pkg::status_t            fpu_status_ex;
+    // Indication of valid data in flight
+  logic                          fpu_busy_ex;
+  //logic                          is_fp_dest_id;
 
   // Multiplier Control
   logic        mult_en_ex;
@@ -412,6 +429,25 @@ module cve2_core import cve2_pkg::*; #(
     .alu_operand_a_ex_o(alu_operand_a_ex),
     .alu_operand_b_ex_o(alu_operand_b_ex),
 
+    // FPU
+    .fpu_operands_o(fpu_operands_ex),
+    .fpu_rnd_mode_o(fpu_rnd_mode_ex),
+    .fpu_op_o(fpu_op_ex),
+    .fpu_op_mod_o(fpu_op_mod_ex),
+    .fpu_src_fmt_o(fpu_src_fmt_ex),
+    .fpu_dst_fmt_o(fpu_dst_fmt_ex),
+    .fpu_int_fmt_o(fpu_int_fmt_ex),
+      // Input Handshake
+    .fpu_in_valid_o(fpu_in_valid_ex),
+    .fpu_in_ready_i(fpu_in_ready_ex),
+    .fpu_flush_o(fpu_flush_ex),
+      // Output signals
+    .fpu_status_i(fpu_status_ex),
+      // Indication of valid data in flight
+    .fpu_busy_i(fpu_busy_ex),
+
+    //.is_fp_dest_id_o(is_fp_dest_id),
+
     .imd_val_q_ex_o (imd_val_q_ex),
     .imd_val_d_ex_i (imd_val_d_ex),
     .imd_val_we_ex_i(imd_val_we_ex),
@@ -536,21 +572,21 @@ module cve2_core import cve2_pkg::*; #(
     .multdiv_operand_b_i  (multdiv_operand_b_ex),
 
     // FPU
-    .fpu_operands_i(),
-    .fpu_rnd_mode_i(),
-    .fpu_op_i(),
-    .fpu_op_mod_i(),
-    .fpu_src_fmt_i(),
-    .fpu_dst_fmt_i(),
-    .fpu_int_fmt_i(),
+    .fpu_operands_i(fpu_operands_ex),
+    .fpu_rnd_mode_i(fpu_rnd_mode_ex),
+    .fpu_op_i(fpu_op_ex),
+    .fpu_op_mod_i(fpu_op_mod_ex),
+    .fpu_src_fmt_i(fpu_src_fmt_ex),
+    .fpu_dst_fmt_i(fpu_dst_fmt_ex),
+    .fpu_int_fmt_i(fpu_int_fmt_ex),
       // Input Handshake
-    .fpu_in_valid_i(),
-    .fpu_in_ready_o(),
-    .fpu_flush_i(),
+    .fpu_in_valid_i(fpu_in_valid_ex),
+    .fpu_in_ready_o(fpu_in_ready_ex),
+    .fpu_flush_i(fpu_flush_ex),
       // Output signals
-    .fpu_status_o(),
+    .fpu_status_o(fpu_status_ex),
       // Indication of valid data in flight
-    .fpu_busy_o(),
+    .fpu_busy_o(fpu_busy_ex),
 
     // Intermediate value register
     .imd_val_we_o(imd_val_we_ex),
@@ -631,9 +667,15 @@ module cve2_core import cve2_pkg::*; #(
     .perf_instr_ret_wb_o                (perf_instr_ret_wb),
     .perf_instr_ret_compressed_wb_o     (perf_instr_ret_compressed_wb),
 
+    //.is_fp_dest_id_i(is_fp_dest_id),
+
     .rf_waddr_id_i(rf_waddr_id),
     .rf_wdata_id_i(rf_wdata_id),
     .rf_we_id_i   (rf_we_id),
+
+    .rf_fp_waddr_id_i(rf_fp_waddr_id),
+    .rf_fp_wdata_id_i(rf_fp_wdata_id),
+    .rf_fp_we_id_i   (rf_fp_we_id),
 
     .rf_wdata_lsu_i(rf_wdata_lsu),
     .rf_we_lsu_i   (rf_we_lsu),
@@ -641,6 +683,10 @@ module cve2_core import cve2_pkg::*; #(
     .rf_waddr_wb_o(rf_waddr_wb),
     .rf_wdata_wb_o(rf_wdata_wb),
     .rf_we_wb_o   (rf_we_wb),
+
+    .rf_fp_waddr_wb_o(rf_fp_waddr_wb),
+    .rf_fp_wdata_wb_o(rf_fp_wdata_wb),
+    .rf_fp_we_wb_o   (rf_fp_we_wb),
 
     .lsu_resp_valid_i(lsu_resp_valid),
     .lsu_resp_err_i  (lsu_resp_err)
@@ -717,8 +763,8 @@ module cve2_core import cve2_pkg::*; #(
     .rdata_a_o(rf_fp_rdata_a),
     .raddr_b_i(rf_fp_raddr_b),
     .rdata_b_o(rf_fp_rdata_b),
-    .raddr_b_i(rf_fp_raddr_c),
-    .rdata_b_o(rf_fp_rdata_c),
+    .raddr_c_i(rf_fp_raddr_c),
+    .rdata_c_o(rf_fp_rdata_c),
     .waddr_a_i(rf_fp_waddr_wb),
     .wdata_a_i(rf_fp_wdata_wb),
     .we_a_i   (rf_fp_we_wb)

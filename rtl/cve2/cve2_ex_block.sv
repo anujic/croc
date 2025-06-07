@@ -65,7 +65,7 @@ module cve2_ex_block #(
 
   import cve2_pkg::*;
 
-  logic [31:0] alu_result, multdiv_result;
+  logic [31:0] alu_result, multdiv_result, fpu_result;
 
   logic [32:0] multdiv_alu_operand_b, multdiv_alu_operand_a;
   logic [33:0] alu_adder_result_ext;

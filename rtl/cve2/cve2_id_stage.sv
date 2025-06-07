@@ -63,7 +63,7 @@ module cve2_id_stage #(
   output logic [31:0]               alu_operand_b_ex_o,
 
   // FPU
-  output logic [2:0][fpnew_pkg::W-1:0] fpu_operands_o,
+  output logic [2:0][31:0] fpu_operands_o,
   output fpnew_pkg::roundmode_e        fpu_rnd_mode_o,
   output fpnew_pkg::operation_e        fpu_op_o,
   output logic                         fpu_op_mod_o,
@@ -77,6 +77,7 @@ module cve2_id_stage #(
   input fpnew_pkg::status_t            fpu_status_i,
     // Indication of valid data in flight
   input logic                          fpu_busy_i,
+  //output logic                         is_fp_dest_id,
 
   // Multicycle Operation Stage Register
   input  logic [1:0]                imd_val_we_ex_i,
@@ -212,7 +213,7 @@ module cve2_id_stage #(
   logic        stall_id;
   logic        flush_id;
   logic        multicycle_done;
-  logic [2:0][fpnew_pkg::W-1:0] fpu_operands;
+  logic [2:0][31:0] fpu_operands;
 
   // Immediate decoding and sign extension
   logic [31:0] imm_i_type;
@@ -340,8 +341,8 @@ module cve2_id_stage #(
 
   // FPU operands
   assign fpu_operands[0] = rf_fp_ren_a? rf_fp_rdata_a_i : rf_rdata_a_fwd;
-  assign fpu_operands[1] = (fpu_op_o == ADD) && rf_fp_ren_a? rf_fp_data_a_i : (rf_fp_ren_b? rf_fp_rdata_b_i : rf_rdata_b_fwd); // because fpu is funny with add :)
-  assign fpu_operands[2] = (fpu_op_o == ADD) && rf_fp_ren_b? rf_fp_data_b_i : rf_fp_rdata_c_i;
+  assign fpu_operands[1] = (fpu_op_o == fpnew_pkg::ADD) && rf_fp_ren_a? rf_fp_rdata_a_i : (rf_fp_ren_b? rf_fp_rdata_b_i : rf_rdata_b_fwd); // because fpu is funny with add :)
+  assign fpu_operands[2] = (fpu_op_o == fpnew_pkg::ADD) && rf_fp_ren_b? rf_fp_rdata_b_i : rf_fp_rdata_c_i;
 
   /////////////////////////////////////////
   // Multicycle Operation Stage Register //
@@ -463,6 +464,7 @@ module cve2_id_stage #(
     .fpu_dst_fmt_o(fpu_dst_fmt_o),
     .fpu_int_fmt_o(fpu_int_fmt_o),
     .fpu_valid_o(fpu_in_valid_o),
+    //.is_fp_dest_id(is_fp_dest_id),
 
     // CSRs
     .csr_access_o(csr_access_o),
@@ -607,7 +609,7 @@ module cve2_id_stage #(
   assign lsu_we_o                = lsu_we;
   assign lsu_type_o              = lsu_type;
   assign lsu_sign_ext_o          = lsu_sign_ext;
-  assign lsu_wdata_o             = rf_rdata_b_fwd;
+  assign lsu_wdata_o             = rf_fp_ren_b_o? rf_fp_rdata_b_i : rf_rdata_b_fwd; // check if lsu will read from fp reg or int reg
   // csr_op_en_o is set when CSR access should actually happen.
   // csv_access_o is set when CSR access instruction is present and is used to compute whether a CSR
   // access is illegal. A combinational loop would be created if csr_op_en_o was used along (as

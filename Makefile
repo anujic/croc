@@ -77,10 +77,15 @@ vsim/compile_netlist.tcl: Bender.lock Bender.yml
 	$(BENDER) script vsim -t ihp13 -t vsim -t simulation -t verilator -t netlist_yosys -DSYNTHESIS -DSIMULATION > $@
 
 ## Simulate RTL using Questasim/Modelsim/vsim
-vsim: vsim/compile_rtl.tcl $(SW_HEX)
+vsim-gui: vsim/compile_rtl.tcl $(SW_HEX)
 	rm -rf vsim/work
 	cd vsim; $(VSIM) -c -do "source compile_rtl.tcl; exit"
 	cd vsim; $(VSIM) +binary="$(realpath $(SW_HEX))" -gui tb_croc_soc $(VSIM_ARGS)
+
+vsim-nogui: vsim/compile_rtl.tcl $(SW_HEX)
+	rm -rf vsim/work
+	cd vsim; $(VSIM) -c -do "source compile_rtl.tcl; exit"
+	cd vsim; $(VSIM) -c +binary="$(realpath $(SW_HEX))" tb_croc_soc $(VSIM_ARGS)	
 
 ## Simulate netlist using Questasim/Modelsim/vsim
 vsim-yosys: vsim/compile_netlist.tcl $(SW_HEX) yosys/out/croc_chip_yosys_debug.v

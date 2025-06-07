@@ -10,7 +10,7 @@
  * This register file is based on flip flops. Use this register file when
  * targeting FPGA synthesis or Verilator simulation.
  */
-module cve2_register_file_ff #(
+module cve2_register_file_float_ff #(
   parameter bit                   RV32E             = 0,
   parameter int unsigned          DataWidth         = 32,
   parameter logic [DataWidth-1:0] WordZeroVal       = '0

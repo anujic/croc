@@ -85,6 +85,7 @@ module cve2_decoder #(
   output fpnew_pkg::fp_format_e        fpu_dst_fmt_o,
   output fpnew_pkg::int_format_e       fpu_int_fmt_o,
   output logic                         fpu_valid_o,
+  output logic                         is_fp_dest_id_o,
 
   // MULT & DIV
   output logic                 mult_en_o,             // perform integer multiplication
@@ -257,13 +258,14 @@ module cve2_decoder #(
     ecall_insn_o          = 1'b0;
     wfi_insn_o            = 1'b0;
 
-    fpu_rnd_mode_o        = RNE;
-    fpu_op_o              = '0;
+    fpu_rnd_mode_o        = fpnew_pkg::RNE;
+    fpu_op_o              = fpnew_pkg::ADD;
     fpu_op_mod_o          = 1'b0;
-    fpu_src_fmt_o         = FP32;
-    fpu_dst_fmt_o         = FP32:
-    fpu_int_fmt_o         = INT32;
+    fpu_src_fmt_o         = fpnew_pkg::FP32;
+    fpu_dst_fmt_o         = fpnew_pkg::FP32;
+    fpu_int_fmt_o         = fpnew_pkg::INT32;
     fpu_valid_o           = 1'b0;
+    is_fp_dest_id_o         = 1'b0;
 
     opcode                = opcode_e'(instr[6:0]);
 
@@ -679,21 +681,22 @@ module cve2_decoder #(
         rf_fp_ren_b_o = 1'b1;
         rf_fp_we_o    = 1'b1;
         fpu_valid_o   = 1'b1;
+        is_fp_dest_id_o = 1'b1;
         unique case (instr[31:25]) 
           7'b000_0000: begin // FADD_S
-            fpu_op_o = ADD;
+            fpu_op_o = fpnew_pkg::ADD;
             fpu_op_mod_o = 1'b0;
           end
           7'b000_0100: begin // FSUB_S
-            fpu_op_o = ADD;
+            fpu_op_o = fpnew_pkg::ADD;
             fpu_op_mod_o = 1'b1;
           end
           7'b000_1000: begin // FMUL_S
-            fpu_op_o = MUL;
+            fpu_op_o = fpnew_pkg::MUL;
             fpu_op_mod_o = 1'b0;
           end
           7'b000_1100: begin // FDIV_S
-            fpu_op_o = DIV;
+            fpu_op_o = fpnew_pkg::DIV;
             fpu_op_mod_o = 1'b0;
           end
           default: illegal_insn = 1'b1;
@@ -701,48 +704,48 @@ module cve2_decoder #(
 
         unique case ({instr[31:25], instr[14:12]}) 
           {7'b001_0000, 3'b000}: begin // FSGNJ_S
-            fpu_op_o = SGNJ;
+            fpu_op_o = fpnew_pkg::SGNJ;
             fpu_op_mod_o = 1'b0;
-            fpu_rnd_mode_o = RNE;
+            fpu_rnd_mode_o = fpnew_pkg::RNE;
           end
           {7'b001_0000, 3'b001}: begin // FSGNJN_S
-            fpu_op_o = SGNJ;
+            fpu_op_o = fpnew_pkg::SGNJ;
             fpu_op_mod_o = 1'b0; 
-            fpu_rnd_mode_o = RTZ; 
+            fpu_rnd_mode_o = fpnew_pkg::RTZ; 
           end
           {7'b001_0000, 3'b010}: begin // FSGNJX_S
-            fpu_op_o = SGNJ;
+            fpu_op_o = fpnew_pkg::SGNJ;
             fpu_op_mod_o = 1'b0;  
-            fpu_rnd_mode_o = RDN;
+            fpu_rnd_mode_o = fpnew_pkg::RDN;
           end
           {7'b001_0100, 3'b000}: begin // FMIN_S
-            fpu_op_o = MINMAX;
+            fpu_op_o = fpnew_pkg::MINMAX;
             fpu_op_mod_o = 1'b0;  
-            fpu_rnd_mode_o = RNE;
+            fpu_rnd_mode_o = fpnew_pkg::RNE;
           end
           {7'b001_0100, 3'b001}: begin // FMAX_S
-            fpu_op_o = MINMAX;
+            fpu_op_o = fpnew_pkg::MINMAX;
             fpu_op_mod_o = 1'b0; 
-            fpu_rnd_mode_o = RTZ; 
+            fpu_rnd_mode_o = fpnew_pkg::RTZ; 
           end
           {7'b101_0000, 3'b000}: begin // FLE_S
-            fpu_op_o = CMP;
+            fpu_op_o = fpnew_pkg::CMP;
             fpu_op_mod_o = 1'b0;  
-            fpu_rnd_mode_o = RNE;
+            fpu_rnd_mode_o = fpnew_pkg::RNE;
             rf_fp_we_o = 1'b0;
             rf_we      = 1'b1;
           end
           {7'b101_0000, 3'b001}: begin // FLT_S
-            fpu_op_o = CMP;
+            fpu_op_o = fpnew_pkg::CMP;
             fpu_op_mod_o = 1'b0;  
-            fpu_rnd_mode_o = RTZ;
+            fpu_rnd_mode_o = fpnew_pkg::RTZ;
             rf_fp_we_o = 1'b0;
             rf_we      = 1'b1;
           end
           {7'b101_0000, 3'b010}: begin // FEQ_S
-            fpu_op_o = CMP;
+            fpu_op_o = fpnew_pkg::CMP;
             fpu_op_mod_o = 1'b0;  
-            fpu_rnd_mode_o = RDN;
+            fpu_rnd_mode_o = fpnew_pkg::RDN;
             rf_fp_we_o = 1'b0;
             rf_we      = 1'b1;  
           end
@@ -751,24 +754,26 @@ module cve2_decoder #(
 
         unique case(instr[31:20])
           12'b0101_1000_0000: begin // FSQRT_S
-            fpu_op_o = SQRT;
+            fpu_op_o = fpnew_pkg::SQRT;
             fpu_op_mod_o = 1'b0;  
             rf_fp_ren_b_o = 1'b0;
           end
           12'b1100_0000_0000: begin // FCVT_W_S
-            fpu_op_o = F2I;
+            fpu_op_o = fpnew_pkg::F2I;
             fpu_op_mod_o = 1'b0;  
+            is_fp_dest_id_o = 1'b0;
             rf_fp_we_o = 1'b0;
             rf_we      = 1'b1;
           end
           12'b1100_0000_0001: begin // FCVT_WU_S
-            fpu_op_o = F2I;
+            fpu_op_o = fpnew_pkg::F2I;
             fpu_op_mod_o = 1'b1;  
+            is_fp_dest_id_o = 1'b0;
             rf_fp_we_o = 1'b0;
             rf_we      = 1'b1;
           end
           12'b1101_0000_0000: begin // FCVT_S_W
-            fpu_op_o = I2F;
+            fpu_op_o = fpnew_pkg::I2F;
             fpu_op_mod_o = 1'b0;  
             rf_ren_a_o   = 1'b1;
             rf_fp_ren_a_o = 1'b0;
@@ -776,7 +781,7 @@ module cve2_decoder #(
             rf_fp_we_o    = 1'b1;
           end
           12'b1101_0000_0001: begin // FCVT_S_WU
-            fpu_op_o = I2F;
+            fpu_op_o = fpnew_pkg::I2F;
             fpu_op_mod_o = 1'b1;
             rf_ren_a_o   = 1'b1;
             rf_fp_ren_a_o = 1'b0;
@@ -791,7 +796,7 @@ module cve2_decoder #(
             //TODO: register file 
           end
           {12'b1110_0000_0000, 3'b001}: begin // FCLASS_S
-            fpu_op_o = CLASSIFY;
+            fpu_op_o = fpnew_pkg::CLASSIFY;
             fpu_op_mod_o = 1'b0;
             rf_fp_ren_b_o = 1'b0;
             rf_fp_we_o    = 1'b0;
@@ -807,6 +812,7 @@ module cve2_decoder #(
 
       OPCODE_LOAD_FP: begin
         fpu_valid_o = 1'b0;
+        is_fp_dest_id_o = 1'b1;
         if(instr[14:12] == 3'b010) begin // FLW
           rf_ren_a_o          = 1'b1;
           data_req_o          = 1'b1;
@@ -818,6 +824,7 @@ module cve2_decoder #(
 
       OPCODE_STORE_FP: begin
         fpu_valid_o = 1'b0;
+        is_fp_dest_id_o = 1'b1;
         if(instr[14:12] == 3'b010) begin // FSW
           rf_ren_a_o         = 1'b1;
           rf_fp_ren_b_o      = 1'b1;
@@ -830,8 +837,9 @@ module cve2_decoder #(
       end
 
       OPCODE_FMADD: begin
+        is_fp_dest_id_o = 1'b1;
         if(instr[26:25] == 2'b00) begin // FMADD_S
-          fpu_op_o = FMADD;
+          fpu_op_o = fpnew_pkg::FMADD;
           fpu_op_mod_o = 1'b0;
           rf_fp_ren_a_o = 1'b1;
           rf_fp_ren_b_o = 1'b1;
@@ -843,8 +851,9 @@ module cve2_decoder #(
       end
 
       OPCODE_FNMADD: begin
+        is_fp_dest_id_o = 1'b1;
         if(instr[26:25] == 2'b00) begin // FNMADD_S
-          fpu_op_o = FNMSUB;
+          fpu_op_o = fpnew_pkg::FNMSUB;
           fpu_op_mod_o = 1'b1;
           rf_fp_ren_a_o = 1'b1;
           rf_fp_ren_b_o = 1'b1;
@@ -856,8 +865,9 @@ module cve2_decoder #(
       end
 
       OPCODE_FMSUB: begin
+        is_fp_dest_id_o = 1'b1;
         if(instr[26:25] == 2'b00) begin // FMSUB_S
-          fpu_op_o = FMADD;
+          fpu_op_o = fpnew_pkg::FMADD;
           fpu_op_mod_o = 1'b1;
           rf_fp_ren_a_o = 1'b1;
           rf_fp_ren_b_o = 1'b1;
@@ -869,8 +879,9 @@ module cve2_decoder #(
       end
 
       OPCODE_FNMSUB: begin
+        is_fp_dest_id_o = 1'b1;
         if(instr[26:25] == 2'b00) begin // FNMSUB_S
-          fpu_op_o = FNMSUB;
+          fpu_op_o = fpnew_pkg::FNMSUB;
           fpu_op_mod_o = 1'b0;
           rf_fp_ren_a_o = 1'b1;
           rf_fp_ren_b_o = 1'b1;
@@ -898,7 +909,7 @@ module cve2_decoder #(
     // these cases are not handled here
     if (illegal_insn) begin
       rf_we           = 1'b0;
-      rf_fp_we        = 1'b0;
+      rf_fp_we_o      = 1'b0;
       data_req_o      = 1'b0;
       data_we_o       = 1'b0;
       jump_in_dec_o   = 1'b0;
