@@ -33,7 +33,7 @@ module cve2_ex_block #(
 
   // FPU
     // Input signals
-  input logic [2-1:0][31:0]                 fpu_operands_i,
+  input logic [2:0][31:0]                   fpu_operands_i,
   input fpnew_pkg::roundmode_e              fpu_rnd_mode_i,
   input fpnew_pkg::operation_e              fpu_op_i,
   input logic                               fpu_op_mod_i,

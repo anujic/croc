@@ -682,27 +682,29 @@ module cve2_decoder #(
         rf_fp_we_o    = 1'b1;
         fpu_valid_o   = 1'b1;
         is_fp_dest_id_o = 1'b1;
-        unique case (instr[31:25]) 
-          7'b000_0000: begin // FADD_S
+        unique case ({instr[31:25], instr[14:12]})
+          // Basic arithmetic operations (no funct3 dependency)
+          {7'b000_0000, 3'b000}, {7'b000_0000, 3'b001}, {7'b000_0000, 3'b010}, {7'b000_0000, 3'b011},
+          {7'b000_0000, 3'b100}, {7'b000_0000, 3'b101}, {7'b000_0000, 3'b110}, {7'b000_0000, 3'b111}: begin // FADD_S
             fpu_op_o = fpnew_pkg::ADD;
             fpu_op_mod_o = 1'b0;
           end
-          7'b000_0100: begin // FSUB_S
+          {7'b000_0100, 3'b000}, {7'b000_0100, 3'b001}, {7'b000_0100, 3'b010}, {7'b000_0100, 3'b011},
+          {7'b000_0100, 3'b100}, {7'b000_0100, 3'b101}, {7'b000_0100, 3'b110}, {7'b000_0100, 3'b111}: begin // FSUB_S
             fpu_op_o = fpnew_pkg::ADD;
             fpu_op_mod_o = 1'b1;
           end
-          7'b000_1000: begin // FMUL_S
+          {7'b000_1000, 3'b000}, {7'b000_1000, 3'b001}, {7'b000_1000, 3'b010}, {7'b000_1000, 3'b011},
+          {7'b000_1000, 3'b100}, {7'b000_1000, 3'b101}, {7'b000_1000, 3'b110}, {7'b000_1000, 3'b111}: begin // FMUL_S
             fpu_op_o = fpnew_pkg::MUL;
             fpu_op_mod_o = 1'b0;
           end
-          7'b000_1100: begin // FDIV_S
+          {7'b000_1100, 3'b000}, {7'b000_1100, 3'b001}, {7'b000_1100, 3'b010}, {7'b000_1100, 3'b011},
+          {7'b000_1100, 3'b100}, {7'b000_1100, 3'b101}, {7'b000_1100, 3'b110}, {7'b000_1100, 3'b111}: begin // FDIV_S
             fpu_op_o = fpnew_pkg::DIV;
             fpu_op_mod_o = 1'b0;
           end
-          default: illegal_insn = 1'b1;
-        endcase
-
-        unique case ({instr[31:25], instr[14:12]}) 
+          // Sign injection operations
           {7'b001_0000, 3'b000}: begin // FSGNJ_S
             fpu_op_o = fpnew_pkg::SGNJ;
             fpu_op_mod_o = 1'b0;
@@ -718,6 +720,7 @@ module cve2_decoder #(
             fpu_op_mod_o = 1'b0;  
             fpu_rnd_mode_o = fpnew_pkg::RDN;
           end
+          // Min/Max operations
           {7'b001_0100, 3'b000}: begin // FMIN_S
             fpu_op_o = fpnew_pkg::MINMAX;
             fpu_op_mod_o = 1'b0;  
@@ -728,6 +731,13 @@ module cve2_decoder #(
             fpu_op_mod_o = 1'b0; 
             fpu_rnd_mode_o = fpnew_pkg::RTZ; 
           end
+          // Square root (single operand)
+          {7'b010_1100, 3'b000}: begin // FSQRT_S (rs2 must be 0)
+            fpu_op_o = fpnew_pkg::SQRT;
+            fpu_op_mod_o = 1'b0;  
+            rf_fp_ren_b_o = 1'b0;
+          end
+          // Comparison operations
           {7'b101_0000, 3'b000}: begin // FLE_S
             fpu_op_o = fpnew_pkg::CMP;
             fpu_op_mod_o = 1'b0;  
@@ -749,30 +759,24 @@ module cve2_decoder #(
             rf_fp_we_o = 1'b0;
             rf_we      = 1'b1;  
           end
-          default: illegal_insn = 1'b1;
-        endcase
-
-        unique case(instr[31:20])
-          12'b0101_1000_0000: begin // FSQRT_S
-            fpu_op_o = fpnew_pkg::SQRT;
-            fpu_op_mod_o = 1'b0;  
-            rf_fp_ren_b_o = 1'b0;
-          end
-          12'b1100_0000_0000: begin // FCVT_W_S
+          // Conversion operations
+          {7'b110_0000, 3'b000}: begin // FCVT_W_S (rs2 must be 0)
             fpu_op_o = fpnew_pkg::F2I;
             fpu_op_mod_o = 1'b0;  
             is_fp_dest_id_o = 1'b0;
             rf_fp_we_o = 1'b0;
+            rf_fp_ren_b_o = 1'b0;
             rf_we      = 1'b1;
           end
-          12'b1100_0000_0001: begin // FCVT_WU_S
+          {7'b110_0000, 3'b001}: begin // FCVT_WU_S (rs2 must be 1)
             fpu_op_o = fpnew_pkg::F2I;
             fpu_op_mod_o = 1'b1;  
             is_fp_dest_id_o = 1'b0;
             rf_fp_we_o = 1'b0;
+            rf_fp_ren_b_o = 1'b0;
             rf_we      = 1'b1;
           end
-          12'b1101_0000_0000: begin // FCVT_S_W
+          {7'b110_1000, 3'b000}: begin // FCVT_S_W (rs2 must be 0)
             fpu_op_o = fpnew_pkg::I2F;
             fpu_op_mod_o = 1'b0;  
             rf_ren_a_o   = 1'b1;
@@ -780,7 +784,7 @@ module cve2_decoder #(
             rf_fp_ren_b_o = 1'b0;
             rf_fp_we_o    = 1'b1;
           end
-          12'b1101_0000_0001: begin // FCVT_S_WU
+          {7'b110_1000, 3'b001}: begin // FCVT_S_WU (rs2 must be 1)
             fpu_op_o = fpnew_pkg::I2F;
             fpu_op_mod_o = 1'b1;
             rf_ren_a_o   = 1'b1;
@@ -788,22 +792,26 @@ module cve2_decoder #(
             rf_fp_ren_b_o = 1'b0;
             rf_fp_we_o    = 1'b1;  
           end
-          default: illegal_insn = 1'b1;
-        endcase
-
-        unique case({instr[31:20], instr[14:12]})
-          {12'b1110_0000_0000, 3'b000}: begin // FMV_X_W
+          // Move and classify operations
+          {7'b111_0000, 3'b000}: begin // FMV_X_W
             //TODO: register file 
+            rf_fp_ren_b_o = 1'b0;
+            rf_fp_we_o = 1'b0;
+            rf_we      = 1'b1;
           end
-          {12'b1110_0000_0000, 3'b001}: begin // FCLASS_S
+          {7'b111_0000, 3'b001}: begin // FCLASS_S
             fpu_op_o = fpnew_pkg::CLASSIFY;
             fpu_op_mod_o = 1'b0;
             rf_fp_ren_b_o = 1'b0;
             rf_fp_we_o    = 1'b0;
             rf_we         = 1'b1;
           end
-          {12'b1111_0000_0000, 3'b000}: begin // FMV_W_X
+          {7'b111_1000, 3'b000}: begin // FMV_W_X
             //TODO: register file
+            rf_ren_a_o   = 1'b1;
+            rf_fp_ren_a_o = 1'b0;
+            rf_fp_ren_b_o = 1'b0;
+            rf_fp_we_o    = 1'b1;
           end
           default: illegal_insn = 1'b1;
         endcase

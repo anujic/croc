@@ -213,7 +213,6 @@ module cve2_id_stage #(
   logic        stall_id;
   logic        flush_id;
   logic        multicycle_done;
-  logic [2:0][31:0] fpu_operands;
 
   // Immediate decoding and sign extension
   logic [31:0] imm_i_type;
@@ -234,17 +233,17 @@ module cve2_id_stage #(
   logic        rf_ren_a_dec, rf_ren_b_dec;
 
   rf_wd_sel_e  rf_fp_wdata_sel;
-  logic        rf_fp_we_dec, rf_fp_we_raw;
-  logic        rf_fp_ren_a, rf_fp_ren_b, rf_fp_ren_c;
+  logic        rf_fp_we_dec;
   logic        rf_fp_ren_a_dec, rf_fp_ren_b_dec, rf_fp_ren_c_dec;
 
   // Read enables should only be asserted for valid and legal instructions
   assign rf_ren_a = instr_valid_i & ~instr_fetch_err_i & ~illegal_insn_o & rf_ren_a_dec;
   assign rf_ren_b = instr_valid_i & ~instr_fetch_err_i & ~illegal_insn_o & rf_ren_b_dec;
 
-  assign rf_fp_ren_a = instr_valid_i & ~instr_fetch_err_i & ~illegal_insn_o & rf_fp_ren_a_dec;
-  assign rf_fp_ren_b = instr_valid_i & ~instr_fetch_err_i & ~illegal_insn_o & rf_fp_ren_b_dec;
-  assign rf_fp_ren_c = instr_valid_i & ~instr_fetch_err_i & ~illegal_insn_o & rf_fp_ren_c_dec;
+  assign rf_fp_ren_a_o = instr_valid_i & ~instr_fetch_err_i & ~illegal_insn_o & rf_fp_ren_a_dec;
+  assign rf_fp_ren_b_o = instr_valid_i & ~instr_fetch_err_i & ~illegal_insn_o & rf_fp_ren_b_dec;
+  assign rf_fp_ren_c_o = instr_valid_i & ~instr_fetch_err_i & ~illegal_insn_o & rf_fp_ren_c_dec;
+  assign rf_fp_we_id_o = rf_fp_we_dec;
 
   assign rf_ren_a_o = rf_ren_a;
   assign rf_ren_b_o = rf_ren_b;
@@ -263,6 +262,9 @@ module cve2_id_stage #(
 
   imm_a_sel_e  imm_a_mux_sel;
   imm_b_sel_e  imm_b_mux_sel, imm_b_mux_sel_dec;
+
+  // FPU Control
+  assign fpu_flush_o = flush_id;
 
   // Multiplier Control
   logic        mult_en_id, mult_en_dec; // use integer multiplier
@@ -340,9 +342,9 @@ module cve2_id_stage #(
   assign alu_operand_b = (alu_op_b_mux_sel == OP_B_IMM) ? imm_b : rf_rdata_b_fwd;
 
   // FPU operands
-  assign fpu_operands[0] = rf_fp_ren_a? rf_fp_rdata_a_i : rf_rdata_a_fwd;
-  assign fpu_operands[1] = (fpu_op_o == fpnew_pkg::ADD) && rf_fp_ren_a? rf_fp_rdata_a_i : (rf_fp_ren_b? rf_fp_rdata_b_i : rf_rdata_b_fwd); // because fpu is funny with add :)
-  assign fpu_operands[2] = (fpu_op_o == fpnew_pkg::ADD) && rf_fp_ren_b? rf_fp_rdata_b_i : rf_fp_rdata_c_i;
+  assign fpu_operands_o[0] = rf_fp_ren_a_o? rf_fp_rdata_a_i : rf_rdata_a_fwd;
+  assign fpu_operands_o[1] = (fpu_op_o == fpnew_pkg::ADD) && rf_fp_ren_a_o? rf_fp_rdata_a_i : (rf_fp_ren_b_o? rf_fp_rdata_b_i : rf_rdata_b_fwd); // because fpu is funny with add :)
+  assign fpu_operands_o[2] = (fpu_op_o == fpnew_pkg::ADD) && rf_fp_ren_b_o? rf_fp_rdata_b_i : rf_fp_rdata_c_i;
 
   /////////////////////////////////////////
   // Multicycle Operation Stage Register //

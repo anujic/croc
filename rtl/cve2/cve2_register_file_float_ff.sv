@@ -44,8 +44,8 @@ module cve2_register_file_float_ff #(
   localparam int unsigned NUM_WORDS  = 2**ADDR_WIDTH;
 
   logic [NUM_WORDS-1:0][DataWidth-1:0] rf_reg;
-  logic [NUM_WORDS-1:1][DataWidth-1:0] rf_reg_q;
-  logic [NUM_WORDS-1:1]                we_a_dec;
+  logic [NUM_WORDS-1:0][DataWidth-1:0] rf_reg_q;
+  logic [NUM_WORDS-1:0]                we_a_dec;
 
   always_comb begin : we_a_decoder
     for (int unsigned i = 0; i < NUM_WORDS; i++) begin
@@ -63,7 +63,7 @@ module cve2_register_file_float_ff #(
     end
   end
 
-  assign rf_reg[NUM_WORDS-1:1] = rf_reg_q[NUM_WORDS-1:1];
+  assign rf_reg[NUM_WORDS-1:0] = rf_reg_q[NUM_WORDS-1:0];
 
   assign rdata_a_o = rf_reg[raddr_a_i];
   assign rdata_b_o = rf_reg[raddr_b_i];
