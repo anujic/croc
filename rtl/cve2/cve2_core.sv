@@ -554,6 +554,7 @@ module cve2_core import cve2_pkg::*; #(
   ) ex_block_i (
     .clk_i (clk_i),
     .rst_ni(rst_ni),
+    .hart_id_i(hart_id_i),
 
     // ALU signal from ID stage
     .alu_operator_i         (alu_operator_ex),

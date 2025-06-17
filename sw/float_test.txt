@@ -3,13 +3,14 @@
 #include "timer.h"
 #include "gpio.h"
 #include "util.h"
+#include "soft-fp.h"
 
 #define INFINITY 0xFFFFFFFF
 #define NAN 0x7fc00000
 // #define TEST_LOAD_STORE
-#define TEST_ARITHMETIC
+// #define TEST_ARITHMETIC
 // #define TEST_COMPARISON
-// #define TEST_CONVERSION
+#define TEST_CONVERSION
 // #define TEST_SIGN_OPERATIONS
 // #define TEST_MOVE_INSTRUCTIONS
 // #define TEST_FUSED_OPERATIONS
@@ -29,18 +30,6 @@ volatile uint32_t raw_bits = 0x3F800000; // Represents 1.0f in IEEE-754
 volatile float f_result;
 volatile int32_t i_result;
 volatile uint32_t u_result;
-
-// Helper function to get raw bits of a float
-uint32_t float_to_bits(float f) {
-  uint32_t result;
-  union {
-    float f_val;
-    uint32_t u_val;
-  } converter;
-  converter.f_val = f;
-  result = converter.u_val;
-  return result;
-}
 
 #ifdef TEST_LOAD_STORE
 void test_flw_fsw(void) {
@@ -307,7 +296,7 @@ void test_conversion(void) {
     : "t0", "ft0"
   );
   if(456.0f == f_result) { // prerequisite: comparison of floats
-    printf("  fcvt.s.wu: Passed! (float)456 = 456.0f\n");
+    printf("  fcvt.s.wu: Passed! (float)456 = -123.0f\n");
     uart_write_flush();
   } else {
     printf("  fcvt.s.wu: Failed!\n");
@@ -330,9 +319,7 @@ void test_sign_operations(void) {
     : "m"(f1), "m"(f3)  // f3 is negative
     : "ft0", "ft1", "ft2"
   );
-  printf("  fsgnj.s: Copy sign: Source=0x%x, Target=0x%x, Result=0x%x\n", 
-         float_to_bits(f3), float_to_bits(f1), float_to_bits(f_result));
-  uart_write_flush();
+  printf("  fsgnj.s: copy sign from %f to %f = %f\n", f3, f1, f_result);
   
   // FSGNJN.S - copy negated sign from f2 to f1
   asm volatile(
@@ -344,9 +331,7 @@ void test_sign_operations(void) {
     : "m"(f1), "m"(f3)  // f3 is negative
     : "ft0", "ft1", "ft2"
   );
-  printf("  fsgnjn.s: Copy negated sign: Source=0x%x, Target=0x%x, Result=0x%x\n", 
-         float_to_bits(f3), float_to_bits(f1), float_to_bits(f_result));
-  uart_write_flush();
+  printf("  fsgnjn.s: copy negated sign from %f to %f = %f\n", f3, f1, f_result);
   
   // FSGNJX.S - xor signs of f1 and f2
   asm volatile(
@@ -358,15 +343,12 @@ void test_sign_operations(void) {
     : "m"(f1), "m"(f3)  // f3 is negative
     : "ft0", "ft1", "ft2"
   );
-  printf("  fsgnjx.s: XOR signs: Value1=0x%x, Value2=0x%x, Result=0x%x\n", 
-         float_to_bits(f1), float_to_bits(f3), float_to_bits(f_result));
-  uart_write_flush();
+  printf("  fsgnjx.s: xor signs of %f and %f = %f\n", f1, f3, f_result);
 }
 #endif
 #ifdef TEST_MOVE_INSTRUCTIONS
 void test_move_instructions(void) {
   printf("\nTesting move instructions...\n");
-  uart_write_flush();
   
   // FMV.X.W - move float bits to integer
   asm volatile(
@@ -378,7 +360,6 @@ void test_move_instructions(void) {
     : "t0", "ft0"
   );
   printf("  fmv.x.w: 0x%08x -> float -> 0x%08x\n", 0x3F800000, u_result);
-  uart_write_flush();
   
   // FMV.W.X - move integer bits to float
   asm volatile(
@@ -389,8 +370,7 @@ void test_move_instructions(void) {
     : "i"(0x40000000)  // 2.0f in IEEE-754
     : "t0", "ft0"
   );
-  printf("  fmv.w.x: 0x%08x -> 0x%08x\n", 0x40000000, float_to_bits(f_result));
-  uart_write_flush();
+  printf("  fmv.w.x: 0x%08x -> %f\n", 0x40000000, f_result);
 }
 #endif
 #ifdef TEST_FUSED_OPERATIONS
@@ -409,9 +389,7 @@ void test_fused_operations(void) {
     : "m"(f1), "m"(f2), "m"(f3)
     : "ft0", "ft1", "ft2", "ft3"
   );
-  printf("  fmadd.s: Op1=0x%x, Op2=0x%x, Op3=0x%x, Result=0x%x\n", 
-         float_to_bits(f1), float_to_bits(f2), float_to_bits(f3), float_to_bits(f_result));
-  uart_write_flush();
+  printf("  fmadd.s: %f * %f + %f = %f\n", f1, f2, f3, f_result);
   
   // FMSUB.S
   asm volatile(
@@ -424,9 +402,7 @@ void test_fused_operations(void) {
     : "m"(f1), "m"(f2), "m"(f3)
     : "ft0", "ft1", "ft2", "ft3"
   );
-  printf("  fmsub.s: Op1=0x%x, Op2=0x%x, Op3=0x%x, Result=0x%x\n", 
-         float_to_bits(f1), float_to_bits(f2), float_to_bits(f3), float_to_bits(f_result));
-  uart_write_flush();
+  printf("  fmsub.s: %f * %f - %f = %f\n", f1, f2, f3, f_result);
   
   // FNMADD.S
   asm volatile(
@@ -439,9 +415,7 @@ void test_fused_operations(void) {
     : "m"(f1), "m"(f2), "m"(f3)
     : "ft0", "ft1", "ft2", "ft3"
   );
-  printf("  fnmadd.s: Op1=0x%x, Op2=0x%x, Op3=0x%x, Result=0x%x\n", 
-         float_to_bits(f1), float_to_bits(f2), float_to_bits(f3), float_to_bits(f_result));
-  uart_write_flush();
+  printf("  fnmadd.s: -(%f * %f) - %f = %f\n", f1, f2, f3, f_result);
   
   // FNMSUB.S
   asm volatile(
@@ -454,15 +428,12 @@ void test_fused_operations(void) {
     : "m"(f1), "m"(f2), "m"(f3)
     : "ft0", "ft1", "ft2", "ft3"
   );
-  printf("  fnmsub.s: Op1=0x%x, Op2=0x%x, Op3=0x%x, Result=0x%x\n", 
-         float_to_bits(f1), float_to_bits(f2), float_to_bits(f3), float_to_bits(f_result));
-  uart_write_flush();
+  printf("  fnmsub.s: -(%f * %f) + %f = %f\n", f1, f2, f3, f_result);
 }
 #endif
 #ifdef TEST_CLASSIFY
 void test_classify(void) {
   printf("\nTesting fclass.s instruction...\n");
-  uart_write_flush();
   
   // Initialize special values
   f_inf = INFINITY;
@@ -477,8 +448,7 @@ void test_classify(void) {
     : "m"(f1)
     : "ft0"
   );
-  printf("  fclass.s(0x%x) = 0x%03x\n", float_to_bits(f1), u_result);
-  uart_write_flush();
+  printf("  fclass.s(%f) = 0x%03x\n", f1, u_result);
   
   // FCLASS.S on negative number
   asm volatile(
@@ -488,8 +458,7 @@ void test_classify(void) {
     : "m"(f3)
     : "ft0"
   );
-  printf("  fclass.s(0x%x) = 0x%03x\n", float_to_bits(f3), u_result);
-  uart_write_flush();
+  printf("  fclass.s(%f) = 0x%03x\n", f3, u_result);
   
   // FCLASS.S on zero
   asm volatile(
@@ -500,7 +469,6 @@ void test_classify(void) {
     : "ft0"
   );
   printf("  fclass.s(+0.0) = 0x%03x\n", u_result);
-  uart_write_flush();
   
   // FCLASS.S on negative zero
   asm volatile(
@@ -511,7 +479,6 @@ void test_classify(void) {
     : "ft0"
   );
   printf("  fclass.s(-0.0) = 0x%03x\n", u_result);
-  uart_write_flush();
   
   // FCLASS.S on infinity
   asm volatile(
@@ -522,7 +489,6 @@ void test_classify(void) {
     : "ft0"
   );
   printf("  fclass.s(+inf) = 0x%03x\n", u_result);
-  uart_write_flush();
   
   // FCLASS.S on negative infinity
   asm volatile(
@@ -533,7 +499,6 @@ void test_classify(void) {
     : "ft0"
   );
   printf("  fclass.s(-inf) = 0x%03x\n", u_result);
-  uart_write_flush();
   
   // FCLASS.S on NaN
   asm volatile(
@@ -544,7 +509,6 @@ void test_classify(void) {
     : "ft0"
   );
   printf("  fclass.s(NaN) = 0x%03x\n", u_result);
-  uart_write_flush();
 }
 #endif
 
@@ -578,6 +542,5 @@ int main() {
   #endif
   // Final message
   printf("\nAll tests completed\n");
-  uart_write_flush();
   return 1;
 }

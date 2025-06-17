@@ -14,6 +14,7 @@ module cve2_ex_block #(
 ) (
   input  logic                  clk_i,
   input  logic                  rst_ni,
+  input  logic [31:0]           hart_id_i,
 
   // ALU
   input  cve2_pkg::alu_op_e     alu_operator_i,
@@ -198,6 +199,7 @@ module cve2_ex_block #(
 
   // FPU instance
   logic fpu_tag_unused;
+  logic fpu_out_valid;
   fpnew_top #(
     .Features       ( fpnew_pkg::RV32F          ),
     .Implementation ( fpnew_pkg::DEFAULT_NOREGS ),
@@ -206,6 +208,7 @@ module cve2_ex_block #(
   ) i_fpnew_top (
     .clk_i(clk_i),
     .rst_ni(rst_ni),
+    .hart_id_i(hart_id_i),
     .operands_i(fpu_operands_i),
     .rnd_mode_i(fpu_rnd_mode_i),
     .op_i(fpu_op_i),
