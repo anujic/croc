@@ -707,17 +707,17 @@ module cve2_decoder #(
           // Sign injection operations
           {7'b001_0000, 3'b000}: begin // FSGNJ_S
             fpu_op_o = fpnew_pkg::SGNJ;
-            fpu_op_mod_o = 1'b0;
+            fpu_op_mod_o = 1'b1;
             fpu_rnd_mode_o = fpnew_pkg::RNE;
           end
           {7'b001_0000, 3'b001}: begin // FSGNJN_S
             fpu_op_o = fpnew_pkg::SGNJ;
-            fpu_op_mod_o = 1'b0; 
+            fpu_op_mod_o = 1'b1; 
             fpu_rnd_mode_o = fpnew_pkg::RTZ; 
           end
           {7'b001_0000, 3'b010}: begin // FSGNJX_S
             fpu_op_o = fpnew_pkg::SGNJ;
-            fpu_op_mod_o = 1'b0;  
+            fpu_op_mod_o = 1'b1;  
             fpu_rnd_mode_o = fpnew_pkg::RDN;
           end
           // Min/Max operations
@@ -806,7 +806,9 @@ module cve2_decoder #(
           // end
           // Move and classify operations
           {7'b111_0000, 3'b000}: begin // FMV_X_W
-            //TODO: register file 
+            fpu_op_o = fpnew_pkg::SGNJ;
+            fpu_op_mod_o = 1'b1;  //TODO: maybe change to 1'b0
+            fpu_rnd_mode_o = fpnew_pkg::RUP; 
             rf_fp_ren_b_o = 1'b0;
             rf_fp_we_o = 1'b0;
             rf_we      = 1'b1;
@@ -819,7 +821,9 @@ module cve2_decoder #(
             rf_we         = 1'b1;
           end
           {7'b111_1000, 3'b000}: begin // FMV_W_X
-            //TODO: register file
+            fpu_op_o = fpnew_pkg::SGNJ;
+            fpu_op_mod_o = 1'b1;  //TODO: maybe change to 1'b0
+            fpu_rnd_mode_o = fpnew_pkg::RUP; 
             rf_ren_a_o   = 1'b1;
             rf_fp_ren_a_o = 1'b0;
             rf_fp_ren_b_o = 1'b0;

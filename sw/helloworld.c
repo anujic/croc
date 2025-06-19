@@ -8,12 +8,12 @@
 #define NAN 0x7fc00000
 // #define TEST_LOAD_STORE
 // #define TEST_BASIC_ARITHMETIC
-// #define TEST_ADVANCED_ARITHMETIC
+#define TEST_ADVANCED_ARITHMETIC
 // #define TEST_COMPARISON
 // #define TEST_CONVERSION
 // #define TEST_SIGN_OPERATIONS
 // #define TEST_MOVE_INSTRUCTIONS
-#define TEST_FUSED_OPERATIONS
+// #define TEST_FUSED_OPERATIONS
 // #define TEST_CLASSIFY
 
 // Define some test values
@@ -34,16 +34,16 @@ volatile int32_t i_result;
 volatile uint32_t u_result;
 
 // Helper function to get raw bits of a float
-// uint32_t float_to_bits(float f) {
-//   uint32_t result;
-//   union {
-//     float f_val;
-//     uint32_t u_val;
-//   } converter;
-//   converter.f_val = f;
-//   result = converter.u_val;
-//   return result;
-// }
+uint32_t float_to_bits(float f) {
+  uint32_t result;
+  union {
+    float f_val;
+    uint32_t u_val;
+  } converter;
+  converter.f_val = f;
+  result = converter.u_val;
+  return result;
+}
 
 #ifdef TEST_LOAD_STORE
 void test_flw_fsw(void) {
@@ -133,43 +133,43 @@ void test_basic_arithmetic(void) {
 #endif
 #ifdef TEST_ADVANCED_ARITHMETIC
 void test_advanced_arithmetic(void) {
-  printf("\nTesting advanced arithmetic instructions...\n");
-  uart_write_flush();
+  // printf("\nTesting advanced arithmetic instructions...\n");
+  // uart_write_flush();
   // FDIV.S
-  // asm volatile(
-  //   "flw ft0, %1\n"
-  //   "flw ft1, %2\n"
-  //   "fdiv.s ft2, ft0, ft1\n"
-  //   "fsw ft2, %0\n"
-  //   : "=m"(f_result)
-  //   : "m"(f1), "m"(f2)
-  //   : "ft0", "ft1", "ft2"
-  // );
-  // if(1.155727f == f_result) { // prerequisite: comparison of floats
-  //   printf("  fdiv.s: Passed!\n");
-  //   uart_write_flush();
-  // } else {
-  //   printf("  fdiv.s: Failed!\n");
-  //   uart_write_flush();
-  // }
+  asm volatile(
+    "flw ft0, %1\n"
+    "flw ft1, %2\n"
+    "fdiv.s ft2, ft0, ft1\n"
+    "fsw ft2, %0\n"
+    : "=m"(f_result)
+    : "m"(f1), "m"(f2)
+    : "ft0", "ft1", "ft2"
+  );
+  if(1.155727f == f_result) { // prerequisite: comparison of floats
+    printf("  fdiv.s: Passed!\n");
+    uart_write_flush();
+  } else {
+    printf("  fdiv.s: Failed!\n");
+    uart_write_flush();
+  }
   
-  // // FSQRT.S
-  // volatile float f_sqrt = 25.0;
-  // asm volatile(
-  //   "flw ft0, %1\n"
-  //   "fsqrt.s ft1, ft0\n"
-  //   "fsw ft1, %0\n"
-  //   : "=m"(f_result)
-  //   : "m"(f_sqrt)
-  //   : "ft0", "ft1"
-  // );
-  // if(5.0f == f_result) { // prerequisite: comparison of floats
-  //   printf("  fsqrt.s: Passed!\n");
-  //   uart_write_flush();
-  // } else {
-  //   printf("  fsqrt.s: Failed!\n");
-  //   uart_write_flush();
-  // }
+  // FSQRT.S
+  volatile float f_sqrt = 25.0;
+  asm volatile(
+    "flw ft0, %1\n"
+    "fsqrt.s ft1, ft0\n"
+    "fsw ft1, %0\n"
+    : "=m"(f_result)
+    : "m"(f_sqrt)
+    : "ft0", "ft1"
+  );
+  if(5.0f == f_result) { // prerequisite: comparison of floats
+    printf("  fsqrt.s: Passed!\n");
+    uart_write_flush();
+  } else {
+    printf("  fsqrt.s: Failed!\n");
+    uart_write_flush();
+  }
   
   // FMIN.S
   asm volatile(
@@ -393,7 +393,7 @@ void test_move_instructions(void) {
     : "i"(0x3F800000)  // 1.0f in IEEE-754
     : "t0", "ft0"
   );
-  printf("  fmv.x.w: 0x%08x -> float -> 0x%08x\n", 0x3F800000, u_result);
+  printf("  fmv.x.w: 0x%x -> float -> 0x%x\n", 0x3F800000, u_result);
   uart_write_flush();
   
   // FMV.W.X - move integer bits to float
@@ -405,7 +405,7 @@ void test_move_instructions(void) {
     : "i"(0x40000000)  // 2.0f in IEEE-754
     : "t0", "ft0"
   );
-  printf("  fmv.w.x: 0x%08x -> 0x%08x\n", 0x40000000, float_to_bits(f_result));
+  printf("  fmv.w.x: 0x%x -> 0x%x\n", 0x40000000, float_to_bits(f_result));
   uart_write_flush();
 }
 #endif
