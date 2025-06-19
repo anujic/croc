@@ -90,7 +90,7 @@ module cve2_ex_block #(
   end else begin : gen_multdiv_no_m
     assign multdiv_sel = 1'b0;
   end
-  assign fpu_sel = fpu_in_valid_i && fpu_in_ready_o;
+  assign fpu_sel = fpu_busy_o;
 
   // Intermediate Value Register Mux
   assign imd_val_d_o[0] = multdiv_sel ? multdiv_imd_val_d[0] : {2'b0, alu_imd_val_d[0]};
@@ -203,7 +203,7 @@ module cve2_ex_block #(
   fpnew_top #(
     .Features       ( fpnew_pkg::RV32F          ),
     .Implementation ( fpnew_pkg::DEFAULT_NOREGS ),
-    .DivSqrtSel     ( fpnew_pkg::TH32           ),
+    .PulpDivsqrt    ( 1'b0           ),
     .TagType        ( logic                     )
   ) i_fpnew_top (
     .clk_i(clk_i),

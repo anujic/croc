@@ -183,6 +183,7 @@ module cve2_core import cve2_pkg::*; #(
   logic [4:0]  rf_fp_waddr_id;
   logic [31:0] rf_fp_wdata_id;
   logic        rf_fp_we_id;
+  logic        is_float_wb;
 
   // ALU Control
   alu_op_e     alu_operator_ex;
@@ -533,6 +534,7 @@ module cve2_core import cve2_pkg::*; #(
     .rf_fp_we_id_o        (rf_fp_we_id),
 
     .en_wb_o           (en_wb),
+    .is_float_o        (is_float_wb),
     .instr_perf_count_id_o (instr_perf_count_id),
 
     // Performance Counters
@@ -668,7 +670,7 @@ module cve2_core import cve2_pkg::*; #(
     .perf_instr_ret_wb_o                (perf_instr_ret_wb),
     .perf_instr_ret_compressed_wb_o     (perf_instr_ret_compressed_wb),
 
-    //.is_fp_dest_id_i(is_fp_dest_id),
+    .is_float_i(is_float_wb),
 
     .rf_waddr_id_i(rf_waddr_id),
     .rf_wdata_id_i(rf_wdata_id),

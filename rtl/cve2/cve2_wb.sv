@@ -23,7 +23,7 @@ module cve2_wb #(
   output logic                     perf_instr_ret_wb_o,
   output logic                     perf_instr_ret_compressed_wb_o,
 
-  //input  logic                     is_fp_dest_id_i,
+  input  logic                     is_float_i,
 
   input  logic [4:0]               rf_waddr_id_i,
   input  logic [31:0]              rf_wdata_id_i,
@@ -68,7 +68,7 @@ module cve2_wb #(
     assign perf_instr_ret_compressed_wb_o      = perf_instr_ret_wb_o & instr_is_compressed_id_i;
 
   assign rf_wdata_wb_mux[1]    = rf_wdata_lsu_i;
-  assign rf_wdata_wb_mux_we[1] = rf_we_lsu_i;
+  assign rf_wdata_wb_mux_we[1] = rf_we_lsu_i & ~is_float_i;
 
   // RF write data can come from ID results (all RF writes that aren't because of loads will come
   // from here) or the LSU (RF writes for load data)
@@ -84,7 +84,7 @@ module cve2_wb #(
     assign rf_fp_wdata_wb_mux_we[0] = rf_fp_we_id_i;
 
   assign rf_fp_wdata_wb_mux[1]    = rf_wdata_lsu_i;
-  assign rf_fp_wdata_wb_mux_we[1] = rf_we_lsu_i;
+  assign rf_fp_wdata_wb_mux_we[1] = rf_we_lsu_i & is_float_i;
 
   // RF write data can come from ID results (all RF writes that aren't because of loads will come
   // from here) or the LSU (RF writes for load data)

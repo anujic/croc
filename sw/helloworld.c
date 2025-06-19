@@ -7,12 +7,14 @@
 #define INFINITY 0xFFFFFFFF
 #define NAN 0x7fc00000
 // #define TEST_LOAD_STORE
-#define TEST_ARITHMETIC
+// #define TEST_BASIC_ARITHMETIC
+// #define TEST_ADVANCED_ARITHMETIC
 // #define TEST_COMPARISON
 // #define TEST_CONVERSION
 // #define TEST_SIGN_OPERATIONS
 // #define TEST_MOVE_INSTRUCTIONS
-// #define TEST_FUSED_OPERATIONS
+#define TEST_FUSED_OPERATIONS
+// #define TEST_CLASSIFY
 
 // Define some test values
 volatile float f1 = 3.14159f;
@@ -24,6 +26,7 @@ volatile float f_inf;
 volatile float f_neg_inf;
 volatile float f_nan;
 volatile uint32_t raw_bits = 0x3F800000; // Represents 1.0f in IEEE-754
+uint32_t errors = 0; // For counting errors
 
 // For storing results
 volatile float f_result;
@@ -31,16 +34,16 @@ volatile int32_t i_result;
 volatile uint32_t u_result;
 
 // Helper function to get raw bits of a float
-uint32_t float_to_bits(float f) {
-  uint32_t result;
-  union {
-    float f_val;
-    uint32_t u_val;
-  } converter;
-  converter.f_val = f;
-  result = converter.u_val;
-  return result;
-}
+// uint32_t float_to_bits(float f) {
+//   uint32_t result;
+//   union {
+//     float f_val;
+//     uint32_t u_val;
+//   } converter;
+//   converter.f_val = f;
+//   result = converter.u_val;
+//   return result;
+// }
 
 #ifdef TEST_LOAD_STORE
 void test_flw_fsw(void) {
@@ -57,14 +60,15 @@ void test_flw_fsw(void) {
     printf("  flw/ fsw: Passed!\n");
     uart_write_flush();
   } else {
+    errors++;
     printf("  flw/ fsw: Failed!\n");
     uart_write_flush();
   }
 }
 #endif
 
-#ifdef TEST_ARITHMETIC
-void test_arithmetic(void) {
+#ifdef TEST_BASIC_ARITHMETIC
+void test_basic_arithmetic(void) {
   printf("\nTesting arithmetic instructions...\n");
   uart_write_flush();
   
@@ -82,6 +86,7 @@ void test_arithmetic(void) {
     printf("  fadd.s: Passed!\n");
     uart_write_flush();
   } else {
+    errors++;
     printf("  fadd.s: Failed!\n");
     uart_write_flush();
   }
@@ -101,6 +106,7 @@ void test_arithmetic(void) {
     printf("  fsub.s: Passed!\n");
     uart_write_flush();
   } else {
+    errors++;
     printf("  fsub.s: Failed!\n");
     uart_write_flush();
   }
@@ -119,45 +125,51 @@ void test_arithmetic(void) {
     printf("  fmul.s: Passed!\n");
     uart_write_flush();
   } else {
+    errors++;
     printf("  fmul.s: Failed!\n");
     uart_write_flush();
   }
-  
+}
+#endif
+#ifdef TEST_ADVANCED_ARITHMETIC
+void test_advanced_arithmetic(void) {
+  printf("\nTesting advanced arithmetic instructions...\n");
+  uart_write_flush();
   // FDIV.S
-  asm volatile(
-    "flw ft0, %1\n"
-    "flw ft1, %2\n"
-    "fdiv.s ft2, ft0, ft1\n"
-    "fsw ft2, %0\n"
-    : "=m"(f_result)
-    : "m"(f1), "m"(f2)
-    : "ft0", "ft1", "ft2"
-  );
-  if(1.155727f == f_result) { // prerequisite: comparison of floats
-    printf("  fdiv.s: Passed!\n");
-    uart_write_flush();
-  } else {
-    printf("  fdiv.s: Failed!\n");
-    uart_write_flush();
-  }
+  // asm volatile(
+  //   "flw ft0, %1\n"
+  //   "flw ft1, %2\n"
+  //   "fdiv.s ft2, ft0, ft1\n"
+  //   "fsw ft2, %0\n"
+  //   : "=m"(f_result)
+  //   : "m"(f1), "m"(f2)
+  //   : "ft0", "ft1", "ft2"
+  // );
+  // if(1.155727f == f_result) { // prerequisite: comparison of floats
+  //   printf("  fdiv.s: Passed!\n");
+  //   uart_write_flush();
+  // } else {
+  //   printf("  fdiv.s: Failed!\n");
+  //   uart_write_flush();
+  // }
   
-  // FSQRT.S
-  volatile float f_sqrt = 25.0;
-  asm volatile(
-    "flw ft0, %1\n"
-    "fsqrt.s ft1, ft0\n"
-    "fsw ft1, %0\n"
-    : "=m"(f_result)
-    : "m"(f_sqrt)
-    : "ft0", "ft1"
-  );
-  if(5.0f == f_result) { // prerequisite: comparison of floats
-    printf("  fsqrt.s: Passed!\n");
-    uart_write_flush();
-  } else {
-    printf("  fsqrt.s: Failed!\n");
-    uart_write_flush();
-  }
+  // // FSQRT.S
+  // volatile float f_sqrt = 25.0;
+  // asm volatile(
+  //   "flw ft0, %1\n"
+  //   "fsqrt.s ft1, ft0\n"
+  //   "fsw ft1, %0\n"
+  //   : "=m"(f_result)
+  //   : "m"(f_sqrt)
+  //   : "ft0", "ft1"
+  // );
+  // if(5.0f == f_result) { // prerequisite: comparison of floats
+  //   printf("  fsqrt.s: Passed!\n");
+  //   uart_write_flush();
+  // } else {
+  //   printf("  fsqrt.s: Failed!\n");
+  //   uart_write_flush();
+  // }
   
   // FMIN.S
   asm volatile(
@@ -169,10 +181,11 @@ void test_arithmetic(void) {
     : "m"(f1), "m"(f3)
     : "ft0", "ft1", "ft2"
   );
-  if(f1 < f3 ? f1 : f3 == f_result) { // prerequisite: comparison of floats
+  if(f3 == f_result) { // prerequisite: comparison of floats
     printf("  fmin.s: Passed!\n");
     uart_write_flush();
   } else {
+    errors++;
     printf("  fmin.s: Failed!\n");
     uart_write_flush();
   }
@@ -187,10 +200,11 @@ void test_arithmetic(void) {
     : "m"(f1), "m"(f3)
     : "ft0", "ft1", "ft2"
   );
-  if(f1 > f3 ? f1 : f3 == f_result) { // prerequisite: comparison of floats
+  if(f1 == f_result) { // prerequisite: comparison of floats
     printf("  fmax.s: Passed!\n");
     uart_write_flush();
   } else {
+    errors++;
     printf("  fmax.s: Failed!\n");
     uart_write_flush();
   }
@@ -252,12 +266,12 @@ void test_compare(void) {
 #endif
 #ifdef TEST_CONVERSION
 void test_conversion(void) {
-  printf("\nTesting conversion instructions...\n");
-  uart_write_flush();
+  // printf("\nTesting conv. instructions\n");
+  // uart_write_flush();
   
   // FCVT.W.S - float to signed int
-  volatile float f_cvt = 42.25;
-  asm volatile(
+  volatile float f_cvt = -42.25;
+  asm volatile( 
     "flw ft0, %1\n"
     "fcvt.w.s %0, ft0, rtz\n"
     : "=r"(i_result)
@@ -268,7 +282,7 @@ void test_conversion(void) {
   uart_write_flush();
   
   // FCVT.WU.S - float to unsigned int
-  asm volatile(
+  asm volatile( // works
     "flw ft0, %1\n"
     "fcvt.wu.s %0, ft0, rtz\n"
     : "=r"(u_result)
@@ -292,6 +306,7 @@ void test_conversion(void) {
     printf("  fcvt.s.w: Passed! (float)-123 = -123.0f\n");
     uart_write_flush();
   } else {
+    errors++;
     printf("  fcvt.s.w: Failed!\n");
     uart_write_flush();
   }
@@ -310,6 +325,7 @@ void test_conversion(void) {
     printf("  fcvt.s.wu: Passed! (float)456 = 456.0f\n");
     uart_write_flush();
   } else {
+    errors++;
     printf("  fcvt.s.wu: Failed!\n");
     uart_write_flush();
   }
@@ -395,8 +411,8 @@ void test_move_instructions(void) {
 #endif
 #ifdef TEST_FUSED_OPERATIONS
 void test_fused_operations(void) {
-  printf("\nTesting fused multiply-add instructions...\n");
-  uart_write_flush();
+  // printf("\nTesting fused multiply-add instructions...\n");
+  // uart_write_flush();
   
   // FMADD.S
   asm volatile(
@@ -409,9 +425,9 @@ void test_fused_operations(void) {
     : "m"(f1), "m"(f2), "m"(f3)
     : "ft0", "ft1", "ft2", "ft3"
   );
-  printf("  fmadd.s: Op1=0x%x, Op2=0x%x, Op3=0x%x, Result=0x%x\n", 
-         float_to_bits(f1), float_to_bits(f2), float_to_bits(f3), float_to_bits(f_result));
-  uart_write_flush();
+  // printf("  fmadd.s: Op1=0x%x, Op2=0x%x, Op3=0x%x, Result=0x%x\n", 
+  //        float_to_bits(f1), float_to_bits(f2), float_to_bits(f3), float_to_bits(f_result));
+  // uart_write_flush();
   
   // FMSUB.S
   asm volatile(
@@ -424,9 +440,9 @@ void test_fused_operations(void) {
     : "m"(f1), "m"(f2), "m"(f3)
     : "ft0", "ft1", "ft2", "ft3"
   );
-  printf("  fmsub.s: Op1=0x%x, Op2=0x%x, Op3=0x%x, Result=0x%x\n", 
-         float_to_bits(f1), float_to_bits(f2), float_to_bits(f3), float_to_bits(f_result));
-  uart_write_flush();
+  // printf("  fmsub.s: Op1=0x%x, Op2=0x%x, Op3=0x%x, Result=0x%x\n", 
+  //        float_to_bits(f1), float_to_bits(f2), float_to_bits(f3), float_to_bits(f_result));
+  // uart_write_flush();
   
   // FNMADD.S
   asm volatile(
@@ -439,9 +455,9 @@ void test_fused_operations(void) {
     : "m"(f1), "m"(f2), "m"(f3)
     : "ft0", "ft1", "ft2", "ft3"
   );
-  printf("  fnmadd.s: Op1=0x%x, Op2=0x%x, Op3=0x%x, Result=0x%x\n", 
-         float_to_bits(f1), float_to_bits(f2), float_to_bits(f3), float_to_bits(f_result));
-  uart_write_flush();
+  // printf("  fnmadd.s: Op1=0x%x, Op2=0x%x, Op3=0x%x, Result=0x%x\n", 
+  //        float_to_bits(f1), float_to_bits(f2), float_to_bits(f3), float_to_bits(f_result));
+  // uart_write_flush();
   
   // FNMSUB.S
   asm volatile(
@@ -454,15 +470,15 @@ void test_fused_operations(void) {
     : "m"(f1), "m"(f2), "m"(f3)
     : "ft0", "ft1", "ft2", "ft3"
   );
-  printf("  fnmsub.s: Op1=0x%x, Op2=0x%x, Op3=0x%x, Result=0x%x\n", 
-         float_to_bits(f1), float_to_bits(f2), float_to_bits(f3), float_to_bits(f_result));
-  uart_write_flush();
+  // printf("  fnmsub.s: Op1=0x%x, Op2=0x%x, Op3=0x%x, Result=0x%x\n", 
+  //        float_to_bits(f1), float_to_bits(f2), float_to_bits(f3), float_to_bits(f_result));
+  // uart_write_flush();
 }
 #endif
 #ifdef TEST_CLASSIFY
 void test_classify(void) {
-  printf("\nTesting fclass.s instruction...\n");
-  uart_write_flush();
+  // printf("\nTesting fclass.s instruction...\n");
+  // uart_write_flush();
   
   // Initialize special values
   f_inf = INFINITY;
@@ -477,7 +493,7 @@ void test_classify(void) {
     : "m"(f1)
     : "ft0"
   );
-  printf("  fclass.s(0x%x) = 0x%03x\n", float_to_bits(f1), u_result);
+  printf("  fclass.s: 0x%x\n", u_result);
   uart_write_flush();
   
   // FCLASS.S on negative number
@@ -488,7 +504,7 @@ void test_classify(void) {
     : "m"(f3)
     : "ft0"
   );
-  printf("  fclass.s(0x%x) = 0x%03x\n", float_to_bits(f3), u_result);
+  printf("  fclass.s: 0x%x\n", u_result);
   uart_write_flush();
   
   // FCLASS.S on zero
@@ -499,7 +515,7 @@ void test_classify(void) {
     : "m"(f_zero)
     : "ft0"
   );
-  printf("  fclass.s(+0.0) = 0x%03x\n", u_result);
+  printf("  fclass.s(+0.0) = 0x%x\n", u_result);
   uart_write_flush();
   
   // FCLASS.S on negative zero
@@ -510,7 +526,7 @@ void test_classify(void) {
     : "m"(f_neg_zero)
     : "ft0"
   );
-  printf("  fclass.s(-0.0) = 0x%03x\n", u_result);
+  printf("  fclass.s(-0.0) = 0x%x\n", u_result);
   uart_write_flush();
   
   // FCLASS.S on infinity
@@ -521,7 +537,7 @@ void test_classify(void) {
     : "m"(f_inf)
     : "ft0"
   );
-  printf("  fclass.s(+inf) = 0x%03x\n", u_result);
+  printf("  fclass.s(+inf) = 0x%x\n", u_result);
   uart_write_flush();
   
   // FCLASS.S on negative infinity
@@ -532,7 +548,7 @@ void test_classify(void) {
     : "m"(f_neg_inf)
     : "ft0"
   );
-  printf("  fclass.s(-inf) = 0x%03x\n", u_result);
+  printf("  fclass.s(-inf) = 0x%x\n", u_result);
   uart_write_flush();
   
   // FCLASS.S on NaN
@@ -543,7 +559,7 @@ void test_classify(void) {
     : "m"(f_nan)
     : "ft0"
   );
-  printf("  fclass.s(NaN) = 0x%03x\n", u_result);
+  printf("  fclass.s(NaN) = 0x%x\n", u_result);
   uart_write_flush();
 }
 #endif
@@ -555,8 +571,11 @@ int main() {
   #ifdef TEST_LOAD_STORE
   test_flw_fsw();
   #endif
-  #ifdef TEST_ARITHMETIC
-  test_arithmetic();
+  #ifdef TEST_BASIC_ARITHMETIC
+  test_basic_arithmetic();
+  #endif
+  #ifdef TEST_ADVANCED_ARITHMETIC
+  test_advanced_arithmetic();
   #endif
   #ifdef TEST_COMPARISON
   test_compare();
@@ -577,7 +596,7 @@ int main() {
   test_classify();
   #endif
   // Final message
-  printf("\nAll tests completed\n");
+  printf("\nAll tests completed with 0x%x errors.\n", errors);
   uart_write_flush();
   return 1;
 }

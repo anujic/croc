@@ -171,6 +171,7 @@ module cve2_id_stage #(
   output logic                      rf_fp_we_id_o,
 
   output  logic                     en_wb_o,
+  output  logic                     is_float_o,
   output  logic                     instr_perf_count_id_o,
 
   // Performance Counters
@@ -466,7 +467,7 @@ module cve2_id_stage #(
     .fpu_dst_fmt_o(fpu_dst_fmt_o),
     .fpu_int_fmt_o(fpu_int_fmt_o),
     .fpu_valid_o(fpu_in_valid_o),
-    //.is_fp_dest_id(is_fp_dest_id),
+    .is_float_o(is_float_o),
 
     // CSRs
     .csr_access_o(csr_access_o),
@@ -601,7 +602,7 @@ module cve2_id_stage #(
     .perf_tbranch_o(perf_tbranch_o)
   );
 
-  assign multdiv_en_dec   = mult_en_dec | div_en_dec;
+  assign multdiv_en_dec   = mult_en_dec | div_en_dec | (fpu_op_o == fpnew_pkg::DIV);
 
   assign lsu_req         = instr_executing ? data_req_allowed & lsu_req_dec  : 1'b0;
   assign mult_en_id      = instr_executing ? mult_en_dec                     : 1'b0;

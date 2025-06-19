@@ -5,6 +5,9 @@
 package:
   name: cve2
 
+dependencies:
+  FPnew:        {git: "https://github.com/pulp-platform/cvfpu.git",         rev:     pulp-v0.1.3}
+
 sources:
   - include_dirs:
     - include
