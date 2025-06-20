@@ -203,7 +203,7 @@ module cve2_ex_block #(
   fpnew_top #(
     .Features       ( fpnew_pkg::RV32F          ),
     .Implementation ( fpnew_pkg::DEFAULT_NOREGS ),
-    .PulpDivsqrt    ( 1'b0           ),
+    .PulpDivsqrt    ( 1'b0   ),
     .TagType        ( logic                     )
   ) i_fpnew_top (
     .clk_i(clk_i),

@@ -701,8 +701,9 @@ module cve2_decoder #(
           end
           {7'b000_1100, 3'b000}, {7'b000_1100, 3'b001}, {7'b000_1100, 3'b010}, {7'b000_1100, 3'b011},
           {7'b000_1100, 3'b100}, {7'b000_1100, 3'b101}, {7'b000_1100, 3'b110}, {7'b000_1100, 3'b111}: begin // FDIV_S
-            fpu_op_o = fpnew_pkg::DIV;
-            fpu_op_mod_o = 1'b0;
+            // fpu_op_o = fpnew_pkg::DIV;
+            // fpu_op_mod_o = 1'b0;
+            illegal_insn = 1'b1; //TODO: add support for fdiv.s
           end
           // Sign injection operations
           {7'b001_0000, 3'b000}: begin // FSGNJ_S
@@ -732,10 +733,16 @@ module cve2_decoder #(
             fpu_rnd_mode_o = fpnew_pkg::RTZ; 
           end
           // Square root (single operand)
-          {7'b010_1100, 3'b000}: begin // FSQRT_S (rs2 must be 0)
-            fpu_op_o = fpnew_pkg::SQRT;
-            fpu_op_mod_o = 1'b0;  
-            rf_fp_ren_b_o = 1'b0;
+          {7'b010_1100, 3'b000}, {7'b010_1100, 3'b001}, {7'b010_1100, 3'b010}, {7'b010_1100, 3'b011},
+          {7'b010_1100, 3'b100}, {7'b010_1100, 3'b101}, {7'b010_1100, 3'b110}, {7'b010_1100, 3'b111}: begin // FSQRT_S (rs2 must be 0)
+            // if(instr_rs2 == '0) begin
+            //   fpu_op_o = fpnew_pkg::SQRT;
+            //   fpu_op_mod_o = 1'b0;  
+            //   rf_fp_ren_b_o = 1'b0;
+            // end else begin
+            //   illegal_insn = 1'b1;
+            // end
+            illegal_insn = 1'b1; //TODO: add support for fsqrt.s
           end
           // Comparison operations
           {7'b101_0000, 3'b000}: begin // FLE_S
