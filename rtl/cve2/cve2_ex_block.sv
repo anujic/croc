@@ -202,7 +202,7 @@ module cve2_ex_block #(
   logic fpu_out_valid;
   fpnew_top #(
     .Features       ( fpnew_pkg::RV32F          ),
-    .Implementation ( fpnew_pkg::DEFAULT_NOREGS ),
+    .Implementation ( cve2_pkg::CROC ),
     .PulpDivsqrt    ( 1'b0   ),
     .TagType        ( logic                     )
   ) i_fpnew_top (

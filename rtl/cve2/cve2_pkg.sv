@@ -192,6 +192,16 @@ package cve2_pkg;
     MD_OP_REM
   } md_op_e;
 
+  // FPU configuration
+  localparam fpnew_pkg::fpu_implementation_t CROC = '{
+    PipeRegs:   '{default: 0},
+    UnitTypes:  '{'{default: fpnew_pkg::PARALLEL}, // ADDMUL
+                  '{default: fpnew_pkg::DISABLED},   // DIVSQRT
+                  '{default: fpnew_pkg::PARALLEL}, // NONCOMP
+                  '{default: fpnew_pkg::MERGED},   // CONV
+                  '{default: fpnew_pkg::DISABLED}},  // DOTP
+    PipeConfig: fpnew_pkg::BEFORE
+  };
 
   //////////////////////////////////
   // Control and status registers //
