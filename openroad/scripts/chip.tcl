@@ -35,7 +35,8 @@ utl::report "###################################################################
 
 # read and check design
 utl::report "Read netlist"
-read_verilog $netlist
+read_verilog ../synopsys/out/croc_chip/croc_chip_syndc.v
+#read_verilog $netlist
 link_design $top_design
 
 utl::report "Read constraints"
@@ -48,8 +49,8 @@ report_checks -format end -no_line_splits                >> ${report_dir}/${log_
 report_checks -format end -no_line_splits                >> ${report_dir}/${log_id_str}_${proj_name}_checks.rpt
 
 # Size of the chip
-set chipW            1995.0
-set chipH            1995.0
+set chipW  [expr 2235 - 2*(39+70)];
+set chipH  [expr 2235 - 2*(39+70)];
 
 # thickness of annular ring for pads (length of a pad)
 set padRing           180.0

@@ -57,7 +57,7 @@ module user_rom #(
 
   // Assign the response data
   // TODO 2 : Modify the code such that the ROM will contain (up to) 32 ASCII chars
-  // hold in your initials in the form: "JD&JD's ASIC\0"
+  // hold in your initials in the form: "AN & KK's ASIC\0"
   logic [2:0] word_addr;
   always_comb begin
     rsp_data = '0;

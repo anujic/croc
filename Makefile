@@ -74,7 +74,7 @@ vsim/compile_rtl.tcl: Bender.lock Bender.yml
 	$(BENDER) script vsim -t rtl -t vsim -t simulation -t verilator -DSYNTHESIS -DSIMULATION  --vlog-arg="$(VLOG_ARGS)" > $@
 
 vsim/compile_netlist.tcl: Bender.lock Bender.yml
-	$(BENDER) script vsim -t ihp13 -t vsim -t simulation -t verilator -t netlist_yosys -DSYNTHESIS -DSIMULATION > $@
+	$(BENDER) script vsim -t ihp13 -t vsim -t simulation -t verilator -t netlist_synopsys -DSYNTHESIS -DSIMULATION > $@
 
 ## Simulate RTL using Questasim/Modelsim/vsim
 vsim-gui: vsim/compile_rtl.tcl $(SW_HEX)
@@ -93,6 +93,10 @@ vsim-yosys: vsim/compile_netlist.tcl $(SW_HEX) yosys/out/croc_chip_yosys_debug.v
 	cd vsim; $(VSIM) -c -do "source compile_netlist.tcl; source compile_tech.tcl; exit"
 	cd vsim; $(VSIM) -gui tb_croc_soc $(VSIM_ARGS)
 
+vsim-syn: $(SW_HEX)
+	rm -rf vsim/work
+	cd vsim; $(VSIM) -c -do "source compile_netlist.tcl; source compile_tech.tcl; exit"
+	cd vsim; $(VSIM) -c +binary="$(realpath $(SW_HEX))" tb_croc_soc $(VSIM_ARGS)
 
 # Verilator
 VERILATOR_ARGS  = --binary -j 0 -Wno-fatal
@@ -110,7 +114,7 @@ verilator/obj_dir/Vtb_croc_soc: verilator/croc.f $(SW_HEX)
 verilator: verilator/obj_dir/Vtb_croc_soc
 	cd verilator; obj_dir/Vtb_croc_soc +binary="$(realpath $(SW_HEX))"
 
-.PHONY: verilator vsim vsim-yosys
+.PHONY: verilator vsim-gui vsim-nogui vsim-yosys vsim-syn
 
 
 ####################

@@ -184,6 +184,7 @@ module cve2_core import cve2_pkg::*; #(
   logic [31:0] rf_fp_wdata_id;
   logic        rf_fp_we_id;
   logic        is_float_wb;
+  logic        rf_fp_we_wb;
 
   // ALU Control
   alu_op_e     alu_operator_ex;

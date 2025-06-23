@@ -27,9 +27,9 @@ set SRAM_512x32     gen_512x32xBx1.i_cut
 
 # memory banks
 set sram {\[0\].i_sram/}
-set bank0_sram0 $SRAM$sram$SRAM_512x32
+set bank0_sram0 i_croc_soc_i_croc_gen_sram_bank_0__i_sram_gen_512x32xBx1_i_cut
 set sram {\[1\].i_sram/}
-set bank1_sram0 $SRAM$sram$SRAM_512x32
+set bank1_sram0 i_croc_soc_i_croc_gen_sram_bank_1__i_sram_gen_512x32xBx1_i_cut
 
 set JTAG_ASYNC_REQ [get_nets $JTAG/i_dmi_cdc.i_cdc_req/*async_*]
 set JTAG_ASYNC_RSP [get_nets $JTAG/i_dmi_cdc.i_cdc_resp/*async_*]
