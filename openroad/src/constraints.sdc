@@ -29,8 +29,8 @@ set_driving_cell [all_inputs] -lib_cell sg13g2_IOPadOut16mA -pin pad
 ##################
 puts "Clocks..."
 
-# We target 80 MHz
-set TCK_SYS 12.5
+# We target 50 MHz
+set TCK_SYS 20
 create_clock -name clk_sys -period $TCK_SYS [get_ports clk_i]
 
 set TCK_JTG 20.0
@@ -68,11 +68,11 @@ puts "CDC/Sync..."
 
 # Constrain `cdc_2phase` for DMI request
 set_false_path -hold                  -through $JTAG_ASYNC_REQ
-set_max_delay  [expr $TCK_SYS * 0.35] -through $JTAG_ASYNC_REQ -ignore_clock_latency
+set_max_delay  [expr $TCK_SYS * 0.25] -through $JTAG_ASYNC_REQ -ignore_clock_latency
 
 # Constrain `cdc_2phase` for DMI response
 set_false_path -hold                  -through $JTAG_ASYNC_RSP
-set_max_delay  [expr $TCK_SYS * 0.35] -through $JTAG_ASYNC_RSP -ignore_clock_latency
+set_max_delay  [expr $TCK_SYS * 0.25] -through $JTAG_ASYNC_RSP -ignore_clock_latency
 
 
 #############
@@ -108,10 +108,10 @@ set_max_delay $TCK_JTG  -from [get_ports jtag_trst_ni]
 puts "GPIO..."
 
 set_input_delay  -min -add_delay -clock clk_sys [ expr $TCK_SYS * 0.10 ] [get_ports {gpio* fetch_en_i}]
-set_input_delay  -max -add_delay -clock clk_sys [ expr $TCK_SYS * 0.30 ] [get_ports {gpio* fetch_en_i}]
+set_input_delay  -max -add_delay -clock clk_sys [ expr $TCK_SYS * 0.25 ] [get_ports {gpio* fetch_en_i}]
 
 set_output_delay -min -add_delay -clock clk_sys [ expr $TCK_SYS * 0.10 ] [get_ports {status_o gpio*}]
-set_output_delay -max -add_delay -clock clk_sys [ expr $TCK_SYS * 0.30 ] [get_ports {status_o gpio*}]
+set_output_delay -max -add_delay -clock clk_sys [ expr $TCK_SYS * 0.25 ] [get_ports {status_o gpio*}]
 
 
 ##########
@@ -120,6 +120,6 @@ set_output_delay -max -add_delay -clock clk_sys [ expr $TCK_SYS * 0.30 ] [get_po
 puts "UART..."
 
 set_input_delay  -min -add_delay -clock clk_sys [ expr $TCK_SYS * 0.10 ] [get_ports uart_rx_i]
-set_input_delay  -max -add_delay -clock clk_sys [ expr $TCK_SYS * 0.30 ] [get_ports uart_rx_i]
+set_input_delay  -max -add_delay -clock clk_sys [ expr $TCK_SYS * 0.25 ] [get_ports uart_rx_i]
 set_output_delay -min -add_delay -clock clk_sys [ expr $TCK_SYS * 0.10 ] [get_ports uart_tx_o]
-set_output_delay -max -add_delay -clock clk_sys [ expr $TCK_SYS * 0.30 ] [get_ports uart_tx_o]
+set_output_delay -max -add_delay -clock clk_sys [ expr $TCK_SYS * 0.25 ] [get_ports uart_tx_o]

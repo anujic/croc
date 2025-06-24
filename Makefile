@@ -67,7 +67,6 @@ sw: $(SW_HEX)
 VLOG_ARGS  = -svinputport=compat
 VSIM_ARGS  = -t 1ns -voptargs=+acc
 VSIM_ARGS += -suppress vsim-3009 -suppress vsim-8683 -suppress vsim-8386
-VSIM_ARGS += -do "waves.do"
 VSIM_ARGS += -do "run -all"
 
 vsim/compile_rtl.tcl: Bender.lock Bender.yml
@@ -80,7 +79,7 @@ vsim/compile_netlist.tcl: Bender.lock Bender.yml
 vsim-gui: vsim/compile_rtl.tcl $(SW_HEX)
 	rm -rf vsim/work
 	cd vsim; $(VSIM) -c -do "source compile_rtl.tcl; exit"
-	cd vsim; $(VSIM) +binary="$(realpath $(SW_HEX))" -gui tb_croc_soc $(VSIM_ARGS)
+	cd vsim; $(VSIM) +binary="$(realpath $(SW_HEX))" -gui tb_croc_soc $(VSIM_ARGS) -do "waves.do"
 
 vsim-nogui: vsim/compile_rtl.tcl $(SW_HEX)
 	rm -rf vsim/work
@@ -96,6 +95,11 @@ vsim-yosys: vsim/compile_netlist.tcl $(SW_HEX) yosys/out/croc_chip_yosys_debug.v
 vsim-syn: $(SW_HEX)
 	rm -rf vsim/work
 	cd vsim; $(VSIM) -c -do "source compile_netlist.tcl; source compile_tech.tcl; exit"
+	cd vsim; $(VSIM) -c +binary="$(realpath $(SW_HEX))" tb_croc_soc $(VSIM_ARGS)
+
+vsim-openroad: $(SW_HEX)
+	rm -rf vsim/work
+	cd vsim; $(VSIM) -c -do "source compile_post_pnr_netlist.tcl; source compile_tech.tcl; source compile_tech_chip.tcl; exit" > compile.log
 	cd vsim; $(VSIM) -c +binary="$(realpath $(SW_HEX))" tb_croc_soc $(VSIM_ARGS)
 
 # Verilator

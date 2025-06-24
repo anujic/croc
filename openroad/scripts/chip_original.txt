@@ -65,17 +65,6 @@ initialize_floorplan -die_area "0 0 $chipW $chipH" \
 utl::report "Connect global nets (power)"
 source scripts/power_connect.tcl
 
-# Convert supply nets to special nets for TritonRoute compatibility
-# This fixes DRT-0305 error: "Net xxx of signal type GROUND is not routable by TritonRoute"
-foreach net [[ord::get_db_block] getNets] {
-    if {[$net getSigType] == "GROUND" || [$net getSigType] == "POWER"} {
-        if {![$net isSpecial]} {
-            puts "Converting supply net [$net getName] to special net"
-            $net setSpecial
-        }
-    }
-}
-
 utl::report "Create Floorplan"
 source scripts/floorplan.tcl
 
@@ -277,6 +266,7 @@ estimate_parasitics -global_routing
 report_metrics "${log_id_str}_${proj_name}.grt"
 save_checkpoint ${log_id_str}_${proj_name}.grt
 report_image "${log_id_str}_${proj_name}.grt" true false false true
+
 grt::set_verbose 0
 # Repair design using global route parasitics
 utl::report "Perform buffer insertion..."
@@ -287,7 +277,7 @@ repair_timing -skip_pin_swap -hold -hold_margin 0.1 -verbose -repair_tns 100
 
 utl::report "GRT incremental..."
 # Run to get modified net by DPL
-global_route -start_incremental
+global_route -start_incremental -allow_congestion
 # Running DPL to fix overlapped instances
 detailed_placement
 # Route only the modified net by DPL
@@ -311,9 +301,9 @@ utl::report "###################################################################
 utl::report "# Step ${log_id_str}: DETAILED ROUTE"
 utl::report "###############################################################################"
 
+check_antennas
 # Requires LEF cell with class 'CORE ANTENNACELL', otherwise you need to give a cell
-repair_design -verbose
-# repair_antennas -ratio_margin 30 -iterations 5
+repair_antennas -ratio_margin 30 -iterations 5
 # check_antennas
 
 utl::report "Detailed route"
@@ -332,11 +322,6 @@ save_checkpoint ${log_id_str}_${proj_name}.drt
 report_metrics "${log_id_str}_${proj_name}.drt"
 report_image "${log_id_str}_${proj_name}.drt" true false false true
 
-repair_antennas -ratio_margin 30 -iterations 5
-utl::report "Repair setup and hold violations..."
-repair_timing -skip_pin_swap -setup -verbose -repair_tns 100
-repair_timing -skip_pin_swap -hold -hold_margin 0.1 -verbose -repair_tns 100
-#repair_antennas -ratio_margin 20 -iterations 5
 ###############################################################################
 # FINISHING                                                                   #
 ###############################################################################
@@ -348,8 +333,8 @@ utl::report "###################################################################
 
 utl::report "Filler placement"
 filler_placement $stdfill
-improve_placement
 global_connect
+
 save_checkpoint ${log_id_str}_${proj_name}.final
 report_image "${log_id_str}_${proj_name}.final" true true false true
 define_process_corner -ext_model_index 0 X
