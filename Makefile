@@ -86,6 +86,23 @@ vsim-nogui: vsim/compile_rtl.tcl $(SW_HEX)
 	cd vsim; $(VSIM) -c -do "source compile_rtl.tcl; exit"
 	cd vsim; $(VSIM) -c +binary="$(realpath $(SW_HEX))" tb_croc_soc $(VSIM_ARGS)	
 
+## Simulate RTL with precompiled applications
+vsim-test-nogui: vsim/compile_rtl.tcl
+	$(if $(filter-out $@,$(MAKECMDGOALS)),,$(error Usage: make vsim-test-nogui <test_name>))
+	rm -rf vsim/work
+	cd vsim; $(VSIM) -c -do "source compile_rtl.tcl; exit"
+	cd vsim; $(VSIM) -c +binary="$(realpath sw/applications_bin/$(filter-out $@,$(MAKECMDGOALS))/$(filter-out $@,$(MAKECMDGOALS)).hex)" tb_croc_soc $(VSIM_ARGS)
+
+%:
+	@:
+vsim-test-gui: vsim/compile_rtl.tcl
+	$(if $(filter-out $@,$(MAKECMDGOALS)),,$(error Usage: make vsim-test-nogui <test_name>))
+	rm -rf vsim/work
+	cd vsim; $(VSIM) -c -do "source compile_rtl.tcl; exit"
+	cd vsim; $(VSIM) +binary="$(realpath sw/applications_bin/$(filter-out $@,$(MAKECMDGOALS))/$(filter-out $@,$(MAKECMDGOALS)).hex)" tb_croc_soc $(VSIM_ARGS)
+
+%:
+	@:
 ## Simulate netlist using Questasim/Modelsim/vsim
 vsim-yosys: vsim/compile_netlist.tcl $(SW_HEX) yosys/out/croc_chip_yosys_debug.v
 	rm -rf vsim/work

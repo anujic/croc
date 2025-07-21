@@ -3,17 +3,16 @@
 #include "timer.h"
 #include "gpio.h"
 #include "util.h"
-#include "soft-fp.h"
 
 #define INFINITY 0xFFFFFFFF
 #define NAN 0x7fc00000
 // #define TEST_LOAD_STORE
 // #define TEST_ARITHMETIC
 // #define TEST_COMPARISON
-#define TEST_CONVERSION
+// #define TEST_CONVERSION
 // #define TEST_SIGN_OPERATIONS
 // #define TEST_MOVE_INSTRUCTIONS
-// #define TEST_FUSED_OPERATIONS
+#define TEST_FUSED_OPERATIONS
 
 // Define some test values
 volatile float f1 = 3.14159f;
@@ -306,7 +305,7 @@ void test_conversion(void) {
 #endif
 #ifdef TEST_SIGN_OPERATIONS
 void test_sign_operations(void) {
-  printf("\nTesting sign manipulation instructions...\n");
+  printf("\nTesting sign manipulation instructions...\n For this test you have to look at the waveforms because we cannot print floats in the UART.\n");
   uart_write_flush();
   
   // FSGNJ.S - copy sign from f2 to f1
@@ -319,7 +318,6 @@ void test_sign_operations(void) {
     : "m"(f1), "m"(f3)  // f3 is negative
     : "ft0", "ft1", "ft2"
   );
-  printf("  fsgnj.s: copy sign from %f to %f = %f\n", f3, f1, f_result);
   
   // FSGNJN.S - copy negated sign from f2 to f1
   asm volatile(
@@ -331,7 +329,6 @@ void test_sign_operations(void) {
     : "m"(f1), "m"(f3)  // f3 is negative
     : "ft0", "ft1", "ft2"
   );
-  printf("  fsgnjn.s: copy negated sign from %f to %f = %f\n", f3, f1, f_result);
   
   // FSGNJX.S - xor signs of f1 and f2
   asm volatile(
@@ -343,7 +340,6 @@ void test_sign_operations(void) {
     : "m"(f1), "m"(f3)  // f3 is negative
     : "ft0", "ft1", "ft2"
   );
-  printf("  fsgnjx.s: xor signs of %f and %f = %f\n", f1, f3, f_result);
 }
 #endif
 #ifdef TEST_MOVE_INSTRUCTIONS
@@ -370,7 +366,7 @@ void test_move_instructions(void) {
     : "i"(0x40000000)  // 2.0f in IEEE-754
     : "t0", "ft0"
   );
-  printf("  fmv.w.x: 0x%08x -> %f\n", 0x40000000, f_result);
+  printf("\nFor this one you have to look at waveforms...\n");
 }
 #endif
 #ifdef TEST_FUSED_OPERATIONS
@@ -389,7 +385,7 @@ void test_fused_operations(void) {
     : "m"(f1), "m"(f2), "m"(f3)
     : "ft0", "ft1", "ft2", "ft3"
   );
-  printf("  fmadd.s: %f * %f + %f = %f\n", f1, f2, f3, f_result);
+  printf("\nFor this one you have to look at waveforms...\n");
   
   // FMSUB.S
   asm volatile(
@@ -402,7 +398,7 @@ void test_fused_operations(void) {
     : "m"(f1), "m"(f2), "m"(f3)
     : "ft0", "ft1", "ft2", "ft3"
   );
-  printf("  fmsub.s: %f * %f - %f = %f\n", f1, f2, f3, f_result);
+  printf("\nFor this one you have to look at waveforms...\n");
   
   // FNMADD.S
   asm volatile(
@@ -415,7 +411,7 @@ void test_fused_operations(void) {
     : "m"(f1), "m"(f2), "m"(f3)
     : "ft0", "ft1", "ft2", "ft3"
   );
-  printf("  fnmadd.s: -(%f * %f) - %f = %f\n", f1, f2, f3, f_result);
+  printf("\nFor this one you have to look at waveforms...\n");
   
   // FNMSUB.S
   asm volatile(
@@ -428,7 +424,7 @@ void test_fused_operations(void) {
     : "m"(f1), "m"(f2), "m"(f3)
     : "ft0", "ft1", "ft2", "ft3"
   );
-  printf("  fnmsub.s: -(%f * %f) + %f = %f\n", f1, f2, f3, f_result);
+  printf("\nFor this one you have to look at waveforms...\n");
 }
 #endif
 #ifdef TEST_CLASSIFY
@@ -448,7 +444,7 @@ void test_classify(void) {
     : "m"(f1)
     : "ft0"
   );
-  printf("  fclass.s(%f) = 0x%03x\n", f1, u_result);
+  printf("\nFor this one you have to look at waveforms...\n");
   
   // FCLASS.S on negative number
   asm volatile(
@@ -458,7 +454,7 @@ void test_classify(void) {
     : "m"(f3)
     : "ft0"
   );
-  printf("  fclass.s(%f) = 0x%03x\n", f3, u_result);
+  printf("\nFor this one you have to look at waveforms...\n");
   
   // FCLASS.S on zero
   asm volatile(

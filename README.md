@@ -175,6 +175,14 @@ If you have Questasim/Modelsim, you can also run:
 make vsim
 ```
 
+To test with the provided binaries, you can run
+```sh
+make vsim-test-nogui <target bin>
+```
+or 
+```sh
+make vsim-test-gui <target bin>
+```
 
 The most important make targets are documented, you can list them with:
 ```sh
