@@ -5,7 +5,7 @@
 // Authors:
 // - Philippe Sauter <phsauter@iis.ee.ethz.ch>
 
-`define TRACE_WAVE
+//`define TRACE_WAVE
 //`define TARGET_NETLIST_OPENROAD
 `timescale 1ns / 1ps
 
