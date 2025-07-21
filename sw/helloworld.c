@@ -47,6 +47,7 @@ static const float gemm_EXP_dram[8 * 8] = {
     }
   }
 
+
 int check_results(float *matrix, const float *expected, int N, int M) {
   // check
   int i, j;
@@ -64,6 +65,7 @@ int check_results(float *matrix, const float *expected, int N, int M) {
 
   return -1;
 }
+
 
   int main() {
   uart_init();

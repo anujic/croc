@@ -1,8 +1,10 @@
+
 +incdir+/scratch/vlsi2_23fs25/croc/rtl/apb/include
 +incdir+/scratch/vlsi2_23fs25/croc/rtl/common_cells/include
 +incdir+/scratch/vlsi2_23fs25/croc/rtl/cve2/include
 +incdir+/scratch/vlsi2_23fs25/croc/rtl/obi/include
 +incdir+/scratch/vlsi2_23fs25/croc/rtl/register_interface/include
+
 +define+TARGET_ASIC
 +define+TARGET_FLIST
 +define+TARGET_IHP13
@@ -11,6 +13,7 @@
 +define+VERILATOR=1
 +define+SYNTHESIS=1
 +define+COMMON_CELLS_ASSERTS_OFF=1
+
 /scratch/vlsi2_23fs25/croc/rtl/common_cells/binary_to_gray.sv
 /scratch/vlsi2_23fs25/croc/rtl/common_cells/cb_filter_pkg.sv
 /scratch/vlsi2_23fs25/croc/rtl/common_cells/cc_onehot.sv
