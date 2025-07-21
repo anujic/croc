@@ -14,6 +14,7 @@ module cve2_ex_block #(
 ) (
   input  logic                  clk_i,
   input  logic                  rst_ni,
+  input  logic [31:0]           hart_id_i,
 
   // ALU
   input  cve2_pkg::alu_op_e     alu_operator_i,
@@ -31,6 +32,24 @@ module cve2_ex_block #(
   input  logic [31:0]           multdiv_operand_a_i,
   input  logic [31:0]           multdiv_operand_b_i,
 
+  // FPU
+    // Input signals
+  input logic [2:0][31:0]                   fpu_operands_i,
+  input fpnew_pkg::roundmode_e              fpu_rnd_mode_i,
+  input fpnew_pkg::operation_e              fpu_op_i,
+  input logic                               fpu_op_mod_i,
+  input fpnew_pkg::fp_format_e              fpu_src_fmt_i,
+  input fpnew_pkg::fp_format_e              fpu_dst_fmt_i,
+  input fpnew_pkg::int_format_e             fpu_int_fmt_i,
+    // Input Handshake
+  input  logic                              fpu_in_valid_i,
+  output logic                              fpu_in_ready_o,
+  input  logic                              fpu_flush_i,
+    // Output signals
+  output fpnew_pkg::status_t                fpu_status_o,
+    // Indication of valid data in flight
+  output logic                              fpu_busy_o,
+
   // intermediate val reg
   output logic [1:0]            imd_val_we_o,
   output logic [33:0]           imd_val_d_o[2],
@@ -47,13 +66,14 @@ module cve2_ex_block #(
 
   import cve2_pkg::*;
 
-  logic [31:0] alu_result, multdiv_result;
+  logic [31:0] alu_result, multdiv_result, fpu_result;
 
   logic [32:0] multdiv_alu_operand_b, multdiv_alu_operand_a;
   logic [33:0] alu_adder_result_ext;
   logic        alu_cmp_result, alu_is_equal_result;
   logic        multdiv_valid;
   logic        multdiv_sel;
+  logic        fpu_sel;
   logic [31:0] alu_imd_val_q[2];
   logic [31:0] alu_imd_val_d[2];
   logic [ 1:0] alu_imd_val_we;
@@ -70,6 +90,7 @@ module cve2_ex_block #(
   end else begin : gen_multdiv_no_m
     assign multdiv_sel = 1'b0;
   end
+  assign fpu_sel = fpu_busy_o;
 
   // Intermediate Value Register Mux
   assign imd_val_d_o[0] = multdiv_sel ? multdiv_imd_val_d[0] : {2'b0, alu_imd_val_d[0]};
@@ -78,7 +99,7 @@ module cve2_ex_block #(
 
   assign alu_imd_val_q = '{imd_val_q_i[0][31:0], imd_val_q_i[1][31:0]};
 
-  assign result_ex_o  = multdiv_sel ? multdiv_result : alu_result;
+  assign result_ex_o  = fpu_sel? fpu_result : (multdiv_sel ? multdiv_result : alu_result);
 
   // branch handling
   assign branch_decision_o  = alu_cmp_result;
@@ -172,9 +193,46 @@ module cve2_ex_block #(
     assign multdiv_valid         = '0;
   end
 
+  ////////////////
+  //    FPU     //
+  ////////////////
+
+  // FPU instance
+  logic fpu_tag_unused;
+  logic fpu_out_valid;
+  fpnew_top #(
+    .Features       ( fpnew_pkg::RV32F          ),
+    .Implementation ( cve2_pkg::CROC ),
+    .PulpDivsqrt    ( 1'b0   ),
+    .TagType        ( logic                     )
+  ) i_fpnew_top (
+    .clk_i(clk_i),
+    .rst_ni(rst_ni),
+    .hart_id_i(hart_id_i),
+    .operands_i(fpu_operands_i),
+    .rnd_mode_i(fpu_rnd_mode_i),
+    .op_i(fpu_op_i),
+    .op_mod_i(fpu_op_mod_i),
+    .src_fmt_i(fpu_src_fmt_i),
+    .dst_fmt_i(fpu_dst_fmt_i),
+    .int_fmt_i(fpu_int_fmt_i),
+    .vectorial_op_i(1'b0), // UNUSED
+    .simd_mask_i('0), // UNUSED
+    .tag_i('0), // UNUSED
+    .in_valid_i(fpu_in_valid_i),
+    .in_ready_o(fpu_in_ready_o),
+    .flush_i(fpu_flush_i),
+    .result_o(fpu_result),
+    .status_o(fpu_status_o),
+    .tag_o(fpu_tag_unused), // UNUSED
+    .out_valid_o(fpu_out_valid),
+    .out_ready_i(1'b1),
+    .busy_o(fpu_busy_o)
+  );
+
   // Multiplier/divider may require multiple cycles. The ALU output is valid in the same cycle
   // unless the intermediate result register is being written (which indicates this isn't the
   // final cycle of ALU operation).
-  assign ex_valid_o = multdiv_sel ? multdiv_valid : ~(|alu_imd_val_we);
+  assign ex_valid_o = fpu_sel? fpu_out_valid : (multdiv_sel ? multdiv_valid : ~(|alu_imd_val_we));
 
 endmodule

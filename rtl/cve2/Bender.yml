@@ -5,6 +5,9 @@
 package:
   name: cve2
 
+dependencies:
+  FPnew:        {git: "https://github.com/pulp-platform/cvfpu.git",         rev:     pulp-v0.1.3}
+
 sources:
   - include_dirs:
     - include
@@ -27,6 +30,7 @@ sources:
     - cve2_multdiv_slow.sv
     - cve2_pmp.sv
     - cve2_register_file_ff.sv
+    - cve2_register_file_float_ff.sv
     - cve2_wb.sv
     # Level 2
     - cve2_cs_registers.sv

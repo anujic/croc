@@ -67,18 +67,24 @@ sw: $(SW_HEX)
 VLOG_ARGS  = -svinputport=compat
 VSIM_ARGS  = -t 1ns -voptargs=+acc
 VSIM_ARGS += -suppress vsim-3009 -suppress vsim-8683 -suppress vsim-8386
+VSIM_ARGS += -do "run -all"
 
 vsim/compile_rtl.tcl: Bender.lock Bender.yml
 	$(BENDER) script vsim -t rtl -t vsim -t simulation -t verilator -DSYNTHESIS -DSIMULATION  --vlog-arg="$(VLOG_ARGS)" > $@
 
 vsim/compile_netlist.tcl: Bender.lock Bender.yml
-	$(BENDER) script vsim -t ihp13 -t vsim -t simulation -t verilator -t netlist_yosys -DSYNTHESIS -DSIMULATION > $@
+	$(BENDER) script vsim -t ihp13 -t vsim -t simulation -t verilator -t netlist_synopsys -DSYNTHESIS -DSIMULATION > $@
 
 ## Simulate RTL using Questasim/Modelsim/vsim
-vsim: vsim/compile_rtl.tcl $(SW_HEX)
+vsim-gui: vsim/compile_rtl.tcl $(SW_HEX)
 	rm -rf vsim/work
 	cd vsim; $(VSIM) -c -do "source compile_rtl.tcl; exit"
-	cd vsim; $(VSIM) +binary="$(realpath $(SW_HEX))" -gui tb_croc_soc $(VSIM_ARGS)
+	cd vsim; $(VSIM) +binary="$(realpath $(SW_HEX))" -gui tb_croc_soc $(VSIM_ARGS) -do "waves.do"
+
+vsim-nogui: vsim/compile_rtl.tcl $(SW_HEX)
+	rm -rf vsim/work
+	cd vsim; $(VSIM) -c -do "source compile_rtl.tcl; exit"
+	cd vsim; $(VSIM) -c +binary="$(realpath $(SW_HEX))" tb_croc_soc $(VSIM_ARGS)	
 
 ## Simulate netlist using Questasim/Modelsim/vsim
 vsim-yosys: vsim/compile_netlist.tcl $(SW_HEX) yosys/out/croc_chip_yosys_debug.v
@@ -86,6 +92,15 @@ vsim-yosys: vsim/compile_netlist.tcl $(SW_HEX) yosys/out/croc_chip_yosys_debug.v
 	cd vsim; $(VSIM) -c -do "source compile_netlist.tcl; source compile_tech.tcl; exit"
 	cd vsim; $(VSIM) -gui tb_croc_soc $(VSIM_ARGS)
 
+vsim-syn: $(SW_HEX)
+	rm -rf vsim/work
+	cd vsim; $(VSIM) -c -do "source compile_netlist.tcl; source compile_tech.tcl; exit"
+	cd vsim; $(VSIM) -c +binary="$(realpath $(SW_HEX))" tb_croc_soc $(VSIM_ARGS)
+
+vsim-openroad: $(SW_HEX)
+	rm -rf vsim/work
+	cd vsim; $(VSIM) -c -do "source compile_post_pnr_netlist.tcl; source compile_tech.tcl; source compile_tech_chip.tcl; exit" > compile.log
+	cd vsim; $(VSIM) -c +binary="$(realpath $(SW_HEX))" tb_croc_soc $(VSIM_ARGS)
 
 # Verilator
 # Turn off style warnings and well-defined SystemVerilog warnings that should be part of -Wno-style
@@ -108,7 +123,7 @@ verilator/obj_dir/Vtb_croc_soc: verilator/croc.f $(SW_HEX)
 verilator: verilator/obj_dir/Vtb_croc_soc
 	cd verilator; obj_dir/Vtb_croc_soc +binary="$(realpath $(SW_HEX))"
 
-.PHONY: verilator vsim vsim-yosys
+.PHONY: verilator vsim-gui vsim-nogui vsim-yosys vsim-syn
 
 
 ####################

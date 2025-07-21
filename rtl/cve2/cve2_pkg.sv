@@ -60,7 +60,14 @@ package cve2_pkg;
     OPCODE_BRANCH   = 7'h63,
     OPCODE_JALR     = 7'h67,
     OPCODE_JAL      = 7'h6f,
-    OPCODE_SYSTEM   = 7'h73
+    OPCODE_SYSTEM   = 7'h73,
+    OPCODE_FP       = 7'b1010011,
+    OPCODE_LOAD_FP  = 7'b0000111,
+    OPCODE_STORE_FP = 7'b0100111,
+    OPCODE_FMADD    = 7'b1000011,
+    OPCODE_FNMADD   = 7'b1001111,
+    OPCODE_FMSUB    = 7'b1000111,
+    OPCODE_FNMSUB   = 7'b1001011
   } opcode_e;
 
 
@@ -185,6 +192,16 @@ package cve2_pkg;
     MD_OP_REM
   } md_op_e;
 
+  // FPU configuration
+  localparam fpnew_pkg::fpu_implementation_t CROC = '{
+    PipeRegs:   '{default: 0},
+    UnitTypes:  '{'{default: fpnew_pkg::PARALLEL}, // ADDMUL
+                  '{default: fpnew_pkg::DISABLED},   // DIVSQRT
+                  '{default: fpnew_pkg::PARALLEL}, // NONCOMP
+                  '{default: fpnew_pkg::MERGED},   // CONV
+                  '{default: fpnew_pkg::DISABLED}},  // DOTP
+    PipeConfig: fpnew_pkg::BEFORE
+  };
 
   //////////////////////////////////
   // Control and status registers //

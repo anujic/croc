@@ -47,6 +47,7 @@ yosys setattr -set keep_hierarchy 1 "t:tc_clk*$*"
 yosys setattr -set keep_hierarchy 1 "t:tc_sram_impl$*"
 yosys setattr -set keep_hierarchy 1 "t:cdc_*$*"
 yosys setattr -set keep_hierarchy 1 "t:sync$*"
+#yosys setattr -set keep_hierarchy 1 "t:fpnew_top$*"
 
 
 # blackbox modules (applies the *blackbox* attribute)
@@ -64,7 +65,7 @@ yosys attrmvcp -copy -attr keep
 yosys hierarchy -top $top_design
 yosys check
 yosys proc
-yosys tee -q -o "${rep_dir}/${top_design}_elaborated.rpt" stat
+yosys tee -q -o "${rep_dir}/${top_design}_01_elaborated.rpt" stat
 yosys write_verilog -norename -noexpr -attr2comment ${tmp_dir}/${top_design}_yosys_elaborated.v
 
 # synth - coarse:
@@ -72,7 +73,7 @@ yosys write_verilog -norename -noexpr -attr2comment ${tmp_dir}/${top_design}_yos
 yosys opt_expr
 yosys opt -noff
 yosys fsm
-yosys tee -q -o "${rep_dir}/${top_design}_initial_opt.rpt" stat
+yosys tee -q -o "${rep_dir}/${top_design}_02_initial_opt.rpt" stat
 yosys wreduce 
 yosys peepopt
 yosys opt_clean
@@ -81,7 +82,7 @@ yosys booth
 yosys share
 yosys opt
 yosys memory -nomap
-yosys tee -q -o "${rep_dir}/${top_design}_memories.rpt" stat
+yosys tee -q -o "${rep_dir}/${top_design}_03_memories.rpt" stat
 yosys write_verilog -norename -noexpr -attr2comment ${tmp_dir}/${top_design}_yosys_memories.v
 yosys memory_map
 yosys opt -fast
@@ -92,7 +93,7 @@ yosys opt -full
 yosys clean -purge
 
 yosys write_verilog -norename ${tmp_dir}/${top_design}_yosys_abstract.v
-yosys tee -q -o "${rep_dir}/${top_design}_abstract.rpt" stat -tech cmos
+yosys tee -q -o "${rep_dir}/${top_design}_04_abstract.rpt" stat -tech cmos
 
 yosys techmap
 yosys opt -fast
@@ -100,8 +101,8 @@ yosys clean -purge
 
 
 # -----------------------------------------------------------------------------
-yosys tee -q -o "${rep_dir}/${top_design}_generic.rpt" stat -tech cmos
-yosys tee -q -o "${rep_dir}/${top_design}_generic.json" stat -json -tech cmos
+yosys tee -q -o "${rep_dir}/${top_design}_05a_generic.rpt" stat -tech cmos
+yosys tee -q -o "${rep_dir}/${top_design}_05b_generic.json" stat -json -tech cmos
 
 # flatten all hierarchy except marked modules
 yosys flatten
@@ -115,15 +116,15 @@ yosys clean -purge
 yosys splitnets -format __v
 # rename DFFs from the driven signal
 yosys rename -wire -suffix _reg t:*DFF*
-yosys select -write ${rep_dir}/${top_design}_registers.rpt t:*DFF*
+yosys select -write ${rep_dir}/${top_design}_06_registers.rpt t:*DFF*
 # rename all other cells
 yosys autoname t:*DFF* %n
 yosys clean -purge
 
 # print paths to important instances (hierarchy and naming is final here)
-yosys select -write ${rep_dir}/${top_design}_registers.rpt t:*DFF*
-yosys tee -q -o ${rep_dir}/${top_design}_instances.rpt  select -list "t:RM_IHPSG13_*"
-yosys tee -q -a ${rep_dir}/${top_design}_instances.rpt  select -list "t:tc_clk*$*"
+yosys select -write ${rep_dir}/${top_design}_06_registers.rpt t:*DFF*
+yosys tee -q -o ${rep_dir}/${top_design}_07a_instances.rpt  select -list "t:RM_IHPSG13_*"
+yosys tee -q -a ${rep_dir}/${top_design}_07a_instances.rpt  select -list "t:tc_clk*$*"
 
 
 # -----------------------------------------------------------------------------
@@ -154,9 +155,9 @@ yosys clean -purge
 yosys hilomap -singleton -hicell {*}$tech_cell_tiehi -locell {*}$tech_cell_tielo
 
 # final reports
-yosys tee -q -o "${rep_dir}/${top_design}_synth.rpt" check
-yosys tee -q -o "${rep_dir}/${top_design}_area.rpt" stat -top $top_design {*}$liberty_args
-yosys tee -q -o "${rep_dir}/${top_design}_area_logic.rpt" stat -top $top_design {*}$tech_cells_args
+yosys tee -q -o "${rep_dir}/${top_design}_08a_synth.rpt" check
+yosys tee -q -o "${rep_dir}/${top_design}_08b_area.rpt" stat -top $top_design {*}$liberty_args
+yosys tee -q -o "${rep_dir}/${top_design}_08c_area_logic.rpt" stat -top $top_design {*}$tech_cells_args
 
 # final netlist
 yosys write_verilog -noattr -noexpr -nohex -nodec ${out_dir}/${top_design}_yosys.v

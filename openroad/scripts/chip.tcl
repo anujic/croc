@@ -36,7 +36,8 @@ utl::report "###################################################################
 
 # read and check design
 utl::report "Read netlist"
-read_verilog $netlist
+read_verilog ../synopsys/out/croc_chip/croc_chip_syndc.v
+#read_verilog $netlist
 link_design $top_design
 
 utl::report "Read constraints"
@@ -49,8 +50,8 @@ report_checks -format end -no_line_splits                >> ${report_dir}/${log_
 report_checks -format end -no_line_splits                >> ${report_dir}/${log_id_str}_${proj_name}_checks.rpt
 
 # Size of the chip
-set chipW            1760.0
-set chipH            1760.0
+set chipW  [expr 2235 - 2*(39+70)];
+set chipH  [expr 2235 - 2*(39+70)];
 
 # thickness of annular ring for pads (length of a pad)
 set padRing           180.0
@@ -64,6 +65,17 @@ initialize_floorplan -die_area "0 0 $chipW $chipH" \
 
 utl::report "Connect global nets (power)"
 source scripts/power_connect.tcl
+
+# Convert supply nets to special nets for TritonRoute compatibility
+# This fixes DRT-0305 error: "Net xxx of signal type GROUND is not routable by TritonRoute"
+foreach net [[ord::get_db_block] getNets] {
+    if {[$net getSigType] == "GROUND" || [$net getSigType] == "POWER"} {
+        if {![$net isSpecial]} {
+            puts "Converting supply net [$net getName] to special net"
+            $net setSpecial
+        }
+    }
+}
 
 utl::report "Create Floorplan"
 source scripts/floorplan.tcl
@@ -266,7 +278,6 @@ estimate_parasitics -global_routing
 report_metrics "${log_id_str}_${proj_name}.grt"
 save_checkpoint ${log_id_str}_${proj_name}.grt
 report_image "${log_id_str}_${proj_name}.grt" true false false true
-
 grt::set_verbose 0
 # Repair design using global route parasitics
 utl::report "Perform buffer insertion..."
@@ -303,7 +314,8 @@ utl::report "# Step ${log_id_str}: DETAILED ROUTE"
 utl::report "###############################################################################"
 
 # Requires LEF cell with class 'CORE ANTENNACELL', otherwise you need to give a cell
-repair_antennas -ratio_margin 30 -iterations 5
+repair_design -verbose
+# repair_antennas -ratio_margin 30 -iterations 5
 # check_antennas
 
 utl::report "Detailed route"
@@ -323,6 +335,12 @@ report_metrics "${log_id_str}_${proj_name}.drt"
 report_image "${log_id_str}_${proj_name}.drt" true false false true
 
 
+repair_antennas -ratio_margin 30 -iterations 5
+utl::report "Repair setup and hold violations..."
+repair_timing -skip_pin_swap -setup -verbose -repair_tns 100
+repair_timing -skip_pin_swap -hold -hold_margin 0.1 -verbose -repair_tns 100
+#repair_antennas -ratio_margin 20 -iterations 5
+
 ###############################################################################
 # FINISHING                                                                   #
 ###############################################################################
@@ -334,8 +352,8 @@ utl::report "###################################################################
 
 utl::report "Filler placement"
 filler_placement $stdfill
+improve_placement
 global_connect
-
 save_checkpoint ${log_id_str}_${proj_name}.final
 report_image "${log_id_str}_${proj_name}.final" true true false true
 estimate_parasitics -global_routing
