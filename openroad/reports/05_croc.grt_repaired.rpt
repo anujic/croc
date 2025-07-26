@@ -1,0 +1,1934 @@
+
+==========================================================================
+05_croc.grt_repaired check_setup
+--------------------------------------------------------------------------
+0
+
+==========================================================================
+05_croc.grt_repaired report_tns
+--------------------------------------------------------------------------
+tns 0.00
+
+==========================================================================
+05_croc.grt_repaired report_wns
+--------------------------------------------------------------------------
+wns 0.00
+
+==========================================================================
+05_croc.grt_repaired report_worst_slack
+--------------------------------------------------------------------------
+worst slack 0.02
+
+==========================================================================
+05_croc.grt_repaired report_checks -path_delay min
+--------------------------------------------------------------------------
+Startpoint: i_croc_soc_i_rstgen_i_rstgen_bypass_synch_regs_q_reg_3_
+            (rising edge-triggered flip-flop clocked by clk_sys)
+Endpoint: i_croc_soc_i_croc_i_gpio_gen_gpios_24__i_sync_reg_q_reg_0_
+          (removal check against rising-edge clock clk_sys)
+Path Group: asynchronous
+Path Type: min
+Corner: ff
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                          0.00    0.00   clock clk_sys (rise edge)
+                          0.00    0.00   clock source latency
+     1    0.20    0.25    0.02    0.02 ^ clk_i (in)
+                                         clk_i (net)
+                  0.25    0.00    0.02 ^ pad_clk_i/pad (sg13g2_IOPadIn)
+     1    0.10    0.13    0.08    0.10 ^ pad_clk_i/p2c (sg13g2_IOPadIn)
+                                         soc_clk_i (net)
+                  0.11    0.03    0.12 ^ clkbuf_0_soc_clk_i/A (sg13g2_buf_8)
+     4    0.15    0.06    0.10    0.22 ^ clkbuf_0_soc_clk_i/X (sg13g2_buf_8)
+                                         clknet_0_soc_clk_i (net)
+                  0.07    0.02    0.24 ^ clkbuf_2_1_0_soc_clk_i/A (sg13g2_buf_16)
+     4    0.13    0.02    0.07    0.31 ^ clkbuf_2_1_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_2_1_0_soc_clk_i (net)
+                  0.06    0.03    0.34 ^ clkbuf_4_4_0_soc_clk_i/A (sg13g2_buf_16)
+    16    0.38    0.06    0.09    0.43 ^ clkbuf_4_4_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_4_4_0_soc_clk_i (net)
+                  0.08    0.02    0.45 ^ clkbuf_8_64_0_soc_clk_i/A (sg13g2_buf_16)
+     4    0.09    0.03    0.07    0.52 ^ clkbuf_8_64_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_8_64_0_soc_clk_i (net)
+                  0.03    0.00    0.53 ^ clkbuf_leaf_238_soc_clk_i/A (sg13g2_buf_16)
+     5    0.03    0.02    0.05    0.58 ^ clkbuf_leaf_238_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_leaf_238_soc_clk_i (net)
+                  0.02    0.00    0.58 ^ i_croc_soc_i_rstgen_i_rstgen_bypass_synch_regs_q_reg_3_/CLK (sg13g2_dfrbp_2)
+     1    0.01    0.03    0.17    0.75 ^ i_croc_soc_i_rstgen_i_rstgen_bypass_synch_regs_q_reg_3_/Q (sg13g2_dfrbp_2)
+                                         i_croc_soc_synced_rst_n (net)
+                  0.03    0.00    0.75 ^ fanout4681/A (sg13g2_buf_8)
+     4    0.17    0.04    0.06    0.80 ^ fanout4681/X (sg13g2_buf_8)
+                                         net4681 (net)
+                  0.16    0.08    0.88 ^ fanout4680/A (sg13g2_buf_8)
+     4    0.07    0.03    0.10    0.98 ^ fanout4680/X (sg13g2_buf_8)
+                                         net4680 (net)
+                  0.04    0.01    0.99 ^ i_croc_soc_i_croc_i_gpio_gen_gpios_24__i_sync_reg_q_reg_0_/RESET_B (sg13g2_dfrbp_2)
+                                  0.99   data arrival time
+
+                          0.00    0.00   clock clk_sys (rise edge)
+                          0.00    0.00   clock source latency
+     1    0.24    0.26    0.03    0.03 ^ clk_i (in)
+                                         clk_i (net)
+                  0.26    0.00    0.03 ^ pad_clk_i/pad (sg13g2_IOPadIn)
+     1    0.10    0.13    0.08    0.10 ^ pad_clk_i/p2c (sg13g2_IOPadIn)
+                                         soc_clk_i (net)
+                  0.11    0.03    0.13 ^ clkbuf_0_soc_clk_i/A (sg13g2_buf_8)
+     4    0.15    0.06    0.10    0.23 ^ clkbuf_0_soc_clk_i/X (sg13g2_buf_8)
+                                         clknet_0_soc_clk_i (net)
+                  0.07    0.02    0.25 ^ clkbuf_2_3_0_soc_clk_i/A (sg13g2_buf_16)
+     4    0.14    0.03    0.07    0.32 ^ clkbuf_2_3_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_2_3_0_soc_clk_i (net)
+                  0.05    0.02    0.34 ^ clkbuf_4_15_0_soc_clk_i/A (sg13g2_buf_16)
+    16    0.39    0.06    0.08    0.42 ^ clkbuf_4_15_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_4_15_0_soc_clk_i (net)
+                  0.11    0.04    0.47 ^ clkbuf_8_247_0_soc_clk_i/A (sg13g2_buf_16)
+     4    0.10    0.03    0.08    0.55 ^ clkbuf_8_247_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_8_247_0_soc_clk_i (net)
+                  0.03    0.00    0.55 ^ clkbuf_leaf_376_soc_clk_i/A (sg13g2_buf_16)
+     3    0.03    0.02    0.05    0.60 ^ clkbuf_leaf_376_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_leaf_376_soc_clk_i (net)
+                  0.02    0.00    0.60 ^ i_croc_soc_i_croc_i_gpio_gen_gpios_24__i_sync_reg_q_reg_0_/CLK (sg13g2_dfrbp_2)
+                          0.10    0.70   clock uncertainty
+                          0.00    0.70   clock reconvergence pessimism
+                         -0.08    0.62   library removal time
+                                  0.62   data required time
+-----------------------------------------------------------------------------
+                                  0.62   data required time
+                                 -0.99   data arrival time
+-----------------------------------------------------------------------------
+                                  0.37   slack (MET)
+
+
+Startpoint: i_croc_soc_i_croc_i_dmi_jtag_i_dmi_jtag_tap_idcode_q_reg_7_
+            (rising edge-triggered flip-flop clocked by clk_jtg)
+Endpoint: i_croc_soc_i_croc_i_dmi_jtag_i_dmi_jtag_tap_idcode_q_reg_6_
+          (rising edge-triggered flip-flop clocked by clk_jtg)
+Path Group: clk_jtg
+Path Type: min
+Corner: ff
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                          0.00    0.00   clock clk_jtg (rise edge)
+                          0.00    0.00   clock source latency
+     1    0.20    0.25    0.02    0.02 ^ jtag_tck_i (in)
+                                         jtag_tck_i (net)
+                  0.25    0.00    0.02 ^ pad_jtag_tck_i/pad (sg13g2_IOPadIn)
+     1    0.13    0.16    0.08    0.10 ^ pad_jtag_tck_i/p2c (sg13g2_IOPadIn)
+                                         i_croc_soc_i_croc_i_dmi_jtag_tck (net)
+                  0.16    0.05    0.15 ^ clkbuf_0_i_croc_soc_i_croc_i_dmi_jtag_tck/A (sg13g2_buf_8)
+     8    0.13    0.06    0.11    0.26 ^ clkbuf_0_i_croc_soc_i_croc_i_dmi_jtag_tck/X (sg13g2_buf_8)
+                                         clknet_0_i_croc_soc_i_croc_i_dmi_jtag_tck (net)
+                  0.06    0.01    0.27 ^ clkbuf_3_4__f_i_croc_soc_i_croc_i_dmi_jtag_tck/A (sg13g2_buf_8)
+     6    0.13    0.05    0.09    0.36 ^ clkbuf_3_4__f_i_croc_soc_i_croc_i_dmi_jtag_tck/X (sg13g2_buf_8)
+                                         clknet_3_4__leaf_i_croc_soc_i_croc_i_dmi_jtag_tck (net)
+                  0.05    0.00    0.36 ^ clkbuf_leaf_35_i_croc_soc_i_croc_i_dmi_jtag_tck/A (sg13g2_buf_16)
+     8    0.04    0.02    0.06    0.42 ^ clkbuf_leaf_35_i_croc_soc_i_croc_i_dmi_jtag_tck/X (sg13g2_buf_16)
+                                         clknet_leaf_35_i_croc_soc_i_croc_i_dmi_jtag_tck (net)
+                  0.02    0.00    0.42 ^ i_croc_soc_i_croc_i_dmi_jtag_i_dmi_jtag_tap_idcode_q_reg_7_/CLK (sg13g2_dfrbp_1)
+     2    0.01    0.03    0.11    0.54 v i_croc_soc_i_croc_i_dmi_jtag_i_dmi_jtag_tap_idcode_q_reg_7_/Q_N (sg13g2_dfrbp_1)
+                                         i_croc_soc_i_croc_i_dmi_jtag_i_dmi_jtag_tap_idcode_q[7] (net)
+                  0.03    0.00    0.54 v U27852/B2 (sg13g2_a22oi_1)
+     1    0.01    0.04    0.04    0.58 ^ U27852/Y (sg13g2_a22oi_1)
+                                         n24642 (net)
+                  0.04    0.00    0.58 ^ U27853/A (sg13g2_inv_1)
+     1    0.00    0.02    0.02    0.60 v U27853/Y (sg13g2_inv_1)
+                                         i_croc_soc_i_croc_i_dmi_jtag_i_dmi_jtag_tap_idcode_d[6] (net)
+                  0.02    0.00    0.60 v i_croc_soc_i_croc_i_dmi_jtag_i_dmi_jtag_tap_idcode_q_reg_6_/D (sg13g2_dfrbp_1)
+                                  0.60   data arrival time
+
+                          0.00    0.00   clock clk_jtg (rise edge)
+                          0.00    0.00   clock source latency
+     1    0.24    0.26    0.03    0.03 ^ jtag_tck_i (in)
+                                         jtag_tck_i (net)
+                  0.26    0.00    0.03 ^ pad_jtag_tck_i/pad (sg13g2_IOPadIn)
+     1    0.13    0.16    0.08    0.11 ^ pad_jtag_tck_i/p2c (sg13g2_IOPadIn)
+                                         i_croc_soc_i_croc_i_dmi_jtag_tck (net)
+                  0.16    0.05    0.15 ^ clkbuf_0_i_croc_soc_i_croc_i_dmi_jtag_tck/A (sg13g2_buf_8)
+     8    0.13    0.06    0.11    0.27 ^ clkbuf_0_i_croc_soc_i_croc_i_dmi_jtag_tck/X (sg13g2_buf_8)
+                                         clknet_0_i_croc_soc_i_croc_i_dmi_jtag_tck (net)
+                  0.06    0.01    0.28 ^ clkbuf_3_4__f_i_croc_soc_i_croc_i_dmi_jtag_tck/A (sg13g2_buf_8)
+     6    0.13    0.05    0.09    0.36 ^ clkbuf_3_4__f_i_croc_soc_i_croc_i_dmi_jtag_tck/X (sg13g2_buf_8)
+                                         clknet_3_4__leaf_i_croc_soc_i_croc_i_dmi_jtag_tck (net)
+                  0.05    0.00    0.37 ^ clkbuf_leaf_35_i_croc_soc_i_croc_i_dmi_jtag_tck/A (sg13g2_buf_16)
+     8    0.04    0.02    0.06    0.43 ^ clkbuf_leaf_35_i_croc_soc_i_croc_i_dmi_jtag_tck/X (sg13g2_buf_16)
+                                         clknet_leaf_35_i_croc_soc_i_croc_i_dmi_jtag_tck (net)
+                  0.02    0.00    0.43 ^ i_croc_soc_i_croc_i_dmi_jtag_i_dmi_jtag_tap_idcode_q_reg_6_/CLK (sg13g2_dfrbp_1)
+                          0.10    0.53   clock uncertainty
+                          0.00    0.52   clock reconvergence pessimism
+                         -0.02    0.50   library hold time
+                                  0.50   data required time
+-----------------------------------------------------------------------------
+                                  0.50   data required time
+                                 -0.60   data arrival time
+-----------------------------------------------------------------------------
+                                  0.10   slack (MET)
+
+
+Startpoint: i_croc_soc_i_croc_i_main_xbar_gen_demux_3__i_demux_select_q_reg_1_
+            (rising edge-triggered flip-flop clocked by clk_sys)
+Endpoint: i_croc_soc_i_croc_i_main_xbar_gen_demux_3__i_demux_select_q_reg_1_
+          (rising edge-triggered flip-flop clocked by clk_sys)
+Path Group: clk_sys
+Path Type: min
+Corner: ff
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                          0.00    0.00   clock clk_sys (rise edge)
+                          0.00    0.00   clock source latency
+     1    0.20    0.25    0.02    0.02 ^ clk_i (in)
+                                         clk_i (net)
+                  0.25    0.00    0.02 ^ pad_clk_i/pad (sg13g2_IOPadIn)
+     1    0.10    0.13    0.08    0.10 ^ pad_clk_i/p2c (sg13g2_IOPadIn)
+                                         soc_clk_i (net)
+                  0.11    0.03    0.12 ^ clkbuf_0_soc_clk_i/A (sg13g2_buf_8)
+     4    0.15    0.06    0.10    0.22 ^ clkbuf_0_soc_clk_i/X (sg13g2_buf_8)
+                                         clknet_0_soc_clk_i (net)
+                  0.07    0.02    0.24 ^ clkbuf_2_2_0_soc_clk_i/A (sg13g2_buf_16)
+     4    0.13    0.03    0.07    0.31 ^ clkbuf_2_2_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_2_2_0_soc_clk_i (net)
+                  0.05    0.02    0.33 ^ clkbuf_4_11_0_soc_clk_i/A (sg13g2_buf_16)
+    16    0.39    0.06    0.08    0.41 ^ clkbuf_4_11_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_4_11_0_soc_clk_i (net)
+                  0.12    0.05    0.46 ^ clkbuf_8_180_0_soc_clk_i/A (sg13g2_buf_16)
+     4    0.09    0.03    0.09    0.55 ^ clkbuf_8_180_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_8_180_0_soc_clk_i (net)
+                  0.03    0.01    0.55 ^ clkbuf_leaf_532_soc_clk_i/A (sg13g2_buf_16)
+     6    0.03    0.02    0.05    0.60 ^ clkbuf_leaf_532_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_leaf_532_soc_clk_i (net)
+                  0.02    0.00    0.60 ^ i_croc_soc_i_croc_i_main_xbar_gen_demux_3__i_demux_select_q_reg_1_/CLK (sg13g2_dfrbp_1)
+     3    0.02    0.06    0.14    0.74 ^ i_croc_soc_i_croc_i_main_xbar_gen_demux_3__i_demux_select_q_reg_1_/Q_N (sg13g2_dfrbp_1)
+                                         n27854 (net)
+                  0.06    0.00    0.74 ^ U28472/B1 (sg13g2_a22oi_1)
+     1    0.00    0.03    0.04    0.78 v U28472/Y (sg13g2_a22oi_1)
+                                         i_croc_soc_i_croc_i_main_xbar_gen_demux_3__i_demux_select_d[1] (net)
+                  0.03    0.00    0.78 v i_croc_soc_i_croc_i_main_xbar_gen_demux_3__i_demux_select_q_reg_1_/D (sg13g2_dfrbp_1)
+                                  0.78   data arrival time
+
+                          0.00    0.00   clock clk_sys (rise edge)
+                          0.00    0.00   clock source latency
+     1    0.24    0.26    0.03    0.03 ^ clk_i (in)
+                                         clk_i (net)
+                  0.26    0.00    0.03 ^ pad_clk_i/pad (sg13g2_IOPadIn)
+     1    0.10    0.13    0.08    0.10 ^ pad_clk_i/p2c (sg13g2_IOPadIn)
+                                         soc_clk_i (net)
+                  0.11    0.03    0.13 ^ clkbuf_0_soc_clk_i/A (sg13g2_buf_8)
+     4    0.15    0.06    0.10    0.23 ^ clkbuf_0_soc_clk_i/X (sg13g2_buf_8)
+                                         clknet_0_soc_clk_i (net)
+                  0.07    0.02    0.25 ^ clkbuf_2_2_0_soc_clk_i/A (sg13g2_buf_16)
+     4    0.13    0.03    0.07    0.32 ^ clkbuf_2_2_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_2_2_0_soc_clk_i (net)
+                  0.05    0.02    0.34 ^ clkbuf_4_11_0_soc_clk_i/A (sg13g2_buf_16)
+    16    0.39    0.06    0.08    0.41 ^ clkbuf_4_11_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_4_11_0_soc_clk_i (net)
+                  0.12    0.05    0.47 ^ clkbuf_8_180_0_soc_clk_i/A (sg13g2_buf_16)
+     4    0.09    0.03    0.09    0.55 ^ clkbuf_8_180_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_8_180_0_soc_clk_i (net)
+                  0.03    0.01    0.56 ^ clkbuf_leaf_532_soc_clk_i/A (sg13g2_buf_16)
+     6    0.03    0.02    0.05    0.61 ^ clkbuf_leaf_532_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_leaf_532_soc_clk_i (net)
+                  0.02    0.00    0.61 ^ i_croc_soc_i_croc_i_main_xbar_gen_demux_3__i_demux_select_q_reg_1_/CLK (sg13g2_dfrbp_1)
+                          0.10    0.71   clock uncertainty
+                          0.00    0.70   clock reconvergence pessimism
+                         -0.02    0.68   library hold time
+                                  0.68   data required time
+-----------------------------------------------------------------------------
+                                  0.68   data required time
+                                 -0.78   data arrival time
+-----------------------------------------------------------------------------
+                                  0.10   slack (MET)
+
+
+
+==========================================================================
+05_croc.grt_repaired report_checks -path_delay max
+--------------------------------------------------------------------------
+Startpoint: i_croc_soc_i_rstgen_i_rstgen_bypass_synch_regs_q_reg_3_
+            (rising edge-triggered flip-flop clocked by clk_sys)
+Endpoint: i_croc_soc_i_croc_i_uart_i_apb_uart_UART_RXFF_iFIFOMem_reg_52__6_
+          (recovery check against rising-edge clock clk_sys)
+Path Group: asynchronous
+Path Type: max
+Corner: tt
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                          0.00    0.00   clock clk_sys (rise edge)
+                          0.00    0.00   clock source latency
+     1    0.24    0.35    0.04    0.04 ^ clk_i (in)
+                                         clk_i (net)
+                  0.35    0.00    0.04 ^ pad_clk_i/pad (sg13g2_IOPadIn)
+     1    0.09    0.19    0.12    0.16 ^ pad_clk_i/p2c (sg13g2_IOPadIn)
+                                         soc_clk_i (net)
+                  0.15    0.03    0.19 ^ clkbuf_0_soc_clk_i/A (sg13g2_buf_8)
+     4    0.14    0.09    0.16    0.34 ^ clkbuf_0_soc_clk_i/X (sg13g2_buf_8)
+                                         clknet_0_soc_clk_i (net)
+                  0.10    0.02    0.36 ^ clkbuf_2_1_0_soc_clk_i/A (sg13g2_buf_16)
+     4    0.12    0.04    0.11    0.47 ^ clkbuf_2_1_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_2_1_0_soc_clk_i (net)
+                  0.07    0.03    0.50 ^ clkbuf_4_4_0_soc_clk_i/A (sg13g2_buf_16)
+    16    0.36    0.11    0.13    0.63 ^ clkbuf_4_4_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_4_4_0_soc_clk_i (net)
+                  0.11    0.02    0.65 ^ clkbuf_8_64_0_soc_clk_i/A (sg13g2_buf_16)
+     4    0.08    0.04    0.11    0.77 ^ clkbuf_8_64_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_8_64_0_soc_clk_i (net)
+                  0.04    0.00    0.77 ^ clkbuf_leaf_238_soc_clk_i/A (sg13g2_buf_16)
+     5    0.03    0.02    0.07    0.84 ^ clkbuf_leaf_238_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_leaf_238_soc_clk_i (net)
+                  0.02    0.00    0.84 ^ i_croc_soc_i_rstgen_i_rstgen_bypass_synch_regs_q_reg_3_/CLK (sg13g2_dfrbp_2)
+     1    0.01    0.04    0.26    1.10 ^ i_croc_soc_i_rstgen_i_rstgen_bypass_synch_regs_q_reg_3_/Q (sg13g2_dfrbp_2)
+                                         i_croc_soc_synced_rst_n (net)
+                  0.04    0.00    1.10 ^ fanout4681/A (sg13g2_buf_8)
+     4    0.17    0.09    0.09    1.19 ^ fanout4681/X (sg13g2_buf_8)
+                                         net4681 (net)
+                  0.17    0.07    1.27 ^ fanout4194/A (sg13g2_buf_8)
+     4    0.10    0.07    0.15    1.42 ^ fanout4194/X (sg13g2_buf_8)
+                                         net4194 (net)
+                  0.07    0.01    1.42 ^ fanout3879/A (sg13g2_buf_8)
+     6    0.09    0.06    0.11    1.53 ^ fanout3879/X (sg13g2_buf_8)
+                                         net3879 (net)
+                  0.07    0.02    1.55 ^ fanout3749/A (sg13g2_buf_4)
+     5    0.06    0.07    0.14    1.69 ^ fanout3749/X (sg13g2_buf_4)
+                                         net3749 (net)
+                  0.07    0.01    1.70 ^ fanout3711/A (sg13g2_buf_2)
+     4    0.03    0.06    0.12    1.82 ^ fanout3711/X (sg13g2_buf_2)
+                                         net3711 (net)
+                  0.06    0.00    1.82 ^ fanout3689/A (sg13g2_buf_2)
+     4    0.03    0.06    0.11    1.93 ^ fanout3689/X (sg13g2_buf_2)
+                                         net3689 (net)
+                  0.06    0.00    1.93 ^ fanout3678/A (sg13g2_buf_2)
+     4    0.03    0.08    0.12    2.06 ^ fanout3678/X (sg13g2_buf_2)
+                                         net3678 (net)
+                  0.08    0.00    2.06 ^ fanout3673/A (sg13g2_buf_4)
+     8    0.06    0.08    0.15    2.21 ^ fanout3673/X (sg13g2_buf_4)
+                                         net3673 (net)
+                  0.08    0.00    2.21 ^ fanout3672/A (sg13g2_buf_4)
+     8    0.06    0.08    0.15    2.36 ^ fanout3672/X (sg13g2_buf_4)
+                                         net3672 (net)
+                  0.08    0.01    2.37 ^ fanout3671/A (sg13g2_buf_4)
+     8    0.06    0.08    0.15    2.52 ^ fanout3671/X (sg13g2_buf_4)
+                                         net3671 (net)
+                  0.08    0.00    2.52 ^ i_croc_soc_i_croc_i_uart_i_apb_uart_UART_RXFF_iFIFOMem_reg_52__6_/RESET_B (sg13g2_dfrbp_1)
+                                  2.52   data arrival time
+
+                         20.00   20.00   clock clk_sys (rise edge)
+                          0.00   20.00   clock source latency
+     1    0.20    0.34    0.03   20.03 ^ clk_i (in)
+                                         clk_i (net)
+                  0.34    0.00   20.03 ^ pad_clk_i/pad (sg13g2_IOPadIn)
+     1    0.09    0.19    0.12   20.15 ^ pad_clk_i/p2c (sg13g2_IOPadIn)
+                                         soc_clk_i (net)
+                  0.15    0.03   20.18 ^ clkbuf_0_soc_clk_i/A (sg13g2_buf_8)
+     4    0.14    0.09    0.16   20.34 ^ clkbuf_0_soc_clk_i/X (sg13g2_buf_8)
+                                         clknet_0_soc_clk_i (net)
+                  0.10    0.02   20.36 ^ clkbuf_2_0_0_soc_clk_i/A (sg13g2_buf_16)
+     4    0.13    0.05    0.11   20.47 ^ clkbuf_2_0_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_2_0_0_soc_clk_i (net)
+                  0.06    0.02   20.49 ^ clkbuf_4_0_0_soc_clk_i/A (sg13g2_buf_16)
+    16    0.37    0.11    0.13   20.62 ^ clkbuf_4_0_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_4_0_0_soc_clk_i (net)
+                  0.11    0.02   20.63 ^ clkbuf_8_12_0_soc_clk_i/A (sg13g2_buf_16)
+     4    0.09    0.04    0.11   20.75 ^ clkbuf_8_12_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_8_12_0_soc_clk_i (net)
+                  0.04    0.00   20.75 ^ clkbuf_leaf_10_soc_clk_i/A (sg13g2_buf_16)
+     8    0.03    0.02    0.07   20.82 ^ clkbuf_leaf_10_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_leaf_10_soc_clk_i (net)
+                  0.02    0.00   20.83 ^ i_croc_soc_i_croc_i_uart_i_apb_uart_UART_RXFF_iFIFOMem_reg_52__6_/CLK (sg13g2_dfrbp_1)
+                         -0.10   20.73   clock uncertainty
+                          0.01   20.73   clock reconvergence pessimism
+                         -0.13   20.60   library recovery time
+                                 20.60   data required time
+-----------------------------------------------------------------------------
+                                 20.60   data required time
+                                 -2.52   data arrival time
+-----------------------------------------------------------------------------
+                                 18.08   slack (MET)
+
+
+Startpoint: i_croc_soc_i_croc_i_dmi_jtag_i_dmi_cdc_i_cdc_req_i_dst_ack_dst_q_reg
+            (rising edge-triggered flip-flop clocked by clk_sys)
+Endpoint: i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_sba_state_q_reg_0_
+          (rising edge-triggered flip-flop clocked by clk_sys)
+Path Group: path delay
+Path Type: max
+Corner: tt
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                  0.02    0.00    0.00 ^ i_croc_soc_i_croc_i_dmi_jtag_i_dmi_cdc_i_cdc_req_i_dst_ack_dst_q_reg/CLK (sg13g2_dfrbp_1)
+     4    0.01    0.05    0.22    0.22 v i_croc_soc_i_croc_i_dmi_jtag_i_dmi_cdc_i_cdc_req_i_dst_ack_dst_q_reg/Q (sg13g2_dfrbp_1)
+                                         i_croc_soc_i_croc_i_dmi_jtag_i_dmi_cdc_i_cdc_req_async_ack (net)
+                  0.05    0.00    0.22 v U28975/A1 (sg13g2_a221oi_1)
+     1    0.01    0.16    0.17    0.39 ^ U28975/Y (sg13g2_a221oi_1)
+                                         i_croc_soc_i_croc_dmi_req_valid (net)
+                  0.16    0.00    0.39 ^ i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U172/A (sg13g2_nand2_2)
+     4    0.05    0.17    0.20    0.59 v i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U172/Y (sg13g2_nand2_2)
+                                         i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/n3868 (net)
+                  0.18    0.01    0.60 v i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U311/A (sg13g2_inv_2)
+     5    0.04    0.13    0.14    0.75 ^ i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U311/Y (sg13g2_inv_2)
+                                         i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/n3876 (net)
+                  0.13    0.00    0.75 ^ i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U313/B (sg13g2_nand3_1)
+     8    0.07    0.57    0.50    1.25 v i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U313/Y (sg13g2_nand3_1)
+                                         i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/n4272 (net)
+                  0.57    0.01    1.26 v i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U167/A (sg13g2_inv_1)
+     1    0.01    0.11    0.12    1.37 ^ i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U167/Y (sg13g2_inv_1)
+                                         i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/n4264 (net)
+                  0.11    0.00    1.37 ^ i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U15/A (sg13g2_inv_1)
+     2    0.01    0.06    0.08    1.46 v i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U15/Y (sg13g2_inv_1)
+                                         i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/n2965 (net)
+                  0.06    0.00    1.46 v i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U16/A (sg13g2_inv_2)
+     5    0.03    0.06    0.07    1.53 ^ i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U16/Y (sg13g2_inv_2)
+                                         i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/n2966 (net)
+                  0.06    0.00    1.53 ^ i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U317/A (sg13g2_nand2_1)
+     4    0.02    0.10    0.11    1.64 v i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U317/Y (sg13g2_nand2_1)
+                                         i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/n3888 (net)
+                  0.10    0.00    1.64 v i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U318/C (sg13g2_or3_1)
+     2    0.01    0.06    0.18    1.82 v i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U318/X (sg13g2_or3_1)
+                                         i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/n3889 (net)
+                  0.06    0.00    1.82 v i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U319/B (sg13g2_or2_2)
+     5    0.05    0.11    0.22    2.03 v i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U319/X (sg13g2_or2_2)
+                                         i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/n4114 (net)
+                  0.11    0.00    2.04 v i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U320/D (sg13g2_nor4_1)
+     1    0.00    0.13    0.13    2.17 ^ i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U320/Y (sg13g2_nor4_1)
+                                         i_croc_soc_i_croc_i_dm_top_i_dm_top_sbdata_read_valid (net)
+                  0.13    0.00    2.17 ^ U31292/A2 (sg13g2_a21oi_1)
+     2    0.01    0.09    0.13    2.30 v U31292/Y (sg13g2_a21oi_1)
+                                         n26565 (net)
+                  0.09    0.00    2.30 v U31294/B1 (sg13g2_a22oi_1)
+     6    0.02    0.18    0.18    2.47 ^ U31294/Y (sg13g2_a22oi_1)
+                                         n26573 (net)
+                  0.18    0.00    2.47 ^ U31301/C (sg13g2_nand4_1)
+     1    0.00    0.10    0.15    2.63 v U31301/Y (sg13g2_nand4_1)
+                                         n26572 (net)
+                  0.10    0.00    2.63 v U31302/B1 (sg13g2_o21ai_1)
+     1    0.00    0.09    0.06    2.69 ^ U31302/Y (sg13g2_o21ai_1)
+                                         n9152 (net)
+                  0.09    0.00    2.69 ^ i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_sba_state_q_reg_0_/D (sg13g2_dfrbp_1)
+                                  2.69   data arrival time
+
+                          5.00    5.00   max_delay
+                         -0.13    4.87   library setup time
+                                  4.87   data required time
+-----------------------------------------------------------------------------
+                                  4.87   data required time
+                                 -2.69   data arrival time
+-----------------------------------------------------------------------------
+                                  2.18   slack (MET)
+
+
+Startpoint: i_croc_soc_i_croc_i_dmi_jtag_i_dmi_jtag_tap_td_o_reg
+            (rising edge-triggered flip-flop clocked by clk_jtg')
+Endpoint: jtag_tdo_o (output port clocked by clk_jtg)
+Path Group: clk_jtg
+Path Type: max
+Corner: tt
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                         10.00   10.00   clock clk_jtg' (rise edge)
+                          0.00   10.00   clock source latency
+     1    0.23    0.49    0.03   10.03 v jtag_tck_i (in)
+                                         jtag_tck_i (net)
+                  0.49    0.00   10.03 v pad_jtag_tck_i/pad (sg13g2_IOPadIn)
+     1    0.13    0.27    0.69   10.72 v pad_jtag_tck_i/p2c (sg13g2_IOPadIn)
+                                         i_croc_soc_i_croc_i_dmi_jtag_tck (net)
+                  0.22    0.05   10.77 v clkbuf_0_i_croc_soc_i_croc_i_dmi_jtag_tck/A (sg13g2_buf_8)
+     8    0.12    0.07    0.18   10.94 v clkbuf_0_i_croc_soc_i_croc_i_dmi_jtag_tck/X (sg13g2_buf_8)
+                                         clknet_0_i_croc_soc_i_croc_i_dmi_jtag_tck (net)
+                  0.07    0.01   10.95 v clkbuf_3_6__f_i_croc_soc_i_croc_i_dmi_jtag_tck/A (sg13g2_buf_8)
+     7    0.13    0.06    0.13   11.08 v clkbuf_3_6__f_i_croc_soc_i_croc_i_dmi_jtag_tck/X (sg13g2_buf_8)
+                                         clknet_3_6__leaf_i_croc_soc_i_croc_i_dmi_jtag_tck (net)
+                  0.07    0.00   11.08 v U28819_4888/A (sg13g2_inv_2)
+     1    0.00    0.03    0.03   11.12 ^ U28819_4888/Y (sg13g2_inv_2)
+                                         net4888 (net)
+                  0.03    0.00   11.12 ^ i_croc_soc_i_croc_i_dmi_jtag_i_dmi_jtag_tap_td_o_reg/CLK (sg13g2_dfrbp_2)
+     1    0.14    0.30    0.40   11.52 ^ i_croc_soc_i_croc_i_dmi_jtag_i_dmi_jtag_tap_td_o_reg/Q (sg13g2_dfrbp_2)
+                                         soc_jtag_tdo_o (net)
+                  0.43    0.06   11.58 ^ pad_jtag_tdo_o/c2p (sg13g2_IOPadOut16mA)
+     1   15.00    3.55    3.30   14.88 ^ pad_jtag_tdo_o/pad (sg13g2_IOPadOut16mA)
+                                         jtag_tdo_o (net)
+                  2.66    0.00   14.88 ^ jtag_tdo_o (out)
+                                 14.88   data arrival time
+
+                         20.00   20.00   clock clk_jtg (rise edge)
+                          0.00   20.00   clock network delay (propagated)
+                         -0.10   19.90   clock uncertainty
+                          0.00   19.90   clock reconvergence pessimism
+                         -5.00   14.90   output external delay
+                                 14.90   data required time
+-----------------------------------------------------------------------------
+                                 14.90   data required time
+                                -14.88   data arrival time
+-----------------------------------------------------------------------------
+                                  0.02   slack (MET)
+
+
+Startpoint: i_croc_soc_i_croc_i_core_wrap_i_ibex_if_stage_i_instr_rdata_id_o_reg_23_
+            (rising edge-triggered flip-flop clocked by clk_sys)
+Endpoint: i_croc_soc_i_croc_i_core_wrap_i_ibex_register_filefp__i/rf_reg_q_reg_0__12_
+          (rising edge-triggered flip-flop clocked by clk_sys)
+Path Group: clk_sys
+Path Type: max
+Corner: tt
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                          0.00    0.00   clock clk_sys (rise edge)
+                          0.00    0.00   clock source latency
+     1    0.24    0.35    0.04    0.04 ^ clk_i (in)
+                                         clk_i (net)
+                  0.35    0.00    0.04 ^ pad_clk_i/pad (sg13g2_IOPadIn)
+     1    0.09    0.19    0.12    0.16 ^ pad_clk_i/p2c (sg13g2_IOPadIn)
+                                         soc_clk_i (net)
+                  0.15    0.03    0.19 ^ clkbuf_0_soc_clk_i/A (sg13g2_buf_8)
+     4    0.14    0.09    0.16    0.34 ^ clkbuf_0_soc_clk_i/X (sg13g2_buf_8)
+                                         clknet_0_soc_clk_i (net)
+                  0.10    0.02    0.36 ^ clkbuf_2_3_0_soc_clk_i/A (sg13g2_buf_16)
+     4    0.13    0.05    0.11    0.47 ^ clkbuf_2_3_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_2_3_0_soc_clk_i (net)
+                  0.07    0.02    0.50 ^ clkbuf_4_12_0_soc_clk_i/A (sg13g2_buf_16)
+    16    0.37    0.11    0.14    0.64 ^ clkbuf_4_12_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_4_12_0_soc_clk_i (net)
+                  0.12    0.03    0.66 ^ clkbuf_8_192_0_soc_clk_i/A (sg13g2_buf_16)
+     4    0.08    0.04    0.12    0.78 ^ clkbuf_8_192_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_8_192_0_soc_clk_i (net)
+                  0.04    0.00    0.79 ^ clkbuf_leaf_310_soc_clk_i/A (sg13g2_buf_16)
+     8    0.04    0.02    0.07    0.86 ^ clkbuf_leaf_310_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_leaf_310_soc_clk_i (net)
+                  0.02    0.00    0.86 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_if_stage_i_instr_rdata_id_o_reg_23_/CLK (sg13g2_dfrbp_2)
+     6    0.06    0.13    0.32    1.18 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_if_stage_i_instr_rdata_id_o_reg_23_/Q (sg13g2_dfrbp_2)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_id_stage_i_imm_i_type[3] (net)
+                  0.13    0.01    1.19 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/U162/B_N (sg13g2_nor2b_1)
+     2    0.01    0.13    0.19    1.37 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/U162/Y (sg13g2_nor2b_1)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/n39 (net)
+                  0.13    0.00    1.37 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/U161/A (sg13g2_nand2_2)
+     4    0.02    0.09    0.11    1.48 v i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/U161/Y (sg13g2_nand2_2)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/n44 (net)
+                  0.09    0.00    1.48 v i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/U318/B (sg13g2_nor2_1)
+     1    0.01    0.08    0.08    1.57 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/U318/Y (sg13g2_nor2_1)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/n2002 (net)
+                  0.08    0.00    1.57 ^ fanout3500/A (sg13g2_buf_2)
+     4    0.03    0.08    0.13    1.70 ^ fanout3500/X (sg13g2_buf_2)
+                                         net3500 (net)
+                  0.08    0.00    1.70 ^ fanout3497/A (sg13g2_buf_4)
+     8    0.05    0.06    0.14    1.84 ^ fanout3497/X (sg13g2_buf_4)
+                                         net3497 (net)
+                  0.06    0.00    1.84 ^ fanout3496/A (sg13g2_buf_4)
+     8    0.05    0.06    0.13    1.97 ^ fanout3496/X (sg13g2_buf_4)
+                                         net3496 (net)
+                  0.06    0.01    1.98 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/U2379/A1 (sg13g2_a22oi_1)
+     1    0.00    0.06    0.09    2.07 v i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/U2379/Y (sg13g2_a22oi_1)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/n1563 (net)
+                  0.06    0.00    2.07 v i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/U2381/C (sg13g2_nand4_1)
+     1    0.01    0.08    0.09    2.16 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/U2381/Y (sg13g2_nand4_1)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/n1576 (net)
+                  0.08    0.00    2.16 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/U127/B (sg13g2_or4_2)
+     2    0.05    0.12    0.19    2.35 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/U127/X (sg13g2_or4_2)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_rf_rdata_b[9] (net)
+                  0.12    0.01    2.36 ^ U14065/B2 (sg13g2_a22oi_1)
+     5    0.03    0.22    0.22    2.58 v U14065/Y (sg13g2_a22oi_1)
+                                         n21620 (net)
+                  0.22    0.01    2.59 v U12760/B (sg13g2_nor2_1)
+     1    0.01    0.11    0.13    2.72 ^ U12760/Y (sg13g2_nor2_1)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_csr_addr[2] (net)
+                  0.11    0.00    2.72 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U74/A (sg13g2_nand2_2)
+     8    0.10    0.29    0.26    2.98 v i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U74/Y (sg13g2_nand2_2)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/n2536 (net)
+                  0.30    0.02    3.00 v i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U8/A (sg13g2_inv_2)
+     1    0.00    0.06    0.06    3.06 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U8/Y (sg13g2_inv_2)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/n2421 (net)
+                  0.06    0.00    3.06 ^ fanout472/A (sg13g2_buf_2)
+     5    0.03    0.07    0.12    3.18 ^ fanout472/X (sg13g2_buf_2)
+                                         net472 (net)
+                  0.08    0.00    3.19 ^ fanout470/A (sg13g2_buf_2)
+     5    0.03    0.08    0.13    3.32 ^ fanout470/X (sg13g2_buf_2)
+                                         net470 (net)
+                  0.08    0.00    3.32 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U221/A (sg13g2_nand3_1)
+     1    0.00    0.07    0.09    3.41 v i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U221/Y (sg13g2_nand3_1)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/n2169 (net)
+                  0.07    0.00    3.41 v i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U225/A_N (sg13g2_nand2b_1)
+     1    0.00    0.04    0.09    3.50 v i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U225/Y (sg13g2_nand2b_1)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/n2170 (net)
+                  0.04    0.00    3.50 v i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U226/B1 (sg13g2_a21oi_1)
+     1    0.00    0.07    0.07    3.57 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U226/Y (sg13g2_a21oi_1)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/n2175 (net)
+                  0.07    0.00    3.57 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U233/A (sg13g2_nand2_1)
+     1    0.00    0.04    0.06    3.63 v i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U233/Y (sg13g2_nand2_1)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/n2201 (net)
+                  0.04    0.00    3.63 v i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U64/A (sg13g2_nor2_1)
+     1    0.01    0.09    0.09    3.73 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U64/Y (sg13g2_nor2_1)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/n2203 (net)
+                  0.09    0.00    3.73 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U63/A2 (sg13g2_a21oi_2)
+     3    0.03    0.10    0.12    3.85 v i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U63/Y (sg13g2_a21oi_2)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_illegal_csr_insn_id (net)
+                  0.10    0.00    3.85 v U13888/A (sg13g2_inv_1)
+     2    0.01    0.06    0.08    3.93 ^ U13888/Y (sg13g2_inv_1)
+                                         n12773 (net)
+                  0.06    0.00    3.93 ^ U14013/A (sg13g2_nand2_1)
+     2    0.01    0.09    0.10    4.02 v U14013/Y (sg13g2_nand2_1)
+                                         n14026 (net)
+                  0.09    0.00    4.02 v U14014/B (sg13g2_nor2_1)
+     2    0.03    0.27    0.24    4.26 ^ U14014/Y (sg13g2_nor2_1)
+                                         n12756 (net)
+                  0.27    0.01    4.27 ^ fanout2170/A (sg13g2_buf_1)
+     5    0.02    0.10    0.19    4.46 ^ fanout2170/X (sg13g2_buf_1)
+                                         net2170 (net)
+                  0.10    0.00    4.46 ^ fanout2168/A (sg13g2_buf_1)
+     5    0.02    0.09    0.14    4.60 ^ fanout2168/X (sg13g2_buf_1)
+                                         net2168 (net)
+                  0.09    0.00    4.60 ^ fanout2167/A (sg13g2_buf_4)
+     8    0.05    0.06    0.15    4.75 ^ fanout2167/X (sg13g2_buf_4)
+                                         net2167 (net)
+                  0.06    0.00    4.75 ^ U12430/A (sg13g2_inv_4)
+     8    0.04    0.04    0.05    4.81 v U12430/Y (sg13g2_inv_4)
+                                         n14227 (net)
+                  0.04    0.00    4.81 v U20661/B1 (sg13g2_a22oi_1)
+     4    0.03    0.20    0.17    4.97 ^ U20661/Y (sg13g2_a22oi_1)
+                                         n22535 (net)
+                  0.20    0.00    4.98 ^ U20659/A (sg13g2_inv_1)
+     3    0.01    0.08    0.11    5.08 v U20659/Y (sg13g2_inv_1)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_fpu_operands_ex[26] (net)
+                  0.08    0.00    5.08 v fanout458/A (sg13g2_buf_4)
+     8    0.04    0.04    0.12    5.20 v fanout458/X (sg13g2_buf_4)
+                                         net458 (net)
+                  0.04    0.00    5.20 v U20669/C (sg13g2_nor4_1)
+     1    0.00    0.13    0.15    5.35 ^ U20669/Y (sg13g2_nor4_1)
+                                         n30704 (net)
+                  0.13    0.00    5.35 ^ U13581/B (sg13g2_nand2_1)
+     2    0.01    0.11    0.13    5.48 v U13581/Y (sg13g2_nand2_1)
+                                         n21054 (net)
+                  0.11    0.00    5.48 v U13571/A (sg13g2_inv_2)
+     6    0.03    0.08    0.09    5.58 ^ U13571/Y (sg13g2_inv_2)
+                                         n14619 (net)
+                  0.08    0.00    5.58 ^ U17755/A (sg13g2_nand2_1)
+     2    0.01    0.06    0.08    5.66 v U17755/Y (sg13g2_nand2_1)
+                                         n14449 (net)
+                  0.06    0.00    5.66 v U17769/A1 (sg13g2_o21ai_1)
+     2    0.01    0.14    0.15    5.81 ^ U17769/Y (sg13g2_o21ai_1)
+                                         n14995 (net)
+                  0.14    0.00    5.81 ^ U12877/B (sg13g2_nand2_1)
+     1    0.00    0.05    0.08    5.89 v U12877/Y (sg13g2_nand2_1)
+                                         n14427 (net)
+                  0.05    0.00    5.90 v U12691/A (sg13g2_nand2_1)
+     2    0.01    0.07    0.07    5.96 ^ U12691/Y (sg13g2_nand2_1)
+                                         n15002 (net)
+                  0.07    0.00    5.96 ^ U17784/A1 (sg13g2_a21oi_2)
+     6    0.03    0.10    0.11    6.08 v U17784/Y (sg13g2_a21oi_2)
+                                         n15107 (net)
+                  0.10    0.00    6.08 v U17795/A2 (sg13g2_o21ai_1)
+     1    0.01    0.10    0.12    6.20 ^ U17795/Y (sg13g2_o21ai_1)
+                                         n14457 (net)
+                  0.10    0.00    6.20 ^ U17796/B (sg13g2_xnor2_1)
+     1    0.01    0.10    0.12    6.33 ^ U17796/Y (sg13g2_xnor2_1)
+                                         n14459 (net)
+                  0.10    0.00    6.33 ^ U13487/A (sg13g2_nand2_2)
+     5    0.03    0.12    0.13    6.46 v U13487/Y (sg13g2_nand2_2)
+                                         n14992 (net)
+                  0.12    0.00    6.46 v U18513/B (sg13g2_xor2_1)
+     3    0.01    0.09    0.15    6.61 v U18513/X (sg13g2_xor2_1)
+                                         n15153 (net)
+                  0.09    0.00    6.61 v U12069/B (sg13g2_nor2_1)
+     3    0.01    0.12    0.13    6.74 ^ U12069/Y (sg13g2_nor2_1)
+                                         n15071 (net)
+                  0.12    0.00    6.74 ^ U18560/A2 (sg13g2_o21ai_1)
+     1    0.01    0.06    0.09    6.83 v U18560/Y (sg13g2_o21ai_1)
+                                         n15048 (net)
+                  0.06    0.00    6.83 v U18561/B1 (sg13g2_a21oi_2)
+     4    0.02    0.11    0.11    6.94 ^ U18561/Y (sg13g2_a21oi_2)
+                                         n15117 (net)
+                  0.11    0.00    6.94 ^ U18575/A2 (sg13g2_o21ai_1)
+     1    0.01    0.06    0.09    7.03 v U18575/Y (sg13g2_o21ai_1)
+                                         n15065 (net)
+                  0.06    0.00    7.03 v U18576/B (sg13g2_xnor2_1)
+     2    0.01    0.06    0.11    7.14 v U18576/Y (sg13g2_xnor2_1)
+                                         n15122 (net)
+                  0.06    0.00    7.14 v U18586/A_N (sg13g2_nand2b_1)
+     1    0.00    0.04    0.09    7.23 v U18586/Y (sg13g2_nand2b_1)
+                                         n15078 (net)
+                  0.04    0.00    7.23 v U12105/B (sg13g2_nor2_1)
+     3    0.01    0.12    0.11    7.34 ^ U12105/Y (sg13g2_nor2_1)
+                                         n19381 (net)
+                  0.12    0.00    7.34 ^ U12065/A (sg13g2_nand2_1)
+     1    0.00    0.05    0.07    7.41 v U12065/Y (sg13g2_nand2_1)
+                                         n15119 (net)
+                  0.05    0.00    7.41 v U12064/A (sg13g2_nand2_1)
+     3    0.01    0.08    0.07    7.48 ^ U12064/Y (sg13g2_nand2_1)
+                                         n15196 (net)
+                  0.08    0.00    7.49 ^ U12063/A (sg13g2_inv_1)
+     2    0.01    0.05    0.06    7.55 v U12063/Y (sg13g2_inv_1)
+                                         n15171 (net)
+                  0.05    0.00    7.55 v U18623/A (sg13g2_nor2b_1)
+     3    0.01    0.11    0.11    7.66 ^ U18623/Y (sg13g2_nor2b_1)
+                                         n15190 (net)
+                  0.11    0.00    7.66 ^ U12204/A (sg13g2_nand2_1)
+     1    0.00    0.05    0.08    7.74 v U12204/Y (sg13g2_nand2_1)
+                                         n15191 (net)
+                  0.05    0.00    7.74 v U12202/A (sg13g2_inv_1)
+     3    0.02    0.09    0.09    7.83 ^ U12202/Y (sg13g2_inv_1)
+                                         n19409 (net)
+                  0.09    0.00    7.83 ^ U12203/A (sg13g2_inv_1)
+     2    0.01    0.05    0.07    7.90 v U12203/Y (sg13g2_inv_1)
+                                         n11016 (net)
+                  0.05    0.00    7.90 v U18688/B (sg13g2_nor2_1)
+     2    0.01    0.08    0.08    7.98 ^ U18688/Y (sg13g2_nor2_1)
+                                         n15370 (net)
+                  0.08    0.00    7.98 ^ U12664/A (sg13g2_inv_1)
+     2    0.01    0.05    0.07    8.05 v U12664/Y (sg13g2_inv_1)
+                                         n11233 (net)
+                  0.05    0.00    8.05 v U18689/A (sg13g2_inv_2)
+     8    0.04    0.10    0.09    8.14 ^ U18689/Y (sg13g2_inv_2)
+                                         n16426 (net)
+                  0.10    0.00    8.15 ^ U19967/A2 (sg13g2_a22oi_1)
+     1    0.00    0.07    0.10    8.25 v U19967/Y (sg13g2_a22oi_1)
+                                         n16428 (net)
+                  0.07    0.00    8.25 v U19968/B (sg13g2_nand2_1)
+     2    0.01    0.08    0.09    8.34 ^ U19968/Y (sg13g2_nand2_1)
+                                         n16508 (net)
+                  0.08    0.00    8.34 ^ U20047/A2 (sg13g2_o21ai_1)
+     3    0.01    0.10    0.11    8.45 v U20047/Y (sg13g2_o21ai_1)
+                                         n18070 (net)
+                  0.10    0.00    8.45 v U18078/A (sg13g2_inv_1)
+     1    0.00    0.04    0.05    8.51 ^ U18078/Y (sg13g2_inv_1)
+                                         n30353 (net)
+                  0.04    0.00    8.51 ^ U18074/A2 (sg13g2_o21ai_1)
+     4    0.02    0.13    0.12    8.63 v U18074/Y (sg13g2_o21ai_1)
+                                         n17905 (net)
+                  0.13    0.00    8.63 v U20059/A (sg13g2_or4_1)
+     1    0.00    0.05    0.23    8.86 v U20059/X (sg13g2_or4_1)
+                                         n16522 (net)
+                  0.05    0.00    8.86 v U20060/D (sg13g2_nor4_1)
+     1    0.00    0.14    0.12    8.98 ^ U20060/Y (sg13g2_nor4_1)
+                                         n16527 (net)
+                  0.14    0.00    8.98 ^ U20064/B (sg13g2_nand4_1)
+     1    0.01    0.17    0.19    9.17 v U20064/Y (sg13g2_nand4_1)
+                                         n16529 (net)
+                  0.17    0.00    9.17 v U20065/B (sg13g2_nand2_2)
+     2    0.02    0.07    0.09    9.27 ^ U20065/Y (sg13g2_nand2_2)
+                                         n20508 (net)
+                  0.07    0.00    9.27 ^ U17814/B (sg13g2_nand2_1)
+     2    0.01    0.06    0.08    9.35 v U17814/Y (sg13g2_nand2_1)
+                                         n16543 (net)
+                  0.06    0.00    9.35 v U13495/A (sg13g2_inv_1)
+     1    0.01    0.05    0.05    9.40 ^ U13495/Y (sg13g2_inv_1)
+                                         n18215 (net)
+                  0.05    0.00    9.40 ^ U12107/A (sg13g2_nand2_2)
+     5    0.02    0.09    0.09    9.49 v U12107/Y (sg13g2_nand2_2)
+                                         n19133 (net)
+                  0.09    0.00    9.49 v U20141/A1 (sg13g2_o21ai_1)
+     2    0.02    0.20    0.21    9.71 ^ U20141/Y (sg13g2_o21ai_1)
+                                         n18954 (net)
+                  0.20    0.00    9.71 ^ U20252/A1 (sg13g2_a21oi_2)
+     2    0.01    0.08    0.12    9.83 v U20252/Y (sg13g2_a21oi_2)
+                                         n18890 (net)
+                  0.08    0.00    9.83 v U20265/A2 (sg13g2_o21ai_1)
+     2    0.02    0.20    0.20   10.02 ^ U20265/Y (sg13g2_o21ai_1)
+                                         n18105 (net)
+                  0.20    0.00   10.02 ^ U21603/A1 (sg13g2_a21oi_2)
+     2    0.03    0.12    0.16   10.18 v U21603/Y (sg13g2_a21oi_2)
+                                         n18475 (net)
+                  0.12    0.00   10.18 v U21679/A2 (sg13g2_o21ai_1)
+     2    0.02    0.19    0.20   10.39 ^ U21679/Y (sg13g2_o21ai_1)
+                                         n19743 (net)
+                  0.19    0.00   10.39 ^ U21686/A1 (sg13g2_a21oi_1)
+     2    0.01    0.10    0.14   10.53 v U21686/Y (sg13g2_a21oi_1)
+                                         n19715 (net)
+                  0.10    0.00   10.53 v U20770/B (sg13g2_nor2_1)
+     1    0.01    0.07    0.09   10.62 ^ U20770/Y (sg13g2_nor2_1)
+                                         n18188 (net)
+                  0.07    0.00   10.62 ^ U21687/A (sg13g2_inv_1)
+     1    0.01    0.03    0.05   10.67 v U21687/Y (sg13g2_inv_1)
+                                         n18191 (net)
+                  0.03    0.00   10.67 v U21689/A (sg13g2_nand2_1)
+     2    0.01    0.06    0.06   10.72 ^ U21689/Y (sg13g2_nand2_1)
+                                         n19707 (net)
+                  0.06    0.00   10.72 ^ U21696/A1 (sg13g2_a21oi_1)
+     2    0.01    0.09    0.11   10.83 v U21696/Y (sg13g2_a21oi_1)
+                                         n19698 (net)
+                  0.09    0.00   10.83 v U21698/A2 (sg13g2_o21ai_1)
+     2    0.01    0.15    0.16   10.99 ^ U21698/Y (sg13g2_o21ai_1)
+                                         n19690 (net)
+                  0.15    0.00   10.99 ^ U12144/A1 (sg13g2_a21oi_1)
+     2    0.01    0.10    0.13   11.13 v U12144/Y (sg13g2_a21oi_1)
+                                         n19732 (net)
+                  0.10    0.00   11.13 v U21702/A2 (sg13g2_o21ai_1)
+     1    0.01    0.10    0.12   11.25 ^ U21702/Y (sg13g2_o21ai_1)
+                                         n18204 (net)
+                  0.10    0.00   11.25 ^ U21703/B (sg13g2_xnor2_1)
+     1    0.01    0.09    0.12   11.37 ^ U21703/Y (sg13g2_xnor2_1)
+                                         n18206 (net)
+                  0.09    0.00   11.37 ^ U21704/A (sg13g2_nand2_1)
+     2    0.02    0.11    0.13   11.49 v U21704/Y (sg13g2_nand2_1)
+                                         n18370 (net)
+                  0.11    0.00   11.49 v U21904/A (sg13g2_inv_2)
+     1    0.01    0.03    0.04   11.54 ^ U21904/Y (sg13g2_inv_2)
+                                         n18395 (net)
+                  0.03    0.00   11.54 ^ fanout1839/A (sg13g2_buf_4)
+     7    0.06    0.08    0.12   11.66 ^ fanout1839/X (sg13g2_buf_4)
+                                         net1839 (net)
+                  0.08    0.01   11.67 ^ fanout1838/A (sg13g2_buf_8)
+     8    0.08    0.05    0.11   11.78 ^ fanout1838/X (sg13g2_buf_8)
+                                         net1838 (net)
+                  0.05    0.00   11.78 ^ U22129/A (sg13g2_inv_4)
+     8    0.07    0.07    0.07   11.85 v U22129/Y (sg13g2_inv_4)
+                                         n19186 (net)
+                  0.07    0.01   11.86 v U22247/A2 (sg13g2_a21oi_2)
+     7    0.03    0.15    0.16   12.02 ^ U22247/Y (sg13g2_a21oi_2)
+                                         n20439 (net)
+                  0.15    0.00   12.02 ^ U22248/B (sg13g2_nand2_1)
+     1    0.01    0.07    0.10   12.11 v U22248/Y (sg13g2_nand2_1)
+                                         n18757 (net)
+                  0.07    0.00   12.12 v U22249/B (sg13g2_nor2_2)
+     4    0.02    0.09    0.10   12.21 ^ U22249/Y (sg13g2_nor2_2)
+                                         n19260 (net)
+                  0.09    0.00   12.21 ^ U22332/A (sg13g2_nand3_1)
+     2    0.01    0.14    0.15   12.36 v U22332/Y (sg13g2_nand3_1)
+                                         n19259 (net)
+                  0.14    0.00   12.36 v U22333/B (sg13g2_nor2_2)
+     6    0.03    0.14    0.16   12.53 ^ U22333/Y (sg13g2_nor2_2)
+                                         n19342 (net)
+                  0.14    0.00   12.53 ^ U22377/A (sg13g2_nand2_1)
+     1    0.01    0.07    0.09   12.62 v U22377/Y (sg13g2_nand2_1)
+                                         n18951 (net)
+                  0.07    0.00   12.62 v U22378/B (sg13g2_nor2_2)
+     6    0.03    0.14    0.14   12.76 ^ U22378/Y (sg13g2_nor2_2)
+                                         n19268 (net)
+                  0.14    0.00   12.76 ^ U22379/A (sg13g2_inv_2)
+     7    0.04    0.10    0.12   12.88 v U22379/Y (sg13g2_inv_2)
+                                         n19328 (net)
+                  0.10    0.01   12.89 v U22543/A (sg13g2_nand2_1)
+     1    0.00    0.05    0.06   12.95 ^ U22543/Y (sg13g2_nand2_1)
+                                         n19178 (net)
+                  0.05    0.00   12.95 ^ U22544/A (sg13g2_nand2_1)
+     1    0.00    0.05    0.05   13.00 v U22544/Y (sg13g2_nand2_1)
+                                         n19183 (net)
+                  0.05    0.00   13.00 v U22551/A (sg13g2_nand2_1)
+     1    0.01    0.06    0.06   13.06 ^ U22551/Y (sg13g2_nand2_1)
+                                         n19216 (net)
+                  0.06    0.00   13.06 ^ U22576/A (sg13g2_nand2_2)
+     3    0.02    0.07    0.08   13.13 v U22576/Y (sg13g2_nand2_2)
+                                         n19362 (net)
+                  0.07    0.00   13.14 v U22577/B (sg13g2_nor2_1)
+     2    0.01    0.11    0.11   13.25 ^ U22577/Y (sg13g2_nor2_1)
+                                         n19346 (net)
+                  0.11    0.00   13.25 ^ U22717/A (sg13g2_inv_1)
+     2    0.01    0.04    0.06   13.31 v U22717/Y (sg13g2_inv_1)
+                                         n20025 (net)
+                  0.04    0.00   13.31 v U20771/A (sg13g2_nand2_1)
+     3    0.01    0.08    0.07   13.38 ^ U20771/Y (sg13g2_nand2_1)
+                                         n20055 (net)
+                  0.08    0.00   13.38 ^ U22719/A (sg13g2_nand2_1)
+     4    0.02    0.12    0.12   13.50 v U22719/Y (sg13g2_nand2_1)
+                                         n20093 (net)
+                  0.12    0.00   13.50 v U22720/B (sg13g2_nand3_1)
+     1    0.00    0.06    0.07   13.58 ^ U22720/Y (sg13g2_nand3_1)
+                                         n19357 (net)
+                  0.06    0.00   13.58 ^ U22727/A (sg13g2_nand3_1)
+     1    0.01    0.08    0.09   13.67 v U22727/Y (sg13g2_nand3_1)
+                                         n19358 (net)
+                  0.08    0.00   13.67 v U13165/B1 (sg13g2_a21oi_2)
+     4    0.02    0.10    0.10   13.77 ^ U13165/Y (sg13g2_a21oi_2)
+                                         n19404 (net)
+                  0.10    0.00   13.77 ^ fanout437/A (sg13g2_buf_2)
+     8    0.03    0.08    0.14   13.92 ^ fanout437/X (sg13g2_buf_2)
+                                         net437 (net)
+                  0.08    0.00   13.92 ^ U22732/A (sg13g2_inv_2)
+     4    0.02    0.04    0.05   13.97 v U22732/Y (sg13g2_inv_2)
+                                         n19370 (net)
+                  0.04    0.00   13.97 v U22737/A2 (sg13g2_o21ai_1)
+     3    0.01    0.16    0.15   14.13 ^ U22737/Y (sg13g2_o21ai_1)
+                                         n19424 (net)
+                  0.16    0.00   14.13 ^ U22766/A (sg13g2_inv_1)
+     1    0.01    0.05    0.07   14.20 v U22766/Y (sg13g2_inv_1)
+                                         n19411 (net)
+                  0.05    0.00   14.20 v U22768/A1 (sg13g2_a21oi_2)
+     5    0.04    0.20    0.17   14.37 ^ U22768/Y (sg13g2_a21oi_2)
+                                         n19412 (net)
+                  0.20    0.01   14.37 ^ U12170/A (sg13g2_inv_1)
+     6    0.03    0.12    0.17   14.55 v U12170/Y (sg13g2_inv_1)
+                                         n22235 (net)
+                  0.12    0.00   14.55 v U22789/B (sg13g2_nor2_1)
+     1    0.00    0.06    0.08   14.63 ^ U22789/Y (sg13g2_nor2_1)
+                                         n19970 (net)
+                  0.06    0.00   14.63 ^ fanout842/A (sg13g2_buf_2)
+     5    0.03    0.07    0.12   14.74 ^ fanout842/X (sg13g2_buf_2)
+                                         net842 (net)
+                  0.07    0.00   14.74 ^ fanout841/A (sg13g2_buf_2)
+     6    0.03    0.07    0.12   14.86 ^ fanout841/X (sg13g2_buf_2)
+                                         net841 (net)
+                  0.07    0.00   14.86 ^ fanout839/A (sg13g2_buf_2)
+     8    0.04    0.09    0.14   15.00 ^ fanout839/X (sg13g2_buf_2)
+                                         net839 (net)
+                  0.09    0.00   15.00 ^ U23469/A1 (sg13g2_a22oi_1)
+     1    0.00    0.06    0.09   15.10 v U23469/Y (sg13g2_a22oi_1)
+                                         n20178 (net)
+                  0.06    0.00   15.10 v U23472/A (sg13g2_nand2_1)
+     3    0.02    0.08    0.08   15.18 ^ U23472/Y (sg13g2_nand2_1)
+                                         n20492 (net)
+                  0.08    0.00   15.18 ^ U13596/A (sg13g2_and2_1)
+     1    0.01    0.04    0.11   15.29 ^ U13596/X (sg13g2_and2_1)
+                                         n20184 (net)
+                  0.04    0.00   15.29 ^ U23478/A1 (sg13g2_a22oi_1)
+     1    0.00    0.05    0.07   15.35 v U23478/Y (sg13g2_a22oi_1)
+                                         n20185 (net)
+                  0.05    0.00   15.35 v U23479/B (sg13g2_nand2_1)
+     2    0.02    0.08    0.08   15.44 ^ U23479/Y (sg13g2_nand2_1)
+                                         n21377 (net)
+                  0.08    0.00   15.44 ^ U23480/B (sg13g2_nor2_1)
+     1    0.00    0.03    0.05   15.49 v U23480/Y (sg13g2_nor2_1)
+                                         n20187 (net)
+                  0.03    0.00   15.49 v U23481/B1 (sg13g2_a21oi_1)
+     2    0.01    0.10    0.10   15.58 ^ U23481/Y (sg13g2_a21oi_1)
+                                         n20638 (net)
+                  0.10    0.00   15.58 ^ U23482/A (sg13g2_nand2_1)
+     2    0.01    0.07    0.09   15.68 v U23482/Y (sg13g2_nand2_1)
+                                         n20223 (net)
+                  0.07    0.00   15.68 v U23483/C (sg13g2_nand3_1)
+     2    0.01    0.06    0.08   15.76 ^ U23483/Y (sg13g2_nand3_1)
+                                         n20217 (net)
+                  0.06    0.00   15.76 ^ U23484/B (sg13g2_nor2_1)
+     1    0.01    0.04    0.05   15.81 v U23484/Y (sg13g2_nor2_1)
+                                         n20190 (net)
+                  0.04    0.00   15.81 v U12499/A (sg13g2_inv_2)
+     1    0.00    0.02    0.03   15.84 ^ U12499/Y (sg13g2_inv_2)
+                                         n21549 (net)
+                  0.02    0.00   15.84 ^ fanout812/A (sg13g2_buf_4)
+     8    0.04    0.06    0.10   15.94 ^ fanout812/X (sg13g2_buf_4)
+                                         net812 (net)
+                  0.06    0.01   15.95 ^ U12031/A (sg13g2_inv_2)
+     2    0.01    0.02    0.03   15.98 v U12031/Y (sg13g2_inv_2)
+                                         n11434 (net)
+                  0.02    0.00   15.98 v fanout810/A (sg13g2_buf_2)
+     8    0.04    0.07    0.11   16.09 v fanout810/X (sg13g2_buf_2)
+                                         net810 (net)
+                  0.07    0.00   16.09 v U23569/A (sg13g2_nor2b_1)
+     1    0.01    0.07    0.08   16.18 ^ U23569/Y (sg13g2_nor2b_1)
+                                         n20262 (net)
+                  0.07    0.00   16.18 ^ U23570/B (sg13g2_nor2_1)
+     1    0.01    0.03    0.05   16.23 v U23570/Y (sg13g2_nor2_1)
+                                         n20264 (net)
+                  0.03    0.00   16.23 v U12498/A (sg13g2_inv_1)
+     1    0.01    0.03    0.04   16.26 ^ U12498/Y (sg13g2_inv_1)
+                                         n20265 (net)
+                  0.03    0.00   16.26 ^ U23571/B2 (sg13g2_a22oi_1)
+     3    0.01    0.11    0.09   16.35 v U23571/Y (sg13g2_a22oi_1)
+                                         n22642 (net)
+                  0.11    0.00   16.35 v U23577/A (sg13g2_nor2_1)
+     1    0.01    0.07    0.09   16.45 ^ U23577/Y (sg13g2_nor2_1)
+                                         n20271 (net)
+                  0.07    0.00   16.45 ^ U23578/B (sg13g2_nand2_1)
+     1    0.00    0.05    0.07   16.51 v U23578/Y (sg13g2_nand2_1)
+                                         n20313 (net)
+                  0.05    0.00   16.51 v U23609/A1 (sg13g2_o21ai_1)
+     1    0.01    0.10    0.12   16.63 ^ U23609/Y (sg13g2_o21ai_1)
+                                         n20314 (net)
+                  0.10    0.00   16.63 ^ U23610/A (sg13g2_inv_2)
+     6    0.03    0.08    0.09   16.72 v U23610/Y (sg13g2_inv_2)
+                                         n20315 (net)
+                  0.08    0.00   16.73 v U13398/A (sg13g2_inv_4)
+     8    0.05    0.07    0.07   16.80 ^ U13398/Y (sg13g2_inv_4)
+                                         n22374 (net)
+                  0.07    0.00   16.80 ^ U13394/B (sg13g2_nor2_2)
+     3    0.02    0.05    0.06   16.86 v U13394/Y (sg13g2_nor2_2)
+                                         n22659 (net)
+                  0.05    0.00   16.86 v U24470/A (sg13g2_nor2_1)
+     3    0.01    0.12    0.12   16.98 ^ U24470/Y (sg13g2_nor2_1)
+                                         n21323 (net)
+                  0.12    0.00   16.98 ^ U13624/A (sg13g2_nand2_1)
+     5    0.02    0.12    0.14   17.12 v U13624/Y (sg13g2_nand2_1)
+                                         n21592 (net)
+                  0.12    0.00   17.12 v U24853/D (sg13g2_nor4_1)
+     1    0.00    0.14    0.14   17.27 ^ U24853/Y (sg13g2_nor4_1)
+                                         n21594 (net)
+                  0.14    0.00   17.27 ^ U24854/B (sg13g2_nand2b_1)
+     1    0.00    0.05    0.09   17.35 v U24854/Y (sg13g2_nand2b_1)
+                                         n21596 (net)
+                  0.05    0.00   17.35 v U12952/A (sg13g2_inv_1)
+     3    0.02    0.07    0.07   17.43 ^ U12952/Y (sg13g2_inv_1)
+                                         n22375 (net)
+                  0.07    0.00   17.43 ^ U12433/A (sg13g2_inv_1)
+     3    0.01    0.06    0.07   17.50 v U12433/Y (sg13g2_inv_1)
+                                         n22263 (net)
+                  0.06    0.00   17.50 v U13186/A (sg13g2_inv_2)
+     8    0.04    0.09    0.09   17.59 ^ U13186/Y (sg13g2_inv_2)
+                                         n11515 (net)
+                  0.09    0.00   17.59 ^ U24997/A (sg13g2_nand3_1)
+     1    0.01    0.08    0.10   17.69 v U24997/Y (sg13g2_nand3_1)
+                                         n21753 (net)
+                  0.08    0.00   17.69 v U24998/B (sg13g2_xnor2_1)
+     1    0.01    0.06    0.12   17.81 v U24998/Y (sg13g2_xnor2_1)
+                                         n21776 (net)
+                  0.06    0.00   17.81 v U25015/A2 (sg13g2_o21ai_1)
+     1    0.02    0.23    0.21   18.02 ^ U25015/Y (sg13g2_o21ai_1)
+                                         n21777 (net)
+                  0.23    0.00   18.02 ^ U25016/B1 (sg13g2_a21oi_2)
+     2    0.01    0.07    0.08   18.10 v U25016/Y (sg13g2_a21oi_2)
+                                         n22806 (net)
+                  0.07    0.00   18.10 v U25023/A2 (sg13g2_o21ai_1)
+     1    0.04    0.40    0.34   18.43 ^ U25023/Y (sg13g2_o21ai_1)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_rf_fp_wdata_wb[12] (net)
+                  0.40    0.01   18.44 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_register_filefp__i/U2718/A (sg13g2_inv_4)
+     4    0.05    0.11    0.13   18.57 v i_croc_soc_i_croc_i_core_wrap_i_ibex_register_filefp__i/U2718/Y (sg13g2_inv_4)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_register_filefp__i/n1745 (net)
+                  0.11    0.01   18.58 v fanout612/A (sg13g2_buf_4)
+     8    0.06    0.06    0.14   18.71 v fanout612/X (sg13g2_buf_4)
+                                         net612 (net)
+                  0.06    0.01   18.72 v fanout611/A (sg13g2_buf_2)
+     8    0.04    0.08    0.14   18.86 v fanout611/X (sg13g2_buf_2)
+                                         net611 (net)
+                  0.08    0.00   18.86 v i_croc_soc_i_croc_i_core_wrap_i_ibex_register_filefp__i/U2728/A2 (sg13g2_o21ai_1)
+     1    0.00    0.08    0.10   18.96 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_register_filefp__i/U2728/Y (sg13g2_o21ai_1)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_register_filefp__i/n4212 (net)
+                  0.08    0.00   18.96 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_register_filefp__i/rf_reg_q_reg_0__12_/D (sg13g2_dfrbp_1)
+                                 18.96   data arrival time
+
+                         20.00   20.00   clock clk_sys (rise edge)
+                          0.00   20.00   clock source latency
+     1    0.20    0.34    0.03   20.03 ^ clk_i (in)
+                                         clk_i (net)
+                  0.34    0.00   20.03 ^ pad_clk_i/pad (sg13g2_IOPadIn)
+     1    0.09    0.19    0.12   20.15 ^ pad_clk_i/p2c (sg13g2_IOPadIn)
+                                         soc_clk_i (net)
+                  0.15    0.03   20.18 ^ clkbuf_0_soc_clk_i/A (sg13g2_buf_8)
+     4    0.14    0.09    0.16   20.34 ^ clkbuf_0_soc_clk_i/X (sg13g2_buf_8)
+                                         clknet_0_soc_clk_i (net)
+                  0.10    0.02   20.36 ^ clkbuf_2_1_0_soc_clk_i/A (sg13g2_buf_16)
+     4    0.12    0.04    0.11   20.46 ^ clkbuf_2_1_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_2_1_0_soc_clk_i (net)
+                  0.07    0.03   20.49 ^ clkbuf_4_5_0_soc_clk_i/A (sg13g2_buf_16)
+    16    0.37    0.11    0.12   20.62 ^ clkbuf_4_5_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_4_5_0_soc_clk_i (net)
+                  0.13    0.04   20.66 ^ clkbuf_8_87_0_soc_clk_i/A (sg13g2_buf_16)
+     4    0.08    0.04    0.12   20.78 ^ clkbuf_8_87_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_8_87_0_soc_clk_i (net)
+                  0.04    0.00   20.78 ^ clkbuf_leaf_289_soc_clk_i/A (sg13g2_buf_16)
+     9    0.04    0.02    0.07   20.85 ^ clkbuf_leaf_289_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_leaf_289_soc_clk_i (net)
+                  0.02    0.00   20.85 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_register_filefp__i/rf_reg_q_reg_0__12_/CLK (sg13g2_dfrbp_1)
+                         -0.10   20.75   clock uncertainty
+                          0.01   20.76   clock reconvergence pessimism
+                         -0.13   20.63   library setup time
+                                 20.63   data required time
+-----------------------------------------------------------------------------
+                                 20.63   data required time
+                                -18.96   data arrival time
+-----------------------------------------------------------------------------
+                                  1.67   slack (MET)
+
+
+
+==========================================================================
+05_croc.grt_repaired report_checks -unconstrained
+--------------------------------------------------------------------------
+Startpoint: i_croc_soc_i_rstgen_i_rstgen_bypass_synch_regs_q_reg_3_
+            (rising edge-triggered flip-flop clocked by clk_sys)
+Endpoint: i_croc_soc_i_croc_i_uart_i_apb_uart_UART_RXFF_iFIFOMem_reg_52__6_
+          (recovery check against rising-edge clock clk_sys)
+Path Group: asynchronous
+Path Type: max
+Corner: tt
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                          0.00    0.00   clock clk_sys (rise edge)
+                          0.00    0.00   clock source latency
+     1    0.24    0.35    0.04    0.04 ^ clk_i (in)
+                                         clk_i (net)
+                  0.35    0.00    0.04 ^ pad_clk_i/pad (sg13g2_IOPadIn)
+     1    0.09    0.19    0.12    0.16 ^ pad_clk_i/p2c (sg13g2_IOPadIn)
+                                         soc_clk_i (net)
+                  0.15    0.03    0.19 ^ clkbuf_0_soc_clk_i/A (sg13g2_buf_8)
+     4    0.14    0.09    0.16    0.34 ^ clkbuf_0_soc_clk_i/X (sg13g2_buf_8)
+                                         clknet_0_soc_clk_i (net)
+                  0.10    0.02    0.36 ^ clkbuf_2_1_0_soc_clk_i/A (sg13g2_buf_16)
+     4    0.12    0.04    0.11    0.47 ^ clkbuf_2_1_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_2_1_0_soc_clk_i (net)
+                  0.07    0.03    0.50 ^ clkbuf_4_4_0_soc_clk_i/A (sg13g2_buf_16)
+    16    0.36    0.11    0.13    0.63 ^ clkbuf_4_4_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_4_4_0_soc_clk_i (net)
+                  0.11    0.02    0.65 ^ clkbuf_8_64_0_soc_clk_i/A (sg13g2_buf_16)
+     4    0.08    0.04    0.11    0.77 ^ clkbuf_8_64_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_8_64_0_soc_clk_i (net)
+                  0.04    0.00    0.77 ^ clkbuf_leaf_238_soc_clk_i/A (sg13g2_buf_16)
+     5    0.03    0.02    0.07    0.84 ^ clkbuf_leaf_238_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_leaf_238_soc_clk_i (net)
+                  0.02    0.00    0.84 ^ i_croc_soc_i_rstgen_i_rstgen_bypass_synch_regs_q_reg_3_/CLK (sg13g2_dfrbp_2)
+     1    0.01    0.04    0.26    1.10 ^ i_croc_soc_i_rstgen_i_rstgen_bypass_synch_regs_q_reg_3_/Q (sg13g2_dfrbp_2)
+                                         i_croc_soc_synced_rst_n (net)
+                  0.04    0.00    1.10 ^ fanout4681/A (sg13g2_buf_8)
+     4    0.17    0.09    0.09    1.19 ^ fanout4681/X (sg13g2_buf_8)
+                                         net4681 (net)
+                  0.17    0.07    1.27 ^ fanout4194/A (sg13g2_buf_8)
+     4    0.10    0.07    0.15    1.42 ^ fanout4194/X (sg13g2_buf_8)
+                                         net4194 (net)
+                  0.07    0.01    1.42 ^ fanout3879/A (sg13g2_buf_8)
+     6    0.09    0.06    0.11    1.53 ^ fanout3879/X (sg13g2_buf_8)
+                                         net3879 (net)
+                  0.07    0.02    1.55 ^ fanout3749/A (sg13g2_buf_4)
+     5    0.06    0.07    0.14    1.69 ^ fanout3749/X (sg13g2_buf_4)
+                                         net3749 (net)
+                  0.07    0.01    1.70 ^ fanout3711/A (sg13g2_buf_2)
+     4    0.03    0.06    0.12    1.82 ^ fanout3711/X (sg13g2_buf_2)
+                                         net3711 (net)
+                  0.06    0.00    1.82 ^ fanout3689/A (sg13g2_buf_2)
+     4    0.03    0.06    0.11    1.93 ^ fanout3689/X (sg13g2_buf_2)
+                                         net3689 (net)
+                  0.06    0.00    1.93 ^ fanout3678/A (sg13g2_buf_2)
+     4    0.03    0.08    0.12    2.06 ^ fanout3678/X (sg13g2_buf_2)
+                                         net3678 (net)
+                  0.08    0.00    2.06 ^ fanout3673/A (sg13g2_buf_4)
+     8    0.06    0.08    0.15    2.21 ^ fanout3673/X (sg13g2_buf_4)
+                                         net3673 (net)
+                  0.08    0.00    2.21 ^ fanout3672/A (sg13g2_buf_4)
+     8    0.06    0.08    0.15    2.36 ^ fanout3672/X (sg13g2_buf_4)
+                                         net3672 (net)
+                  0.08    0.01    2.37 ^ fanout3671/A (sg13g2_buf_4)
+     8    0.06    0.08    0.15    2.52 ^ fanout3671/X (sg13g2_buf_4)
+                                         net3671 (net)
+                  0.08    0.00    2.52 ^ i_croc_soc_i_croc_i_uart_i_apb_uart_UART_RXFF_iFIFOMem_reg_52__6_/RESET_B (sg13g2_dfrbp_1)
+                                  2.52   data arrival time
+
+                         20.00   20.00   clock clk_sys (rise edge)
+                          0.00   20.00   clock source latency
+     1    0.20    0.34    0.03   20.03 ^ clk_i (in)
+                                         clk_i (net)
+                  0.34    0.00   20.03 ^ pad_clk_i/pad (sg13g2_IOPadIn)
+     1    0.09    0.19    0.12   20.15 ^ pad_clk_i/p2c (sg13g2_IOPadIn)
+                                         soc_clk_i (net)
+                  0.15    0.03   20.18 ^ clkbuf_0_soc_clk_i/A (sg13g2_buf_8)
+     4    0.14    0.09    0.16   20.34 ^ clkbuf_0_soc_clk_i/X (sg13g2_buf_8)
+                                         clknet_0_soc_clk_i (net)
+                  0.10    0.02   20.36 ^ clkbuf_2_0_0_soc_clk_i/A (sg13g2_buf_16)
+     4    0.13    0.05    0.11   20.47 ^ clkbuf_2_0_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_2_0_0_soc_clk_i (net)
+                  0.06    0.02   20.49 ^ clkbuf_4_0_0_soc_clk_i/A (sg13g2_buf_16)
+    16    0.37    0.11    0.13   20.62 ^ clkbuf_4_0_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_4_0_0_soc_clk_i (net)
+                  0.11    0.02   20.63 ^ clkbuf_8_12_0_soc_clk_i/A (sg13g2_buf_16)
+     4    0.09    0.04    0.11   20.75 ^ clkbuf_8_12_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_8_12_0_soc_clk_i (net)
+                  0.04    0.00   20.75 ^ clkbuf_leaf_10_soc_clk_i/A (sg13g2_buf_16)
+     8    0.03    0.02    0.07   20.82 ^ clkbuf_leaf_10_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_leaf_10_soc_clk_i (net)
+                  0.02    0.00   20.83 ^ i_croc_soc_i_croc_i_uart_i_apb_uart_UART_RXFF_iFIFOMem_reg_52__6_/CLK (sg13g2_dfrbp_1)
+                         -0.10   20.73   clock uncertainty
+                          0.01   20.73   clock reconvergence pessimism
+                         -0.13   20.60   library recovery time
+                                 20.60   data required time
+-----------------------------------------------------------------------------
+                                 20.60   data required time
+                                 -2.52   data arrival time
+-----------------------------------------------------------------------------
+                                 18.08   slack (MET)
+
+
+Startpoint: i_croc_soc_i_croc_i_dmi_jtag_i_dmi_cdc_i_cdc_req_i_dst_ack_dst_q_reg
+            (rising edge-triggered flip-flop clocked by clk_sys)
+Endpoint: i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_sba_state_q_reg_0_
+          (rising edge-triggered flip-flop clocked by clk_sys)
+Path Group: path delay
+Path Type: max
+Corner: tt
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                  0.02    0.00    0.00 ^ i_croc_soc_i_croc_i_dmi_jtag_i_dmi_cdc_i_cdc_req_i_dst_ack_dst_q_reg/CLK (sg13g2_dfrbp_1)
+     4    0.01    0.05    0.22    0.22 v i_croc_soc_i_croc_i_dmi_jtag_i_dmi_cdc_i_cdc_req_i_dst_ack_dst_q_reg/Q (sg13g2_dfrbp_1)
+                                         i_croc_soc_i_croc_i_dmi_jtag_i_dmi_cdc_i_cdc_req_async_ack (net)
+                  0.05    0.00    0.22 v U28975/A1 (sg13g2_a221oi_1)
+     1    0.01    0.16    0.17    0.39 ^ U28975/Y (sg13g2_a221oi_1)
+                                         i_croc_soc_i_croc_dmi_req_valid (net)
+                  0.16    0.00    0.39 ^ i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U172/A (sg13g2_nand2_2)
+     4    0.05    0.17    0.20    0.59 v i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U172/Y (sg13g2_nand2_2)
+                                         i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/n3868 (net)
+                  0.18    0.01    0.60 v i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U311/A (sg13g2_inv_2)
+     5    0.04    0.13    0.14    0.75 ^ i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U311/Y (sg13g2_inv_2)
+                                         i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/n3876 (net)
+                  0.13    0.00    0.75 ^ i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U313/B (sg13g2_nand3_1)
+     8    0.07    0.57    0.50    1.25 v i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U313/Y (sg13g2_nand3_1)
+                                         i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/n4272 (net)
+                  0.57    0.01    1.26 v i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U167/A (sg13g2_inv_1)
+     1    0.01    0.11    0.12    1.37 ^ i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U167/Y (sg13g2_inv_1)
+                                         i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/n4264 (net)
+                  0.11    0.00    1.37 ^ i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U15/A (sg13g2_inv_1)
+     2    0.01    0.06    0.08    1.46 v i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U15/Y (sg13g2_inv_1)
+                                         i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/n2965 (net)
+                  0.06    0.00    1.46 v i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U16/A (sg13g2_inv_2)
+     5    0.03    0.06    0.07    1.53 ^ i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U16/Y (sg13g2_inv_2)
+                                         i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/n2966 (net)
+                  0.06    0.00    1.53 ^ i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U317/A (sg13g2_nand2_1)
+     4    0.02    0.10    0.11    1.64 v i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U317/Y (sg13g2_nand2_1)
+                                         i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/n3888 (net)
+                  0.10    0.00    1.64 v i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U318/C (sg13g2_or3_1)
+     2    0.01    0.06    0.18    1.82 v i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U318/X (sg13g2_or3_1)
+                                         i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/n3889 (net)
+                  0.06    0.00    1.82 v i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U319/B (sg13g2_or2_2)
+     5    0.05    0.11    0.22    2.03 v i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U319/X (sg13g2_or2_2)
+                                         i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/n4114 (net)
+                  0.11    0.00    2.04 v i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U320/D (sg13g2_nor4_1)
+     1    0.00    0.13    0.13    2.17 ^ i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs/U320/Y (sg13g2_nor4_1)
+                                         i_croc_soc_i_croc_i_dm_top_i_dm_top_sbdata_read_valid (net)
+                  0.13    0.00    2.17 ^ U31292/A2 (sg13g2_a21oi_1)
+     2    0.01    0.09    0.13    2.30 v U31292/Y (sg13g2_a21oi_1)
+                                         n26565 (net)
+                  0.09    0.00    2.30 v U31294/B1 (sg13g2_a22oi_1)
+     6    0.02    0.18    0.18    2.47 ^ U31294/Y (sg13g2_a22oi_1)
+                                         n26573 (net)
+                  0.18    0.00    2.47 ^ U31301/C (sg13g2_nand4_1)
+     1    0.00    0.10    0.15    2.63 v U31301/Y (sg13g2_nand4_1)
+                                         n26572 (net)
+                  0.10    0.00    2.63 v U31302/B1 (sg13g2_o21ai_1)
+     1    0.00    0.09    0.06    2.69 ^ U31302/Y (sg13g2_o21ai_1)
+                                         n9152 (net)
+                  0.09    0.00    2.69 ^ i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_sba_state_q_reg_0_/D (sg13g2_dfrbp_1)
+                                  2.69   data arrival time
+
+                          5.00    5.00   max_delay
+                         -0.13    4.87   library setup time
+                                  4.87   data required time
+-----------------------------------------------------------------------------
+                                  4.87   data required time
+                                 -2.69   data arrival time
+-----------------------------------------------------------------------------
+                                  2.18   slack (MET)
+
+
+Startpoint: i_croc_soc_i_croc_i_dmi_jtag_i_dmi_jtag_tap_td_o_reg
+            (rising edge-triggered flip-flop clocked by clk_jtg')
+Endpoint: jtag_tdo_o (output port clocked by clk_jtg)
+Path Group: clk_jtg
+Path Type: max
+Corner: tt
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                         10.00   10.00   clock clk_jtg' (rise edge)
+                          0.00   10.00   clock source latency
+     1    0.23    0.49    0.03   10.03 v jtag_tck_i (in)
+                                         jtag_tck_i (net)
+                  0.49    0.00   10.03 v pad_jtag_tck_i/pad (sg13g2_IOPadIn)
+     1    0.13    0.27    0.69   10.72 v pad_jtag_tck_i/p2c (sg13g2_IOPadIn)
+                                         i_croc_soc_i_croc_i_dmi_jtag_tck (net)
+                  0.22    0.05   10.77 v clkbuf_0_i_croc_soc_i_croc_i_dmi_jtag_tck/A (sg13g2_buf_8)
+     8    0.12    0.07    0.18   10.94 v clkbuf_0_i_croc_soc_i_croc_i_dmi_jtag_tck/X (sg13g2_buf_8)
+                                         clknet_0_i_croc_soc_i_croc_i_dmi_jtag_tck (net)
+                  0.07    0.01   10.95 v clkbuf_3_6__f_i_croc_soc_i_croc_i_dmi_jtag_tck/A (sg13g2_buf_8)
+     7    0.13    0.06    0.13   11.08 v clkbuf_3_6__f_i_croc_soc_i_croc_i_dmi_jtag_tck/X (sg13g2_buf_8)
+                                         clknet_3_6__leaf_i_croc_soc_i_croc_i_dmi_jtag_tck (net)
+                  0.07    0.00   11.08 v U28819_4888/A (sg13g2_inv_2)
+     1    0.00    0.03    0.03   11.12 ^ U28819_4888/Y (sg13g2_inv_2)
+                                         net4888 (net)
+                  0.03    0.00   11.12 ^ i_croc_soc_i_croc_i_dmi_jtag_i_dmi_jtag_tap_td_o_reg/CLK (sg13g2_dfrbp_2)
+     1    0.14    0.30    0.40   11.52 ^ i_croc_soc_i_croc_i_dmi_jtag_i_dmi_jtag_tap_td_o_reg/Q (sg13g2_dfrbp_2)
+                                         soc_jtag_tdo_o (net)
+                  0.43    0.06   11.58 ^ pad_jtag_tdo_o/c2p (sg13g2_IOPadOut16mA)
+     1   15.00    3.55    3.30   14.88 ^ pad_jtag_tdo_o/pad (sg13g2_IOPadOut16mA)
+                                         jtag_tdo_o (net)
+                  2.66    0.00   14.88 ^ jtag_tdo_o (out)
+                                 14.88   data arrival time
+
+                         20.00   20.00   clock clk_jtg (rise edge)
+                          0.00   20.00   clock network delay (propagated)
+                         -0.10   19.90   clock uncertainty
+                          0.00   19.90   clock reconvergence pessimism
+                         -5.00   14.90   output external delay
+                                 14.90   data required time
+-----------------------------------------------------------------------------
+                                 14.90   data required time
+                                -14.88   data arrival time
+-----------------------------------------------------------------------------
+                                  0.02   slack (MET)
+
+
+Startpoint: i_croc_soc_i_croc_i_core_wrap_i_ibex_if_stage_i_instr_rdata_id_o_reg_23_
+            (rising edge-triggered flip-flop clocked by clk_sys)
+Endpoint: i_croc_soc_i_croc_i_core_wrap_i_ibex_register_filefp__i/rf_reg_q_reg_0__12_
+          (rising edge-triggered flip-flop clocked by clk_sys)
+Path Group: clk_sys
+Path Type: max
+Corner: tt
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                          0.00    0.00   clock clk_sys (rise edge)
+                          0.00    0.00   clock source latency
+     1    0.24    0.35    0.04    0.04 ^ clk_i (in)
+                                         clk_i (net)
+                  0.35    0.00    0.04 ^ pad_clk_i/pad (sg13g2_IOPadIn)
+     1    0.09    0.19    0.12    0.16 ^ pad_clk_i/p2c (sg13g2_IOPadIn)
+                                         soc_clk_i (net)
+                  0.15    0.03    0.19 ^ clkbuf_0_soc_clk_i/A (sg13g2_buf_8)
+     4    0.14    0.09    0.16    0.34 ^ clkbuf_0_soc_clk_i/X (sg13g2_buf_8)
+                                         clknet_0_soc_clk_i (net)
+                  0.10    0.02    0.36 ^ clkbuf_2_3_0_soc_clk_i/A (sg13g2_buf_16)
+     4    0.13    0.05    0.11    0.47 ^ clkbuf_2_3_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_2_3_0_soc_clk_i (net)
+                  0.07    0.02    0.50 ^ clkbuf_4_12_0_soc_clk_i/A (sg13g2_buf_16)
+    16    0.37    0.11    0.14    0.64 ^ clkbuf_4_12_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_4_12_0_soc_clk_i (net)
+                  0.12    0.03    0.66 ^ clkbuf_8_192_0_soc_clk_i/A (sg13g2_buf_16)
+     4    0.08    0.04    0.12    0.78 ^ clkbuf_8_192_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_8_192_0_soc_clk_i (net)
+                  0.04    0.00    0.79 ^ clkbuf_leaf_310_soc_clk_i/A (sg13g2_buf_16)
+     8    0.04    0.02    0.07    0.86 ^ clkbuf_leaf_310_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_leaf_310_soc_clk_i (net)
+                  0.02    0.00    0.86 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_if_stage_i_instr_rdata_id_o_reg_23_/CLK (sg13g2_dfrbp_2)
+     6    0.06    0.13    0.32    1.18 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_if_stage_i_instr_rdata_id_o_reg_23_/Q (sg13g2_dfrbp_2)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_id_stage_i_imm_i_type[3] (net)
+                  0.13    0.01    1.19 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/U162/B_N (sg13g2_nor2b_1)
+     2    0.01    0.13    0.19    1.37 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/U162/Y (sg13g2_nor2b_1)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/n39 (net)
+                  0.13    0.00    1.37 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/U161/A (sg13g2_nand2_2)
+     4    0.02    0.09    0.11    1.48 v i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/U161/Y (sg13g2_nand2_2)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/n44 (net)
+                  0.09    0.00    1.48 v i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/U318/B (sg13g2_nor2_1)
+     1    0.01    0.08    0.08    1.57 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/U318/Y (sg13g2_nor2_1)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/n2002 (net)
+                  0.08    0.00    1.57 ^ fanout3500/A (sg13g2_buf_2)
+     4    0.03    0.08    0.13    1.70 ^ fanout3500/X (sg13g2_buf_2)
+                                         net3500 (net)
+                  0.08    0.00    1.70 ^ fanout3497/A (sg13g2_buf_4)
+     8    0.05    0.06    0.14    1.84 ^ fanout3497/X (sg13g2_buf_4)
+                                         net3497 (net)
+                  0.06    0.00    1.84 ^ fanout3496/A (sg13g2_buf_4)
+     8    0.05    0.06    0.13    1.97 ^ fanout3496/X (sg13g2_buf_4)
+                                         net3496 (net)
+                  0.06    0.01    1.98 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/U2379/A1 (sg13g2_a22oi_1)
+     1    0.00    0.06    0.09    2.07 v i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/U2379/Y (sg13g2_a22oi_1)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/n1563 (net)
+                  0.06    0.00    2.07 v i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/U2381/C (sg13g2_nand4_1)
+     1    0.01    0.08    0.09    2.16 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/U2381/Y (sg13g2_nand4_1)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/n1576 (net)
+                  0.08    0.00    2.16 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/U127/B (sg13g2_or4_2)
+     2    0.05    0.12    0.19    2.35 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i/U127/X (sg13g2_or4_2)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_rf_rdata_b[9] (net)
+                  0.12    0.01    2.36 ^ U14065/B2 (sg13g2_a22oi_1)
+     5    0.03    0.22    0.22    2.58 v U14065/Y (sg13g2_a22oi_1)
+                                         n21620 (net)
+                  0.22    0.01    2.59 v U12760/B (sg13g2_nor2_1)
+     1    0.01    0.11    0.13    2.72 ^ U12760/Y (sg13g2_nor2_1)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_csr_addr[2] (net)
+                  0.11    0.00    2.72 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U74/A (sg13g2_nand2_2)
+     8    0.10    0.29    0.26    2.98 v i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U74/Y (sg13g2_nand2_2)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/n2536 (net)
+                  0.30    0.02    3.00 v i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U8/A (sg13g2_inv_2)
+     1    0.00    0.06    0.06    3.06 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U8/Y (sg13g2_inv_2)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/n2421 (net)
+                  0.06    0.00    3.06 ^ fanout472/A (sg13g2_buf_2)
+     5    0.03    0.07    0.12    3.18 ^ fanout472/X (sg13g2_buf_2)
+                                         net472 (net)
+                  0.08    0.00    3.19 ^ fanout470/A (sg13g2_buf_2)
+     5    0.03    0.08    0.13    3.32 ^ fanout470/X (sg13g2_buf_2)
+                                         net470 (net)
+                  0.08    0.00    3.32 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U221/A (sg13g2_nand3_1)
+     1    0.00    0.07    0.09    3.41 v i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U221/Y (sg13g2_nand3_1)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/n2169 (net)
+                  0.07    0.00    3.41 v i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U225/A_N (sg13g2_nand2b_1)
+     1    0.00    0.04    0.09    3.50 v i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U225/Y (sg13g2_nand2b_1)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/n2170 (net)
+                  0.04    0.00    3.50 v i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U226/B1 (sg13g2_a21oi_1)
+     1    0.00    0.07    0.07    3.57 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U226/Y (sg13g2_a21oi_1)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/n2175 (net)
+                  0.07    0.00    3.57 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U233/A (sg13g2_nand2_1)
+     1    0.00    0.04    0.06    3.63 v i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U233/Y (sg13g2_nand2_1)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/n2201 (net)
+                  0.04    0.00    3.63 v i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U64/A (sg13g2_nor2_1)
+     1    0.01    0.09    0.09    3.73 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U64/Y (sg13g2_nor2_1)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/n2203 (net)
+                  0.09    0.00    3.73 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U63/A2 (sg13g2_a21oi_2)
+     3    0.03    0.10    0.12    3.85 v i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i/U63/Y (sg13g2_a21oi_2)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_illegal_csr_insn_id (net)
+                  0.10    0.00    3.85 v U13888/A (sg13g2_inv_1)
+     2    0.01    0.06    0.08    3.93 ^ U13888/Y (sg13g2_inv_1)
+                                         n12773 (net)
+                  0.06    0.00    3.93 ^ U14013/A (sg13g2_nand2_1)
+     2    0.01    0.09    0.10    4.02 v U14013/Y (sg13g2_nand2_1)
+                                         n14026 (net)
+                  0.09    0.00    4.02 v U14014/B (sg13g2_nor2_1)
+     2    0.03    0.27    0.24    4.26 ^ U14014/Y (sg13g2_nor2_1)
+                                         n12756 (net)
+                  0.27    0.01    4.27 ^ fanout2170/A (sg13g2_buf_1)
+     5    0.02    0.10    0.19    4.46 ^ fanout2170/X (sg13g2_buf_1)
+                                         net2170 (net)
+                  0.10    0.00    4.46 ^ fanout2168/A (sg13g2_buf_1)
+     5    0.02    0.09    0.14    4.60 ^ fanout2168/X (sg13g2_buf_1)
+                                         net2168 (net)
+                  0.09    0.00    4.60 ^ fanout2167/A (sg13g2_buf_4)
+     8    0.05    0.06    0.15    4.75 ^ fanout2167/X (sg13g2_buf_4)
+                                         net2167 (net)
+                  0.06    0.00    4.75 ^ U12430/A (sg13g2_inv_4)
+     8    0.04    0.04    0.05    4.81 v U12430/Y (sg13g2_inv_4)
+                                         n14227 (net)
+                  0.04    0.00    4.81 v U20661/B1 (sg13g2_a22oi_1)
+     4    0.03    0.20    0.17    4.97 ^ U20661/Y (sg13g2_a22oi_1)
+                                         n22535 (net)
+                  0.20    0.00    4.98 ^ U20659/A (sg13g2_inv_1)
+     3    0.01    0.08    0.11    5.08 v U20659/Y (sg13g2_inv_1)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_fpu_operands_ex[26] (net)
+                  0.08    0.00    5.08 v fanout458/A (sg13g2_buf_4)
+     8    0.04    0.04    0.12    5.20 v fanout458/X (sg13g2_buf_4)
+                                         net458 (net)
+                  0.04    0.00    5.20 v U20669/C (sg13g2_nor4_1)
+     1    0.00    0.13    0.15    5.35 ^ U20669/Y (sg13g2_nor4_1)
+                                         n30704 (net)
+                  0.13    0.00    5.35 ^ U13581/B (sg13g2_nand2_1)
+     2    0.01    0.11    0.13    5.48 v U13581/Y (sg13g2_nand2_1)
+                                         n21054 (net)
+                  0.11    0.00    5.48 v U13571/A (sg13g2_inv_2)
+     6    0.03    0.08    0.09    5.58 ^ U13571/Y (sg13g2_inv_2)
+                                         n14619 (net)
+                  0.08    0.00    5.58 ^ U17755/A (sg13g2_nand2_1)
+     2    0.01    0.06    0.08    5.66 v U17755/Y (sg13g2_nand2_1)
+                                         n14449 (net)
+                  0.06    0.00    5.66 v U17769/A1 (sg13g2_o21ai_1)
+     2    0.01    0.14    0.15    5.81 ^ U17769/Y (sg13g2_o21ai_1)
+                                         n14995 (net)
+                  0.14    0.00    5.81 ^ U12877/B (sg13g2_nand2_1)
+     1    0.00    0.05    0.08    5.89 v U12877/Y (sg13g2_nand2_1)
+                                         n14427 (net)
+                  0.05    0.00    5.90 v U12691/A (sg13g2_nand2_1)
+     2    0.01    0.07    0.07    5.96 ^ U12691/Y (sg13g2_nand2_1)
+                                         n15002 (net)
+                  0.07    0.00    5.96 ^ U17784/A1 (sg13g2_a21oi_2)
+     6    0.03    0.10    0.11    6.08 v U17784/Y (sg13g2_a21oi_2)
+                                         n15107 (net)
+                  0.10    0.00    6.08 v U17795/A2 (sg13g2_o21ai_1)
+     1    0.01    0.10    0.12    6.20 ^ U17795/Y (sg13g2_o21ai_1)
+                                         n14457 (net)
+                  0.10    0.00    6.20 ^ U17796/B (sg13g2_xnor2_1)
+     1    0.01    0.10    0.12    6.33 ^ U17796/Y (sg13g2_xnor2_1)
+                                         n14459 (net)
+                  0.10    0.00    6.33 ^ U13487/A (sg13g2_nand2_2)
+     5    0.03    0.12    0.13    6.46 v U13487/Y (sg13g2_nand2_2)
+                                         n14992 (net)
+                  0.12    0.00    6.46 v U18513/B (sg13g2_xor2_1)
+     3    0.01    0.09    0.15    6.61 v U18513/X (sg13g2_xor2_1)
+                                         n15153 (net)
+                  0.09    0.00    6.61 v U12069/B (sg13g2_nor2_1)
+     3    0.01    0.12    0.13    6.74 ^ U12069/Y (sg13g2_nor2_1)
+                                         n15071 (net)
+                  0.12    0.00    6.74 ^ U18560/A2 (sg13g2_o21ai_1)
+     1    0.01    0.06    0.09    6.83 v U18560/Y (sg13g2_o21ai_1)
+                                         n15048 (net)
+                  0.06    0.00    6.83 v U18561/B1 (sg13g2_a21oi_2)
+     4    0.02    0.11    0.11    6.94 ^ U18561/Y (sg13g2_a21oi_2)
+                                         n15117 (net)
+                  0.11    0.00    6.94 ^ U18575/A2 (sg13g2_o21ai_1)
+     1    0.01    0.06    0.09    7.03 v U18575/Y (sg13g2_o21ai_1)
+                                         n15065 (net)
+                  0.06    0.00    7.03 v U18576/B (sg13g2_xnor2_1)
+     2    0.01    0.06    0.11    7.14 v U18576/Y (sg13g2_xnor2_1)
+                                         n15122 (net)
+                  0.06    0.00    7.14 v U18586/A_N (sg13g2_nand2b_1)
+     1    0.00    0.04    0.09    7.23 v U18586/Y (sg13g2_nand2b_1)
+                                         n15078 (net)
+                  0.04    0.00    7.23 v U12105/B (sg13g2_nor2_1)
+     3    0.01    0.12    0.11    7.34 ^ U12105/Y (sg13g2_nor2_1)
+                                         n19381 (net)
+                  0.12    0.00    7.34 ^ U12065/A (sg13g2_nand2_1)
+     1    0.00    0.05    0.07    7.41 v U12065/Y (sg13g2_nand2_1)
+                                         n15119 (net)
+                  0.05    0.00    7.41 v U12064/A (sg13g2_nand2_1)
+     3    0.01    0.08    0.07    7.48 ^ U12064/Y (sg13g2_nand2_1)
+                                         n15196 (net)
+                  0.08    0.00    7.49 ^ U12063/A (sg13g2_inv_1)
+     2    0.01    0.05    0.06    7.55 v U12063/Y (sg13g2_inv_1)
+                                         n15171 (net)
+                  0.05    0.00    7.55 v U18623/A (sg13g2_nor2b_1)
+     3    0.01    0.11    0.11    7.66 ^ U18623/Y (sg13g2_nor2b_1)
+                                         n15190 (net)
+                  0.11    0.00    7.66 ^ U12204/A (sg13g2_nand2_1)
+     1    0.00    0.05    0.08    7.74 v U12204/Y (sg13g2_nand2_1)
+                                         n15191 (net)
+                  0.05    0.00    7.74 v U12202/A (sg13g2_inv_1)
+     3    0.02    0.09    0.09    7.83 ^ U12202/Y (sg13g2_inv_1)
+                                         n19409 (net)
+                  0.09    0.00    7.83 ^ U12203/A (sg13g2_inv_1)
+     2    0.01    0.05    0.07    7.90 v U12203/Y (sg13g2_inv_1)
+                                         n11016 (net)
+                  0.05    0.00    7.90 v U18688/B (sg13g2_nor2_1)
+     2    0.01    0.08    0.08    7.98 ^ U18688/Y (sg13g2_nor2_1)
+                                         n15370 (net)
+                  0.08    0.00    7.98 ^ U12664/A (sg13g2_inv_1)
+     2    0.01    0.05    0.07    8.05 v U12664/Y (sg13g2_inv_1)
+                                         n11233 (net)
+                  0.05    0.00    8.05 v U18689/A (sg13g2_inv_2)
+     8    0.04    0.10    0.09    8.14 ^ U18689/Y (sg13g2_inv_2)
+                                         n16426 (net)
+                  0.10    0.00    8.15 ^ U19967/A2 (sg13g2_a22oi_1)
+     1    0.00    0.07    0.10    8.25 v U19967/Y (sg13g2_a22oi_1)
+                                         n16428 (net)
+                  0.07    0.00    8.25 v U19968/B (sg13g2_nand2_1)
+     2    0.01    0.08    0.09    8.34 ^ U19968/Y (sg13g2_nand2_1)
+                                         n16508 (net)
+                  0.08    0.00    8.34 ^ U20047/A2 (sg13g2_o21ai_1)
+     3    0.01    0.10    0.11    8.45 v U20047/Y (sg13g2_o21ai_1)
+                                         n18070 (net)
+                  0.10    0.00    8.45 v U18078/A (sg13g2_inv_1)
+     1    0.00    0.04    0.05    8.51 ^ U18078/Y (sg13g2_inv_1)
+                                         n30353 (net)
+                  0.04    0.00    8.51 ^ U18074/A2 (sg13g2_o21ai_1)
+     4    0.02    0.13    0.12    8.63 v U18074/Y (sg13g2_o21ai_1)
+                                         n17905 (net)
+                  0.13    0.00    8.63 v U20059/A (sg13g2_or4_1)
+     1    0.00    0.05    0.23    8.86 v U20059/X (sg13g2_or4_1)
+                                         n16522 (net)
+                  0.05    0.00    8.86 v U20060/D (sg13g2_nor4_1)
+     1    0.00    0.14    0.12    8.98 ^ U20060/Y (sg13g2_nor4_1)
+                                         n16527 (net)
+                  0.14    0.00    8.98 ^ U20064/B (sg13g2_nand4_1)
+     1    0.01    0.17    0.19    9.17 v U20064/Y (sg13g2_nand4_1)
+                                         n16529 (net)
+                  0.17    0.00    9.17 v U20065/B (sg13g2_nand2_2)
+     2    0.02    0.07    0.09    9.27 ^ U20065/Y (sg13g2_nand2_2)
+                                         n20508 (net)
+                  0.07    0.00    9.27 ^ U17814/B (sg13g2_nand2_1)
+     2    0.01    0.06    0.08    9.35 v U17814/Y (sg13g2_nand2_1)
+                                         n16543 (net)
+                  0.06    0.00    9.35 v U13495/A (sg13g2_inv_1)
+     1    0.01    0.05    0.05    9.40 ^ U13495/Y (sg13g2_inv_1)
+                                         n18215 (net)
+                  0.05    0.00    9.40 ^ U12107/A (sg13g2_nand2_2)
+     5    0.02    0.09    0.09    9.49 v U12107/Y (sg13g2_nand2_2)
+                                         n19133 (net)
+                  0.09    0.00    9.49 v U20141/A1 (sg13g2_o21ai_1)
+     2    0.02    0.20    0.21    9.71 ^ U20141/Y (sg13g2_o21ai_1)
+                                         n18954 (net)
+                  0.20    0.00    9.71 ^ U20252/A1 (sg13g2_a21oi_2)
+     2    0.01    0.08    0.12    9.83 v U20252/Y (sg13g2_a21oi_2)
+                                         n18890 (net)
+                  0.08    0.00    9.83 v U20265/A2 (sg13g2_o21ai_1)
+     2    0.02    0.20    0.20   10.02 ^ U20265/Y (sg13g2_o21ai_1)
+                                         n18105 (net)
+                  0.20    0.00   10.02 ^ U21603/A1 (sg13g2_a21oi_2)
+     2    0.03    0.12    0.16   10.18 v U21603/Y (sg13g2_a21oi_2)
+                                         n18475 (net)
+                  0.12    0.00   10.18 v U21679/A2 (sg13g2_o21ai_1)
+     2    0.02    0.19    0.20   10.39 ^ U21679/Y (sg13g2_o21ai_1)
+                                         n19743 (net)
+                  0.19    0.00   10.39 ^ U21686/A1 (sg13g2_a21oi_1)
+     2    0.01    0.10    0.14   10.53 v U21686/Y (sg13g2_a21oi_1)
+                                         n19715 (net)
+                  0.10    0.00   10.53 v U20770/B (sg13g2_nor2_1)
+     1    0.01    0.07    0.09   10.62 ^ U20770/Y (sg13g2_nor2_1)
+                                         n18188 (net)
+                  0.07    0.00   10.62 ^ U21687/A (sg13g2_inv_1)
+     1    0.01    0.03    0.05   10.67 v U21687/Y (sg13g2_inv_1)
+                                         n18191 (net)
+                  0.03    0.00   10.67 v U21689/A (sg13g2_nand2_1)
+     2    0.01    0.06    0.06   10.72 ^ U21689/Y (sg13g2_nand2_1)
+                                         n19707 (net)
+                  0.06    0.00   10.72 ^ U21696/A1 (sg13g2_a21oi_1)
+     2    0.01    0.09    0.11   10.83 v U21696/Y (sg13g2_a21oi_1)
+                                         n19698 (net)
+                  0.09    0.00   10.83 v U21698/A2 (sg13g2_o21ai_1)
+     2    0.01    0.15    0.16   10.99 ^ U21698/Y (sg13g2_o21ai_1)
+                                         n19690 (net)
+                  0.15    0.00   10.99 ^ U12144/A1 (sg13g2_a21oi_1)
+     2    0.01    0.10    0.13   11.13 v U12144/Y (sg13g2_a21oi_1)
+                                         n19732 (net)
+                  0.10    0.00   11.13 v U21702/A2 (sg13g2_o21ai_1)
+     1    0.01    0.10    0.12   11.25 ^ U21702/Y (sg13g2_o21ai_1)
+                                         n18204 (net)
+                  0.10    0.00   11.25 ^ U21703/B (sg13g2_xnor2_1)
+     1    0.01    0.09    0.12   11.37 ^ U21703/Y (sg13g2_xnor2_1)
+                                         n18206 (net)
+                  0.09    0.00   11.37 ^ U21704/A (sg13g2_nand2_1)
+     2    0.02    0.11    0.13   11.49 v U21704/Y (sg13g2_nand2_1)
+                                         n18370 (net)
+                  0.11    0.00   11.49 v U21904/A (sg13g2_inv_2)
+     1    0.01    0.03    0.04   11.54 ^ U21904/Y (sg13g2_inv_2)
+                                         n18395 (net)
+                  0.03    0.00   11.54 ^ fanout1839/A (sg13g2_buf_4)
+     7    0.06    0.08    0.12   11.66 ^ fanout1839/X (sg13g2_buf_4)
+                                         net1839 (net)
+                  0.08    0.01   11.67 ^ fanout1838/A (sg13g2_buf_8)
+     8    0.08    0.05    0.11   11.78 ^ fanout1838/X (sg13g2_buf_8)
+                                         net1838 (net)
+                  0.05    0.00   11.78 ^ U22129/A (sg13g2_inv_4)
+     8    0.07    0.07    0.07   11.85 v U22129/Y (sg13g2_inv_4)
+                                         n19186 (net)
+                  0.07    0.01   11.86 v U22247/A2 (sg13g2_a21oi_2)
+     7    0.03    0.15    0.16   12.02 ^ U22247/Y (sg13g2_a21oi_2)
+                                         n20439 (net)
+                  0.15    0.00   12.02 ^ U22248/B (sg13g2_nand2_1)
+     1    0.01    0.07    0.10   12.11 v U22248/Y (sg13g2_nand2_1)
+                                         n18757 (net)
+                  0.07    0.00   12.12 v U22249/B (sg13g2_nor2_2)
+     4    0.02    0.09    0.10   12.21 ^ U22249/Y (sg13g2_nor2_2)
+                                         n19260 (net)
+                  0.09    0.00   12.21 ^ U22332/A (sg13g2_nand3_1)
+     2    0.01    0.14    0.15   12.36 v U22332/Y (sg13g2_nand3_1)
+                                         n19259 (net)
+                  0.14    0.00   12.36 v U22333/B (sg13g2_nor2_2)
+     6    0.03    0.14    0.16   12.53 ^ U22333/Y (sg13g2_nor2_2)
+                                         n19342 (net)
+                  0.14    0.00   12.53 ^ U22377/A (sg13g2_nand2_1)
+     1    0.01    0.07    0.09   12.62 v U22377/Y (sg13g2_nand2_1)
+                                         n18951 (net)
+                  0.07    0.00   12.62 v U22378/B (sg13g2_nor2_2)
+     6    0.03    0.14    0.14   12.76 ^ U22378/Y (sg13g2_nor2_2)
+                                         n19268 (net)
+                  0.14    0.00   12.76 ^ U22379/A (sg13g2_inv_2)
+     7    0.04    0.10    0.12   12.88 v U22379/Y (sg13g2_inv_2)
+                                         n19328 (net)
+                  0.10    0.01   12.89 v U22543/A (sg13g2_nand2_1)
+     1    0.00    0.05    0.06   12.95 ^ U22543/Y (sg13g2_nand2_1)
+                                         n19178 (net)
+                  0.05    0.00   12.95 ^ U22544/A (sg13g2_nand2_1)
+     1    0.00    0.05    0.05   13.00 v U22544/Y (sg13g2_nand2_1)
+                                         n19183 (net)
+                  0.05    0.00   13.00 v U22551/A (sg13g2_nand2_1)
+     1    0.01    0.06    0.06   13.06 ^ U22551/Y (sg13g2_nand2_1)
+                                         n19216 (net)
+                  0.06    0.00   13.06 ^ U22576/A (sg13g2_nand2_2)
+     3    0.02    0.07    0.08   13.13 v U22576/Y (sg13g2_nand2_2)
+                                         n19362 (net)
+                  0.07    0.00   13.14 v U22577/B (sg13g2_nor2_1)
+     2    0.01    0.11    0.11   13.25 ^ U22577/Y (sg13g2_nor2_1)
+                                         n19346 (net)
+                  0.11    0.00   13.25 ^ U22717/A (sg13g2_inv_1)
+     2    0.01    0.04    0.06   13.31 v U22717/Y (sg13g2_inv_1)
+                                         n20025 (net)
+                  0.04    0.00   13.31 v U20771/A (sg13g2_nand2_1)
+     3    0.01    0.08    0.07   13.38 ^ U20771/Y (sg13g2_nand2_1)
+                                         n20055 (net)
+                  0.08    0.00   13.38 ^ U22719/A (sg13g2_nand2_1)
+     4    0.02    0.12    0.12   13.50 v U22719/Y (sg13g2_nand2_1)
+                                         n20093 (net)
+                  0.12    0.00   13.50 v U22720/B (sg13g2_nand3_1)
+     1    0.00    0.06    0.07   13.58 ^ U22720/Y (sg13g2_nand3_1)
+                                         n19357 (net)
+                  0.06    0.00   13.58 ^ U22727/A (sg13g2_nand3_1)
+     1    0.01    0.08    0.09   13.67 v U22727/Y (sg13g2_nand3_1)
+                                         n19358 (net)
+                  0.08    0.00   13.67 v U13165/B1 (sg13g2_a21oi_2)
+     4    0.02    0.10    0.10   13.77 ^ U13165/Y (sg13g2_a21oi_2)
+                                         n19404 (net)
+                  0.10    0.00   13.77 ^ fanout437/A (sg13g2_buf_2)
+     8    0.03    0.08    0.14   13.92 ^ fanout437/X (sg13g2_buf_2)
+                                         net437 (net)
+                  0.08    0.00   13.92 ^ U22732/A (sg13g2_inv_2)
+     4    0.02    0.04    0.05   13.97 v U22732/Y (sg13g2_inv_2)
+                                         n19370 (net)
+                  0.04    0.00   13.97 v U22737/A2 (sg13g2_o21ai_1)
+     3    0.01    0.16    0.15   14.13 ^ U22737/Y (sg13g2_o21ai_1)
+                                         n19424 (net)
+                  0.16    0.00   14.13 ^ U22766/A (sg13g2_inv_1)
+     1    0.01    0.05    0.07   14.20 v U22766/Y (sg13g2_inv_1)
+                                         n19411 (net)
+                  0.05    0.00   14.20 v U22768/A1 (sg13g2_a21oi_2)
+     5    0.04    0.20    0.17   14.37 ^ U22768/Y (sg13g2_a21oi_2)
+                                         n19412 (net)
+                  0.20    0.01   14.37 ^ U12170/A (sg13g2_inv_1)
+     6    0.03    0.12    0.17   14.55 v U12170/Y (sg13g2_inv_1)
+                                         n22235 (net)
+                  0.12    0.00   14.55 v U22789/B (sg13g2_nor2_1)
+     1    0.00    0.06    0.08   14.63 ^ U22789/Y (sg13g2_nor2_1)
+                                         n19970 (net)
+                  0.06    0.00   14.63 ^ fanout842/A (sg13g2_buf_2)
+     5    0.03    0.07    0.12   14.74 ^ fanout842/X (sg13g2_buf_2)
+                                         net842 (net)
+                  0.07    0.00   14.74 ^ fanout841/A (sg13g2_buf_2)
+     6    0.03    0.07    0.12   14.86 ^ fanout841/X (sg13g2_buf_2)
+                                         net841 (net)
+                  0.07    0.00   14.86 ^ fanout839/A (sg13g2_buf_2)
+     8    0.04    0.09    0.14   15.00 ^ fanout839/X (sg13g2_buf_2)
+                                         net839 (net)
+                  0.09    0.00   15.00 ^ U23469/A1 (sg13g2_a22oi_1)
+     1    0.00    0.06    0.09   15.10 v U23469/Y (sg13g2_a22oi_1)
+                                         n20178 (net)
+                  0.06    0.00   15.10 v U23472/A (sg13g2_nand2_1)
+     3    0.02    0.08    0.08   15.18 ^ U23472/Y (sg13g2_nand2_1)
+                                         n20492 (net)
+                  0.08    0.00   15.18 ^ U13596/A (sg13g2_and2_1)
+     1    0.01    0.04    0.11   15.29 ^ U13596/X (sg13g2_and2_1)
+                                         n20184 (net)
+                  0.04    0.00   15.29 ^ U23478/A1 (sg13g2_a22oi_1)
+     1    0.00    0.05    0.07   15.35 v U23478/Y (sg13g2_a22oi_1)
+                                         n20185 (net)
+                  0.05    0.00   15.35 v U23479/B (sg13g2_nand2_1)
+     2    0.02    0.08    0.08   15.44 ^ U23479/Y (sg13g2_nand2_1)
+                                         n21377 (net)
+                  0.08    0.00   15.44 ^ U23480/B (sg13g2_nor2_1)
+     1    0.00    0.03    0.05   15.49 v U23480/Y (sg13g2_nor2_1)
+                                         n20187 (net)
+                  0.03    0.00   15.49 v U23481/B1 (sg13g2_a21oi_1)
+     2    0.01    0.10    0.10   15.58 ^ U23481/Y (sg13g2_a21oi_1)
+                                         n20638 (net)
+                  0.10    0.00   15.58 ^ U23482/A (sg13g2_nand2_1)
+     2    0.01    0.07    0.09   15.68 v U23482/Y (sg13g2_nand2_1)
+                                         n20223 (net)
+                  0.07    0.00   15.68 v U23483/C (sg13g2_nand3_1)
+     2    0.01    0.06    0.08   15.76 ^ U23483/Y (sg13g2_nand3_1)
+                                         n20217 (net)
+                  0.06    0.00   15.76 ^ U23484/B (sg13g2_nor2_1)
+     1    0.01    0.04    0.05   15.81 v U23484/Y (sg13g2_nor2_1)
+                                         n20190 (net)
+                  0.04    0.00   15.81 v U12499/A (sg13g2_inv_2)
+     1    0.00    0.02    0.03   15.84 ^ U12499/Y (sg13g2_inv_2)
+                                         n21549 (net)
+                  0.02    0.00   15.84 ^ fanout812/A (sg13g2_buf_4)
+     8    0.04    0.06    0.10   15.94 ^ fanout812/X (sg13g2_buf_4)
+                                         net812 (net)
+                  0.06    0.01   15.95 ^ U12031/A (sg13g2_inv_2)
+     2    0.01    0.02    0.03   15.98 v U12031/Y (sg13g2_inv_2)
+                                         n11434 (net)
+                  0.02    0.00   15.98 v fanout810/A (sg13g2_buf_2)
+     8    0.04    0.07    0.11   16.09 v fanout810/X (sg13g2_buf_2)
+                                         net810 (net)
+                  0.07    0.00   16.09 v U23569/A (sg13g2_nor2b_1)
+     1    0.01    0.07    0.08   16.18 ^ U23569/Y (sg13g2_nor2b_1)
+                                         n20262 (net)
+                  0.07    0.00   16.18 ^ U23570/B (sg13g2_nor2_1)
+     1    0.01    0.03    0.05   16.23 v U23570/Y (sg13g2_nor2_1)
+                                         n20264 (net)
+                  0.03    0.00   16.23 v U12498/A (sg13g2_inv_1)
+     1    0.01    0.03    0.04   16.26 ^ U12498/Y (sg13g2_inv_1)
+                                         n20265 (net)
+                  0.03    0.00   16.26 ^ U23571/B2 (sg13g2_a22oi_1)
+     3    0.01    0.11    0.09   16.35 v U23571/Y (sg13g2_a22oi_1)
+                                         n22642 (net)
+                  0.11    0.00   16.35 v U23577/A (sg13g2_nor2_1)
+     1    0.01    0.07    0.09   16.45 ^ U23577/Y (sg13g2_nor2_1)
+                                         n20271 (net)
+                  0.07    0.00   16.45 ^ U23578/B (sg13g2_nand2_1)
+     1    0.00    0.05    0.07   16.51 v U23578/Y (sg13g2_nand2_1)
+                                         n20313 (net)
+                  0.05    0.00   16.51 v U23609/A1 (sg13g2_o21ai_1)
+     1    0.01    0.10    0.12   16.63 ^ U23609/Y (sg13g2_o21ai_1)
+                                         n20314 (net)
+                  0.10    0.00   16.63 ^ U23610/A (sg13g2_inv_2)
+     6    0.03    0.08    0.09   16.72 v U23610/Y (sg13g2_inv_2)
+                                         n20315 (net)
+                  0.08    0.00   16.73 v U13398/A (sg13g2_inv_4)
+     8    0.05    0.07    0.07   16.80 ^ U13398/Y (sg13g2_inv_4)
+                                         n22374 (net)
+                  0.07    0.00   16.80 ^ U13394/B (sg13g2_nor2_2)
+     3    0.02    0.05    0.06   16.86 v U13394/Y (sg13g2_nor2_2)
+                                         n22659 (net)
+                  0.05    0.00   16.86 v U24470/A (sg13g2_nor2_1)
+     3    0.01    0.12    0.12   16.98 ^ U24470/Y (sg13g2_nor2_1)
+                                         n21323 (net)
+                  0.12    0.00   16.98 ^ U13624/A (sg13g2_nand2_1)
+     5    0.02    0.12    0.14   17.12 v U13624/Y (sg13g2_nand2_1)
+                                         n21592 (net)
+                  0.12    0.00   17.12 v U24853/D (sg13g2_nor4_1)
+     1    0.00    0.14    0.14   17.27 ^ U24853/Y (sg13g2_nor4_1)
+                                         n21594 (net)
+                  0.14    0.00   17.27 ^ U24854/B (sg13g2_nand2b_1)
+     1    0.00    0.05    0.09   17.35 v U24854/Y (sg13g2_nand2b_1)
+                                         n21596 (net)
+                  0.05    0.00   17.35 v U12952/A (sg13g2_inv_1)
+     3    0.02    0.07    0.07   17.43 ^ U12952/Y (sg13g2_inv_1)
+                                         n22375 (net)
+                  0.07    0.00   17.43 ^ U12433/A (sg13g2_inv_1)
+     3    0.01    0.06    0.07   17.50 v U12433/Y (sg13g2_inv_1)
+                                         n22263 (net)
+                  0.06    0.00   17.50 v U13186/A (sg13g2_inv_2)
+     8    0.04    0.09    0.09   17.59 ^ U13186/Y (sg13g2_inv_2)
+                                         n11515 (net)
+                  0.09    0.00   17.59 ^ U24997/A (sg13g2_nand3_1)
+     1    0.01    0.08    0.10   17.69 v U24997/Y (sg13g2_nand3_1)
+                                         n21753 (net)
+                  0.08    0.00   17.69 v U24998/B (sg13g2_xnor2_1)
+     1    0.01    0.06    0.12   17.81 v U24998/Y (sg13g2_xnor2_1)
+                                         n21776 (net)
+                  0.06    0.00   17.81 v U25015/A2 (sg13g2_o21ai_1)
+     1    0.02    0.23    0.21   18.02 ^ U25015/Y (sg13g2_o21ai_1)
+                                         n21777 (net)
+                  0.23    0.00   18.02 ^ U25016/B1 (sg13g2_a21oi_2)
+     2    0.01    0.07    0.08   18.10 v U25016/Y (sg13g2_a21oi_2)
+                                         n22806 (net)
+                  0.07    0.00   18.10 v U25023/A2 (sg13g2_o21ai_1)
+     1    0.04    0.40    0.34   18.43 ^ U25023/Y (sg13g2_o21ai_1)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_rf_fp_wdata_wb[12] (net)
+                  0.40    0.01   18.44 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_register_filefp__i/U2718/A (sg13g2_inv_4)
+     4    0.05    0.11    0.13   18.57 v i_croc_soc_i_croc_i_core_wrap_i_ibex_register_filefp__i/U2718/Y (sg13g2_inv_4)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_register_filefp__i/n1745 (net)
+                  0.11    0.01   18.58 v fanout612/A (sg13g2_buf_4)
+     8    0.06    0.06    0.14   18.71 v fanout612/X (sg13g2_buf_4)
+                                         net612 (net)
+                  0.06    0.01   18.72 v fanout611/A (sg13g2_buf_2)
+     8    0.04    0.08    0.14   18.86 v fanout611/X (sg13g2_buf_2)
+                                         net611 (net)
+                  0.08    0.00   18.86 v i_croc_soc_i_croc_i_core_wrap_i_ibex_register_filefp__i/U2728/A2 (sg13g2_o21ai_1)
+     1    0.00    0.08    0.10   18.96 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_register_filefp__i/U2728/Y (sg13g2_o21ai_1)
+                                         i_croc_soc_i_croc_i_core_wrap_i_ibex_register_filefp__i/n4212 (net)
+                  0.08    0.00   18.96 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_register_filefp__i/rf_reg_q_reg_0__12_/D (sg13g2_dfrbp_1)
+                                 18.96   data arrival time
+
+                         20.00   20.00   clock clk_sys (rise edge)
+                          0.00   20.00   clock source latency
+     1    0.20    0.34    0.03   20.03 ^ clk_i (in)
+                                         clk_i (net)
+                  0.34    0.00   20.03 ^ pad_clk_i/pad (sg13g2_IOPadIn)
+     1    0.09    0.19    0.12   20.15 ^ pad_clk_i/p2c (sg13g2_IOPadIn)
+                                         soc_clk_i (net)
+                  0.15    0.03   20.18 ^ clkbuf_0_soc_clk_i/A (sg13g2_buf_8)
+     4    0.14    0.09    0.16   20.34 ^ clkbuf_0_soc_clk_i/X (sg13g2_buf_8)
+                                         clknet_0_soc_clk_i (net)
+                  0.10    0.02   20.36 ^ clkbuf_2_1_0_soc_clk_i/A (sg13g2_buf_16)
+     4    0.12    0.04    0.11   20.46 ^ clkbuf_2_1_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_2_1_0_soc_clk_i (net)
+                  0.07    0.03   20.49 ^ clkbuf_4_5_0_soc_clk_i/A (sg13g2_buf_16)
+    16    0.37    0.11    0.12   20.62 ^ clkbuf_4_5_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_4_5_0_soc_clk_i (net)
+                  0.13    0.04   20.66 ^ clkbuf_8_87_0_soc_clk_i/A (sg13g2_buf_16)
+     4    0.08    0.04    0.12   20.78 ^ clkbuf_8_87_0_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_8_87_0_soc_clk_i (net)
+                  0.04    0.00   20.78 ^ clkbuf_leaf_289_soc_clk_i/A (sg13g2_buf_16)
+     9    0.04    0.02    0.07   20.85 ^ clkbuf_leaf_289_soc_clk_i/X (sg13g2_buf_16)
+                                         clknet_leaf_289_soc_clk_i (net)
+                  0.02    0.00   20.85 ^ i_croc_soc_i_croc_i_core_wrap_i_ibex_register_filefp__i/rf_reg_q_reg_0__12_/CLK (sg13g2_dfrbp_1)
+                         -0.10   20.75   clock uncertainty
+                          0.01   20.76   clock reconvergence pessimism
+                         -0.13   20.63   library setup time
+                                 20.63   data required time
+-----------------------------------------------------------------------------
+                                 20.63   data required time
+                                -18.96   data arrival time
+-----------------------------------------------------------------------------
+                                  1.67   slack (MET)
+
+
+
+==========================================================================
+05_croc.grt_repaired report_check_types -max_slew -max_cap -max_fanout -violators
+--------------------------------------------------------------------------
+
+==========================================================================
+05_croc.grt_repaired max_slew_check_slack
+--------------------------------------------------------------------------
+-2.4305672645568848
+
+==========================================================================
+05_croc.grt_repaired max_slew_check_limit
+--------------------------------------------------------------------------
+1.2000000476837158
+
+==========================================================================
+05_croc.grt_repaired max_slew_check_slack_limit
+--------------------------------------------------------------------------
+-2.0255
+
+==========================================================================
+05_croc.grt_repaired max_fanout_check_slack
+--------------------------------------------------------------------------
+-8.0
+
+==========================================================================
+05_croc.grt_repaired max_fanout_check_limit
+--------------------------------------------------------------------------
+8.0
+
+==========================================================================
+05_croc.grt_repaired max_fanout_check_slack_limit
+--------------------------------------------------------------------------
+-1.0000
+
+==========================================================================
+05_croc.grt_repaired max_capacitance_check_slack
+--------------------------------------------------------------------------
+-11.160959243774414
+
+==========================================================================
+05_croc.grt_repaired max_capacitance_check_limit
+--------------------------------------------------------------------------
+4.21304988861084
+
+==========================================================================
+05_croc.grt_repaired max_capacitance_check_slack_limit
+--------------------------------------------------------------------------
+-2.6491
+
+==========================================================================
+05_croc.grt_repaired max_slew_violation_count
+--------------------------------------------------------------------------
+max slew violation count 95
+
+==========================================================================
+05_croc.grt_repaired max_fanout_violation_count
+--------------------------------------------------------------------------
+max fanout violation count 87
+
+==========================================================================
+05_croc.grt_repaired max_cap_violation_count
+--------------------------------------------------------------------------
+max cap violation count 71
+
+==========================================================================
+05_croc.grt_repaired setup_violation_count
+--------------------------------------------------------------------------
+setup violation count 0
+
+==========================================================================
+05_croc.grt_repaired hold_violation_count
+--------------------------------------------------------------------------
+hold violation count 0
+
+==========================================================================
+05_croc.grt_repaired critical path delay
+--------------------------------------------------------------------------
+14.8799
+
+==========================================================================
+05_croc.grt_repaired critical path slack
+--------------------------------------------------------------------------
+0.0201
+
+==========================================================================
+05_croc.grt_repaired slack div critical path delay
+--------------------------------------------------------------------------
+0.135082
+
+==========================================================================
+05_croc.grt_repaired report_power tt
+--------------------------------------------------------------------------
+Group                  Internal  Switching    Leakage      Total
+                          Power      Power      Power      Power (Watts)
+----------------------------------------------------------------
+Sequential             1.83e-02   4.21e-04   2.99e-06   1.87e-02  35.9%
+Combinational          6.03e-03   7.92e-03   6.96e-06   1.40e-02  26.8%
+Clock                  1.06e-02   4.24e-03   2.03e-06   1.49e-02  28.6%
+Macro                  0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+Pad                    3.50e-04   4.11e-03   1.08e-07   4.46e-03   8.6%
+----------------------------------------------------------------
+Total                  3.53e-02   1.67e-02   1.21e-05   5.20e-02 100.0%
+                          67.9%      32.1%       0.0%
+
+==========================================================================
+05_croc.grt_repaired report_design_area
+--------------------------------------------------------------------------
+
+==========================================================================
+05_croc.grt_repaired area by hierarchy
+--------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Design Area Summary
+--------------------------------------------------------------------------------
+Die Area:              4068289.0 um2
+Core Area:             2513332.2816 um2
+Total Area:            2596234.0128 um2
+Total Active Area:     959994.0128 um2
+
+Core Utilization:      0.3819606423822572
+Std Cell Utilization:  0.3324634785958965
+
+--------------------------------------------------------------------------------
+Hierarchical Area Report
+--------------------------------------------------------------------------------
+                                                                                Global Area (um^2)                                                              Global Instances                                                                Local Area (um^2)                                                               Local Instances
+                                                                                ------------------------------------------------------------------------------- ------------------------------------------------------------------------------- ------------------------------------------------------------------------------- ----------------------------------------------------------------------------
+Hierarchy Name                                                                  Total           StdCell         Macro           Cover           Pad             Total           StdCell         Macro           Cover           Pad             Total           StdCell         Macro           Cover           Pad             Total           StdCell         Macro           Cover           Pad             
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<top>                                                                           2596234.013     773632.944      186361.069      313600.000      1322640.000     48792           48522           2               64              204             2292265.766     469664.698      186361.069      313600.000      1322640.000     30211           29941           2               64              204             
+  i_croc_soc_i_croc_i_core_wrap_i_ibex_cs_registers_i                           40054.694       40054.694       0.000           0.000           0.000           2539            2539            0               0               0               40054.694       40054.694       0.000           0.000           0.000           2539            2539            0               0               0               
+  i_croc_soc_i_croc_i_core_wrap_i_ibex_ex_block_i_i_fpnew_top_gen_operation_groups_3__i_opgroup_block_gen_merged_slice_i_multifmt_slice_gen_num_lanes_0__active_lane_lane_instance_i_fpnew_cast_multi 12680.842       12680.842       0.000           0.000           0.000           1376            1376            0               0               0               12680.842       12680.842       0.000           0.000           0.000           1376            1376            0               0               0               
+  i_croc_soc_i_croc_i_core_wrap_i_ibex_register_file_i                          79572.326       79572.326       0.000           0.000           0.000           4535            4535            0               0               0               79572.326       79572.326       0.000           0.000           0.000           4535            4535            0               0               0               
+  i_croc_soc_i_croc_i_core_wrap_i_ibex_register_filefp__i                       90110.362       90110.362       0.000           0.000           0.000           5319            5319            0               0               0               90110.362       90110.362       0.000           0.000           0.000           5319            5319            0               0               0               
+  i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_csrs                                 45688.406       45688.406       0.000           0.000           0.000           2460            2460            0               0               0               45688.406       45688.406       0.000           0.000           0.000           2460            2460            0               0               0               
+  i_croc_soc_i_croc_i_dm_top_i_dm_top_i_dm_mem                                  12305.261       12305.261       0.000           0.000           0.000           1012            1012            0               0               0               12305.261       12305.261       0.000           0.000           0.000           1012            1012            0               0               0               
+  i_croc_soc_i_croc_i_timer                                                     23556.355       23556.355       0.000           0.000           0.000           1340            1340            0               0               0               23556.355       23556.355       0.000           0.000           0.000           1340            1340            0               0               0               

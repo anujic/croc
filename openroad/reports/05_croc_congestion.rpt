@@ -1,0 +1,48 @@
+violation type: Horizontal congestion
+	srcs: net:soc_gpio_i[12] 
+	congestion information: capacity:0 usage:1 overflow:1
+	bbox = ( 1836, 460.8 ) - ( 1843.2, 468) on Layer -
+violation type: Horizontal congestion
+	srcs: net:soc_gpio_i[13] 
+	congestion information: capacity:0 usage:1 overflow:1
+	bbox = ( 1836, 561.6 ) - ( 1843.2, 568.8) on Layer -
+violation type: Horizontal congestion
+	srcs: net:soc_gpio_i[14] 
+	congestion information: capacity:0 usage:1 overflow:1
+	bbox = ( 1836, 662.4 ) - ( 1843.2, 669.6) on Layer -
+violation type: Horizontal congestion
+	srcs: net:soc_gpio_i[15] 
+	congestion information: capacity:0 usage:1 overflow:1
+	bbox = ( 1836, 763.2 ) - ( 1843.2, 770.4) on Layer -
+violation type: Horizontal congestion
+	srcs: net:soc_gpio_i[16] 
+	congestion information: capacity:0 usage:1 overflow:1
+	bbox = ( 1836, 871.2 ) - ( 1843.2, 878.4) on Layer -
+violation type: Horizontal congestion
+	srcs: net:soc_gpio_i[17] 
+	congestion information: capacity:0 usage:1 overflow:1
+	bbox = ( 1836, 972 ) - ( 1843.2, 979.2) on Layer -
+violation type: Horizontal congestion
+	srcs: net:soc_gpio_i[18] 
+	congestion information: capacity:0 usage:1 overflow:1
+	bbox = ( 1836, 1072.8 ) - ( 1843.2, 1080) on Layer -
+violation type: Horizontal congestion
+	srcs: net:soc_gpio_i[19] 
+	congestion information: capacity:0 usage:1 overflow:1
+	bbox = ( 1836, 1173.6 ) - ( 1843.2, 1180.8) on Layer -
+violation type: Horizontal congestion
+	srcs: net:soc_gpio_i[20] 
+	congestion information: capacity:0 usage:1 overflow:1
+	bbox = ( 1836, 1274.4 ) - ( 1843.2, 1281.6) on Layer -
+violation type: Horizontal congestion
+	srcs: net:soc_gpio_i[21] 
+	congestion information: capacity:0 usage:1 overflow:1
+	bbox = ( 1836, 1375.2 ) - ( 1843.2, 1382.4) on Layer -
+violation type: Horizontal congestion
+	srcs: net:soc_gpio_i[22] 
+	congestion information: capacity:0 usage:1 overflow:1
+	bbox = ( 1836, 1483.2 ) - ( 1843.2, 1490.4) on Layer -
+violation type: Horizontal congestion
+	srcs: net:soc_gpio_i[23] 
+	congestion information: capacity:0 usage:1 overflow:1
+	bbox = ( 1836, 1584 ) - ( 1843.2, 1591.2) on Layer -
