@@ -9,7 +9,7 @@ d9855a08c2caa6df0bc719ec0fab0f6e960b5f1b	not-for-merge	branch 'feature/mxdotp' o
 16dcfc0acee00bb927d244b91615ff2a3c18b87a	not-for-merge	branch 'feature/new-divider' of https://github.com/pulp-platform/cvfpu
 d35f4254a8250d4ba3cc5f3c0ba1b0f438096c0d	not-for-merge	branch 'feature/new_32b_divsqrt' of https://github.com/pulp-platform/cvfpu
 2f04d59b5b862075a44aa4f49ead2d8e16b4e53c	not-for-merge	branch 'feature/new_multifmt_divsqrt' of https://github.com/pulp-platform/cvfpu
-ec06d11cebdc7498ab9c1852dfe8d3f654a6bc29	not-for-merge	branch 'feature/pace' of https://github.com/pulp-platform/cvfpu
+484e9adac27519edf734244f425e1f977af371a2	not-for-merge	branch 'feature/pace' of https://github.com/pulp-platform/cvfpu
 541a7f2061212d99edf4e3d86eaa791e92a05137	not-for-merge	branch 'feature/thmulti_8b_divsqrt_support' of https://github.com/pulp-platform/cvfpu
 d3df9427fe8d8bba186e863998027c130e259c50	not-for-merge	branch 'feature/tiny-fpu' of https://github.com/pulp-platform/cvfpu
 4d52517c38d2c39918a97fdc78e995c363efb342	not-for-merge	branch 'fix-headers' of https://github.com/pulp-platform/cvfpu
